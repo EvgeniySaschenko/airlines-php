@@ -1,0 +1,41 @@
+@media (max-width: 420px){
+  .table {
+    font-size: 11px;
+  }
+}
+
+.table tr th {
+  font-size: 12px;
+}
+
+.table-td-bg-1 {
+  background: #f9f9f9;
+}
+
+.table-td-bg-2 {
+  background: #fff;
+}
+
+.table-tr-no-border tr.doc__name td {
+  border-top : 0;
+}
+
+.table.table-align-middle td {
+  vertical-align: middle;
+}
+
+.table.table-align-middle .form-group .input-group {
+  margin: 0 auto;
+}
+
+.table.table-align-middle .form-control {
+  padding: 2px;
+}
+
+.table.table-align-middle td {
+  padding: 2px;
+}
+
+.table.table-align-middle .form-group {
+  margin: 2px;
+}

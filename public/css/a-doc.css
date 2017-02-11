@@ -1,0 +1,13 @@
+.a-doc__chapter-container,
+.a-doc__book-container {
+  width: 250px;
+  margin: 0 auto;
+}
+
+.a-doc__priority .form-control {
+  width: 80px;
+}
+
+.call-modal-edit-doc {
+  cursor: pointer;
+}

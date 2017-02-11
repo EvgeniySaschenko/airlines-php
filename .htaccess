@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteBase /
+RewriteRule ^doc/([0-9]+)$    doc.php?id_doc=$1

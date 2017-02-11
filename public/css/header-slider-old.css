@@ -1,0 +1,34 @@
+.carousel-control {
+  width: 25px;
+  box-shadow: none;
+}
+
+
+/* Слайдер */
+.header__slider {
+  position: relative;
+}
+
+.header__slider h2 {
+    margin: 0;     
+    color: #666;
+    padding-top: 90px;
+    font-size: 52px;
+}
+
+.header__slider .item {
+    background: #333;    
+    text-align: center;
+    height: auto;
+}
+
+
+.header__slider .carousel-indicators li {
+  background: #09171b;
+}
+
+.header__slider .carousel-indicators li.active {
+  background: #fff;
+}
+
+/*/ Слайдер */

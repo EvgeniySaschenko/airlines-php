@@ -1,0 +1,12 @@
+.table .form-group {
+  margin: 2px;
+}
+
+.a-doc [type="file"] {
+  font-size: 11px;
+  width: 110px;
+}
+
+.a-doc .date-picker {
+  width: 100px;
+}

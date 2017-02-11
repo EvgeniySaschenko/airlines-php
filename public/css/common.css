@@ -1,0 +1,150 @@
+body {
+  -moz-background-size: 100%; /* Firefox 3.6+ */
+  -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+  -o-background-size: 100%; /* Opera 9.6+ */
+  background-size: 100%; /* Современные браузеры */
+  font-family: "PtSans";
+  width: 100%;
+}
+.box-content {
+  -moz-background-size: 100%; /* Firefox 3.6+ */
+  -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+  -o-background-size: 100%; /* Opera 9.6+ */
+  background-size: 100%; /* Современные браузеры */
+}
+
+body.body__home {
+  -moz-background-size: 100%; /* Firefox 3.6+ */
+  -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+  -o-background-size: 100%; /* Opera 9.6+ */
+  background-size: 100%; /* Современные браузеры */
+  background: url(/../images/bg-body.jpg);
+  font-family: "PtSans";
+  width: 100%;
+}
+.body__home .box-content {
+  background: url(/../images/bg.jpg) no-repeat;
+  -moz-background-size: 100%; /* Firefox 3.6+ */
+  -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+  -o-background-size: 100%; /* Opera 9.6+ */
+  background-size: 100%; /* Современные браузеры */
+}
+
+
+[class^="nav-tabs-"]{
+  background: #fff;
+}
+
+.box-content_department {
+  background: #fff;
+}
+
+@font-face {
+  font-family: "PlumbBlackSoftC";
+  src: url(../fonts/plumbbsc/plumbbsc.ttf);
+}
+
+@font-face {
+  font-family: "PtSansItalicBold";
+  src: url(../fonts/pt-sans/PTS76F.ttf);
+}
+
+@font-face {
+  font-family: "PtSansCaption";
+  src: url(../fonts/pt-sans/PTC55F.ttf);
+}
+
+@font-face {
+  font-family: "PtSans";
+  src: url(../fonts/pt-sans/PTS55F.ttf);
+}
+
+
+.notice-red {
+  color: #a94442;
+  background: #F78181;
+}
+
+.title-page {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+/* Text in place notice transparent */
+.place-notice {
+  color: transparent;
+}
+
+/* Date end < 30 */
+.text-red {
+  color: #FF0000 !important;
+}
+/* Date end < 60 */
+.text-orange {
+  color: #FE9A2E !important;
+}
+
+.title-page {
+  font-size: 16px;
+}
+
+.visible-xs-block {
+  background: #000;
+}
+
+.text-color-excel {
+  color: #49633e;
+}
+
+.text-color-pdf {
+  color: #d91e00;
+}
+
+.text-color-word {
+  color: #445686;
+}
+
+.text-color-image {
+  color: #fe9a2e;
+}
+
+.text-color-powerpoint {
+  color: #ee2f0a;
+}
+
+.text-color-video {
+  color: #848484;
+}
+
+.indent-indent-20 {
+  margin-top: 20px;
+}
+
+.cut-text {
+  min-height: 20px;
+}
+
+.block-center {
+  margin: 0 auto;
+}
+
+.notice {
+  margin-top: 15px;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.nav.nav-tabs a{
+    border-bottom: 3px solid #FE9A2E;
+    font-size: 18px;
+}

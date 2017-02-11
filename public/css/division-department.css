@@ -1,0 +1,83 @@
+.division-department--box-user {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.division-department_icon-section {
+  text-align: center;
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.division-department_name {
+  font-size: 20px;
+  margin: 30px 0;
+  font-family: "PlumbBlackSoftC";
+  text-align: center;
+}
+
+
+.division-department--user {
+  width: 150px;
+  height: 220px; 
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.division-department--user-circle {
+  width: 150px;
+  height: 150px; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.division-department--user-img {
+  height: 100%;
+}
+
+.division-department--box-user-rank-name {
+  display: table-cell;
+}
+
+.division-department--user-rank {
+  margin: 5px auto 0;
+  text-align: center;
+  width: 100%;
+  font-size: 11px;
+  font-family: "PtSansItalicBold";
+}
+
+.division-department--user-name {
+  margin: 5px auto 0;
+  text-align: center;
+  width: 150px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.division-department__text {
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: "PtSansItalicBold";
+  padding-bottom: 10px;
+}
+
+
+.division-department__text p {
+  text-align: justify;
+  text-indent: 2em;
+}
+
+.division-department__cover {
+  width: 100%;
+}
+
+.division-department__cover--img {
+  width: 100%;
+}
+
+.division-department__title-page {
+  font-size: 24px;
+}

@@ -1,0 +1,19 @@
+.content {
+  background: #fff;
+  padding: 20px 15px;
+  min-height: 1500px;
+}
+
+.menu-content {
+  padding: 0 15px;
+}
+
+.content__form-auth {
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.content__form-auth-btn--submit {
+    padding: 5px 20px;
+}

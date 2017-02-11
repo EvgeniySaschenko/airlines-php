@@ -1,0 +1,11 @@
+.crew__table-head--UKR {
+  border-top: 2px solid #ffa500;
+}
+
+.crew__table-head--UAE {
+  border-top: 2px solid #008b00;
+}
+
+.crew--UKR {
+  float: right;
+}

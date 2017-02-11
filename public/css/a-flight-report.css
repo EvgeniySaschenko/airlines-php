@@ -1,0 +1,136 @@
+
+/* ОТЧЕТ О ПОЛЕТЕ ЗАДАНИЕ НА ПОЛЕТ */
+
+.a-flight-report .form-control {
+  padding: 2px;
+  height: 24px;
+}
+
+.a-flight-report .input-group-addon {
+  padding: 3px;
+}
+
+.a-flight-report .picker-time {
+  width: 64px;
+}
+
+.a-flight-report .picker-time .form-control {
+  width: 45px;
+}
+
+.a-flight-report .table td {
+  padding: 2px;
+}
+
+
+.a-flight-report__container {
+  background: #fff;
+}
+
+.a-flight-report{
+  text-align: center;
+  position: relative;
+}
+
+.a-flight-report .a-flight-report__container{
+	position: absolute;
+	font: 9pt Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+  width: 1400px;
+}
+
+.a-flight-report .table-1 .flight-route{
+	width: 150px; 
+}
+
+.a-flight-report .table-1 [name="point_departure[]"].field,
+.a-flight-report .table-1 [name="point_arrival[]"].field,
+.a-flight-report .table-1 [name="point_departure"].field,
+.a-flight-report .table-1 [name="point_arrival"].field {
+	width: 60px; 
+}
+
+.a-flight-report .table-1 .vertical-text div{
+/*   -moz-transform: rotate(270deg);
+  -webkit-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  writing-mode: tb-rl;
+	-ms-transform-origin: left top 0;
+	-moz-transform-origin: left top 0;
+	-webkit-transform-origin: left top 0;
+	transform-origin: left top 0; */
+	padding: 0;
+	float: left;
+	white-space: nowrap;
+	width:5px;
+}
+
+.a-flight-report .table-1 .level-1 .vertical-text div{
+	margin-left: 20px;
+	margin-top: 150px;
+}
+
+.a-flight-report .table-1 .level-2 .vertical-text div{
+	margin-left: 20px;
+	margin-top: 90px;
+}
+
+.a-flight-report .table-1 .level-1 .text-save div,
+.a-flight-report .table-1 .level-1 .text-delete div{
+	margin-top: 140px;
+	margin-right: 20px;
+}
+
+.a-flight-report .table-1 .level-1{
+  height: 50px;
+}
+
+.a-flight-report .table-1 .level-2{
+  height: 150px;
+}
+
+.a-flight-report .table-1  .field{
+  width: 40px;
+}
+
+.a-flight-report .table-1 select{
+  font-size: 8pt;
+}
+
+.a-flight-report .table-1 .time{
+  width: 90px;
+}
+
+.a-flight-report .table-1 .date .date-picker {
+  width: 105px;
+  min-width: 105px;
+}
+
+.a-flight-report-edit .hide-delete {
+  width: 53px;
+}
+
+
+.a-flight-report .table-2 .date{
+  width: 180px;
+}
+
+.a-flight-report .table-2{
+  position: absolute;
+}
+
+.a-flight-report-post-flight-analysis-edit .remark input{
+  width: 600px;
+}
+
+.a-flight-report .table-2 .field input{
+  width: 50%;
+}
+
+
+.flight-consolidated-report-crew-year__time-night-total,
+.flight-consolidated-report-crew-year__time-night {
+  border-top: 1px solid #000;
+  color: #000080;
+}
+
+/* ОТЧЕТ О ПОЛЕТЕ ЗАДАНИЕ НА ПОЛЕТ */

@@ -1,0 +1,29 @@
+.a-crew-generate-user__crew select.form-control,
+.a-crew-generate-user__remark input {
+  width: 100%;
+}
+
+.a-crew-generate__table-head--UKR {
+  border-top: 2px solid #ffa500;
+}
+
+.a-crew-generate__table-head--UAE {
+  border-top: 2px solid #008b00;
+}
+
+.a-crews-edit--UKR {
+  border-left: 2px solid #ffa500;
+}
+
+.a-crews-edit--UAE {
+  border-left: 2px solid #008b00;
+}
+
+.a-crews-edit__group {
+  border: 2px dotted #ddd;
+  margin-bottom: 20px;
+}
+
+.a-crew-generate__group .panel{
+  margin-bottom: 0;
+}

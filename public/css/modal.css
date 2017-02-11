@@ -1,0 +1,25 @@
+.modal-doc__iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.call-modal-doc {
+  color: #337ab7;
+  cursor: pointer;
+}
+
+.modal-doc__img {
+  max-width: 100%;
+}
+
+.modal-doc__body {
+  text-align: center;
+}
+
+.call-modal-upload-doc {
+  cursor: pointer;
+}
+
+video {
+  width: 100%;
+}

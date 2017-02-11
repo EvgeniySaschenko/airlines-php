@@ -1,0 +1,88 @@
+.home__logo-company {
+  text-align: center;
+  padding: 100px 0 30px;
+}
+
+
+.home__title-page {
+  font-size: 24px;
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
+
+.home__content {
+  width: 70%;
+  margin: 0 auto;
+  font-family: "PtSansItalicBold";
+  margin-bottom: 10px;
+  padding-bottom: 30px;
+  overflow: hidden;
+}
+
+
+.home__content p:last-child {
+  text-align: right;
+}
+
+.home__content p {
+  text-indent: 2em;
+  font-size: 16px;
+}
+
+.home__box-director {
+  width: 250px;
+  height: 250px;
+  box-shadow: 0 0 0 1px #fff;
+  overflow: hidden;
+  border-radius: 50%;
+  display: block;
+  margin: 30px auto;
+}
+
+.home__director--img {
+  width: 100%;
+}
+
+/* Кнопка */
+.home_btn-show-content {
+  height: 36px;
+  width: 36px;
+  margin: 0 auto;
+  background: url(../../images/home_btn-show-content.png);
+  cursor: pointer;
+}
+
+.home_line-content {
+  width: 80%;
+  border-bottom: 2px solid #000;
+  content: "";
+  display: block;
+  margin: 15px auto;
+}
+
+
+
+/* Сертификаты */
+.home__certificate {
+  text-align: center;
+}
+
+.home__certificate--item {
+  height: 200px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.home__certificate--item img {
+  height: 100%;
+}
+
+.home__care-by-air {
+  margin: 80px auto 15px;
+  text-align: center;
+}
+
+.home__care-by-air--img {
+  height: 50px;
+}

@@ -1,0 +1,9 @@
+/* Переопределенные классы */
+
+.content {
+  min-height: 1000px;
+}
+
+ul.nav-pills a {
+  color: #000;
+}

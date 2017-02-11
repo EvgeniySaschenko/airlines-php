@@ -1,0 +1,13 @@
+.breadcrumb {
+  margin: 0 auto;
+  margin-bottom: 0;
+  background: transparent;
+}
+
+.breadcrumb a{
+  color: #000;
+}
+
+.breadcrumb .active a{
+  text-decoration: underline;
+}

@@ -1,0 +1,11 @@
+.a-user-add,
+.table.a-user-add__permission,
+.a-user-edit,
+.table.a-user-edit__permission {
+  /*background: #f9f9f9;*/
+}
+
+.table .form-group.text-center .input-group {
+  text-align: center;
+  margin: 0 auto;
+}

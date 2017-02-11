@@ -1,0 +1,23 @@
+/* Профиль пользователя */
+.user__photo-img {
+  max-width: 140px;
+}
+
+.user__signature-img {
+  max-width: 120px;
+}
+
+/* Редактировать пользователя */
+.a-user-edit__photo-img {
+  max-width: 140px;
+}
+
+.a-user-edit__signature-img {
+  max-width: 100px;
+}
+
+
+.user,
+.nav-tabs--user {
+  background: #fff;
+}
