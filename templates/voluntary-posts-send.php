@@ -56,9 +56,13 @@
        </div>
      </div>-->  
      <!--Кнопка отправить-->  
-     <div>
+     
+     <div class="captcha-maskedinput-form-group">
+         <?= $word[378]['name_'.$lang]; ?>: <span class="captcha-maskedinput-text" onselectstart="return false;"></span>
+         <input name="capcha" type="text" class="voluntary-posts-send__capcha captcha-maskedinput-input form-control" required="required" placeholder="*<?= $word[379]['name_'.$lang]; ?>">
+
         <?php if(empty($currentUser)): ?> 
-         <button type="submit" class="btn btn-warning voluntary-posts-send__btn-send"><?= $word[367]['name_'.$lang]; ?></button>
+         <button type="submit" class="btn btn-warning voluntary-posts-send__btn-send" disabled><?= $word[367]['name_'.$lang]; ?></button>
         <?php else: ?> 
           <div class="alert alert-danger" role="alert">
             <?= $word[368]['name_'.$lang]; ?>

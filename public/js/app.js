@@ -30,5 +30,6 @@
     include('division-department');
     include('manage-site');
     include('maskedinput'); 
+    include('captcha'); 
   });
 }).call(this);
