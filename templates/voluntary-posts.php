@@ -8,7 +8,7 @@
       <tr>
         <td class="voluntary-posts__title title text-bold"><?= $word[374]['name_'.$lang]; ?></td>
         <td class="voluntary-posts__value">
-           <?= convertDate($currentNews[0]['date_create']); ?> : <?= convertTime($news['date_create']); ?>
+           <?= convertDate($currentNews[0]['date_create']); ?> : <?= convertTime($currentNews[0]['date_create']); ?>
         </td>
       </tr>
       
