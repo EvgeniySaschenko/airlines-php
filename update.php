@@ -102,5 +102,8 @@ and
   
     # Главные настройки сайта
   include('controller/update/general-site-settings.php'); 
+  
+    # Добровольные сообщения
+  include('controller/update/voluntary-posts.php'); 
 }
 ?>

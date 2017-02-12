@@ -18,7 +18,17 @@
      <div class="form-group text-center">
         <input name="name_ru" type="text" class="voluntary-posts-send__name form-control" required="required" placeholder="*<?= $word[365]['name_'.$lang]; ?>">
      </div>
-
+    <!--Подразделения-->     
+    <div class="form-group form-inline">
+      <?= $word[372]['name_'.$lang]; ?>
+      <select class="voluntary-posts-send__departments form-control" name="id_department">
+        <?php foreach($allSections as $section): ?> 
+          <?php if($section['type'] == 'department'): ?> 
+            <option value="<?= $section['id']; ?>"><?= $section['name_'.$lang]; ?></option>
+          <?php endif; ?> 
+        <?php endforeach; ?> 
+      </select>
+    </div>
     <!--Текст сообщения-->     
      <div class="form-group text-center">
          <input name="mail" type="text" class="voluntary-posts-send__mail form-control" placeholder="E-mail (<?= $word[369]['name_'.$lang]; ?>)">

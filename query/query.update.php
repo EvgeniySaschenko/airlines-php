@@ -1040,5 +1040,24 @@
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}  
-  
+    
+    
+    
+	//Добровольные сообщения
+	function updateVoluntaryPosts($idNews, $idDepartment, $commentCorrectiveActions){
+		global $db;
+		$query =
+		"UPDATE ae_news
+		SET
+			id_department = ?,
+            comment_corrective_actions = ? 
+		WHERE id = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "isi", $idDepartment, $commentCorrectiveActions, $idNews);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+	}
 ?>

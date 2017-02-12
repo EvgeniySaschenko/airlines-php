@@ -1,5 +1,4 @@
 <?php
-echo 1111;
 		if
 			($currentSection[0]['type'] == 'voluntary-posts')
 		{
@@ -9,6 +8,7 @@ echo 1111;
               // Добавление в БД
               $idSection = $getIdSection;
               $idSubsection = $getIdSubsection;
+              $idDepartment = clearInt($_POST['id_department']);
               $nameRu = clearStr($_POST['name_ru']);
               $nameEn = $nameRu;
               $contentRu = clearStr(str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $_POST['content_ru']));
@@ -17,7 +17,7 @@ echo 1111;
               $ip = $currentUserIp;
               $userAgent = $currentUserAgent;
       
-              $idVoluntaryPosts = insertVoluntaryPosts($idSection, $idSubsection, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $ip, $userAgent);	
+              $idVoluntaryPosts = insertVoluntaryPosts($idSection, $idSubsection, $idDepartment, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $ip, $userAgent);	
         
               
           // Отправка на маил

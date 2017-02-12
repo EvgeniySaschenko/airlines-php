@@ -4192,19 +4192,9 @@
 		$record = $page * 30;
 		$query =
 		"SELECT
-			id,
-			id_section,
-			id_subsection,
-			id_author,
-			name_ru,
-			name_en,
-			content_ru,
-			content_en,
-			link,
-			extension,
-			date_create,
-			priority,
-			hide,
+			n.*,
+            se.name_ru as section_name_ru,
+            se.name_en as section_name_en,
         (SELECT 
           COUNT(*)
         FROM ae_news
@@ -4214,16 +4204,17 @@
           id_subsection = ?
         AND
           hide = 0) as count_news
-		FROM ae_news
+		FROM ae_news n
+        LEFT OUTER JOIN ae_section se ON se.id = n.id_department
 		WHERE
-			id_section = ?
+			n.id_section = ?
 		AND
-			id_subsection = ?
+			n.id_subsection = ?
 		AND
-			hide = 0
+			n.hide = 0
 		ORDER BY
-			priority ASC,
-			date_create DESC
+			n.priority ASC,
+			n.date_create DESC
 		LIMIT $record, 30";
 		$stmt = mysqli_stmt_init($db);
 		if(!mysqli_stmt_prepare($stmt, $query))
@@ -4303,20 +4294,7 @@
 		global $db;
 		$query =
 		"SELECT
-			n.id,
-			n.id_section,
-			n.id_subsection,
-			n.id_author,
-			n.name_ru,
-			n.name_en,
-			n.content_ru,
-			n.content_en,
-			n.link,
-			n.extension,
-			n.date_create,
-			n.priority,
-			n.hide,
-			s.mark
+			n.*
 		FROM ae_news n
 		INNER JOIN ae_section s ON s.id = n.id_section
 		WHERE n.id = ? AND n.hide = 0";
