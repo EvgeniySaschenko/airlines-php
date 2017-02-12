@@ -6,7 +6,9 @@
 	or
 		$currentSection[0]['user'] == 1 and $permissionManageUsers
   or
-    $currentSection[0]['type'] == 'news' and $permissionEditSection)
+    $currentSection[0]['type'] == 'news' and $permissionEditSection
+    or
+      $currentSection[0]['type'] == 'voluntary-posts' and $permissionEditSection)
 	{
 		if($_GET['action'] == 'doc')
 		{

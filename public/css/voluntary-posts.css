@@ -24,3 +24,7 @@
 .a-voluntary-posts .a-voluntary-posts__comment-corrective-actions {
     height: 300px;
 }
+
+.voluntary-posts__title  {
+    width: 30%;
+}

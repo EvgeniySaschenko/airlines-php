@@ -4294,9 +4294,12 @@
 		global $db;
 		$query =
 		"SELECT
-			n.*
+			n.*,
+            se_d.name_ru as section_name_ru,
+            se_d.name_en as section_name_en
 		FROM ae_news n
 		INNER JOIN ae_section s ON s.id = n.id_section
+        LEFT OUTER JOIN ae_section se_d ON se_d.id = n.id_department
 		WHERE n.id = ? AND n.hide = 0";
 		$stmt = mysqli_stmt_init($db);
 		if(!mysqli_stmt_prepare($stmt, $query))
