@@ -1,3 +1,7 @@
 .a-general-site-settings__name {
     width: 350px;
 }
+
+.a-general-site-settings input {
+    width: 80%;
+}

@@ -553,5 +553,32 @@
 		mysqli_stmt_close($stmt);
 		return 	mysqli_insert_id($db);
 	}
+    
+    
+	//НОВОСТИ + ССЫЛКИ + РАЗНОЕ
+	function insertVoluntaryPosts($idSection, $idSubsection, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_news
+			(id_section,
+			id_subsection,
+			name_ru,
+			name_en,
+			content_ru,
+			content_en,
+			mail,
+			date_create,
+			ip,
+			user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iisssssss", $idSection, $idSubsection, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
 	
 ?>

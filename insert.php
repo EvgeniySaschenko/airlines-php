@@ -48,7 +48,10 @@
     
     # Воздушное судно
     include('controller/insert/aircraft.php');
-
     
 	}
+    
+    # БЕЗ АВТОРИЗАЦИИ!!!!!!!!!!!!!!!!!!
+    # Добровольные сообщения
+    include('controller/insert/voluntary-posts.php');
 ?>

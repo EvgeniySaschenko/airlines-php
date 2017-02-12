@@ -1,0 +1,21 @@
+.voluntary-posts-send {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.voluntary-posts-send .voluntary-posts-send__departments,
+.voluntary-posts-send__content,
+.voluntary-posts-send__name {
+    width: 100%;
+}
+
+.voluntary-posts-send__content {
+    min-height: 150px;
+}
+
+
+.voluntary-posts-send__btn-send {
+    padding: 15px 15px;
+    margin-top: 10px;
+}

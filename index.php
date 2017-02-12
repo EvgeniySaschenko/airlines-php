@@ -74,8 +74,14 @@
       # Контактная информация
       include('route/contact.php');
     }
+    
+    # Добровольные сообщения
+    include('route/voluntary-posts.php');
+    
     # Главная
     include('route/home.php');
+    
+    
     $countVisitorsToday = selectCountVisitorsToday();
     $countVisitsToday = selectCountVisitsToday();
   ?>
