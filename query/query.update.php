@@ -1044,19 +1044,21 @@
     
     
 	//Добровольные сообщения
-	function updateVoluntaryPosts($idNews, $idDepartment, $commentCorrectiveActions){
+	function updateVoluntaryPosts($idAuthor, $idNews, $idDepartment, $commentCorrectiveActions){
 		global $db;
 		$query =
 		"UPDATE ae_news
 		SET
+            id_author = ?,
 			id_department = ?,
-            comment_corrective_actions = ? 
+            comment_corrective_actions = ?,
+            date_update = CURRENT_TIMESTAMP
 		WHERE id = ?";
 		if(!$stmt = mysqli_prepare($db, $query))
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "isi", $idDepartment, $commentCorrectiveActions, $idNews);
+		mysqli_stmt_bind_param($stmt, "iisi", $idAuthor, $idDepartment, $commentCorrectiveActions, $idNews);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}

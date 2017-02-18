@@ -4,6 +4,9 @@
 <div class="alert alert-warning">
   <?= $word[95]['name_'.$lang]; ?>
 </div>
+<div class="alert alert-warning">
+  <?= $word[381]['name_'.$lang]; ?>
+</div>
 
 <div class="doc-user-received" data-anchor-pagination="#docUserReceived">
 

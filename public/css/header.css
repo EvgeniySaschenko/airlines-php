@@ -453,3 +453,9 @@
 .header__nav-bottom .header__nav-bottom-list-item {
         width: 14.28571%;
 }
+
+@media (max-width: 768px) { 
+    .header__nav-bottom .header__nav-bottom-list-item {
+        width: 100%;
+    }
+}

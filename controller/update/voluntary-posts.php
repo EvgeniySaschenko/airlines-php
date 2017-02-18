@@ -6,12 +6,13 @@
 			{
               
               // Добавление в БД
+              $idAuthor = $currentUser[0]['id'];
               $idNews = $getIdNews;
               $idDepartment = clearInt($_POST['id_department']);
               $commentCorrectiveActions = clearStr($_POST['comment_corrective_actions']);
               
               
-              updateVoluntaryPosts($idNews, $idDepartment, $commentCorrectiveActions);
+              updateVoluntaryPosts($idAuthor, $idNews, $idDepartment, $commentCorrectiveActions);
        
 
               $ancor = '#noticeUpdateVoluntaryPostsSend';

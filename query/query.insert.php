@@ -556,7 +556,7 @@
     
     
 	//НОВОСТИ + ССЫЛКИ + РАЗНОЕ
-	function insertVoluntaryPosts($idSection, $idSubsection, $idDepartment, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $ip, $userAgent){
+	function insertVoluntaryPosts($idSection, $idSubsection, $idDepartment, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $userName, $numberFlight, $routeFlight, $ip, $userAgent) {
 		global $db;
 		$query = 
 		"INSERT INTO ae_news
@@ -568,15 +568,18 @@
 			content_ru,
 			content_en,
 			mail,
+            user_name,
+            number_flight,
+            route_flight,
 			date_create,
 			ip,
 			user_agent)
-		VALUES(?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
 		if(!$stmt = mysqli_prepare($db, $query))
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "iiisssssss", $idSection, $idSubsection, $idDepartment, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $ip, $userAgent);
+		mysqli_stmt_bind_param($stmt, "iiissssssssss", $idSection, $idSubsection, $idDepartment, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $userName, $numberFlight, $routeFlight, $ip, $userAgent);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 		return 	mysqli_insert_id($db);

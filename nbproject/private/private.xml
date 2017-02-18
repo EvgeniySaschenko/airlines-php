@@ -4,20 +4,21 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/airlines-php/route/voluntary-posts.php</file>
-            <file>file:/D:/airlines-php/controller/update/voluntary-posts.php</file>
             <file>file:/D:/airlines-php/query/query.select.php</file>
+            <file>file:/D:/airlines-php/controller/update/voluntary-posts.php</file>
             <file>file:/D:/airlines-php/public/css/styles.css</file>
             <file>file:/D:/airlines-php/templates/a-voluntary-posts-edit.php</file>
             <file>file:/D:/airlines-php/public/css/voluntary-posts.css</file>
             <file>file:/D:/airlines-php/update.php</file>
             <file>file:/D:/airlines-php/templates/voluntary-posts-send.php</file>
-            <file>file:/D:/airlines-php/templates/doc-list-voluntary-posts.php</file>
             <file>file:/D:/airlines-php/controller/insert/voluntary-posts.php</file>
+            <file>file:/D:/airlines-php/templates/doc-list-voluntary-posts.php</file>
             <file>file:/D:/airlines-php/controller/insert/doc.php</file>
             <file>file:/D:/airlines-php/query/query.update.php</file>
             <file>file:/D:/airlines-php/templates/a-voluntary-posts.php</file>
             <file>file:/D:/airlines-php/public/js/captcha.js</file>
             <file>file:/D:/airlines-php/query/query.insert.php</file>
+            <file>file:/D:/airlines-php/templates/doc-user-received.php</file>
             <file>file:/D:/airlines-php/templates/voluntary-posts.php</file>
             <file>file:/D:/airlines-php/templates/a-news-edit.php</file>
             <file>file:/D:/airlines-php/public/js/app.js</file>

@@ -40,3 +40,7 @@
   -ms-user-select: none; 
   user-select: none; 
 }
+
+.a-voluntary-posts-edit__title {
+    width: 30%;
+}

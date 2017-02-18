@@ -14,10 +14,14 @@
               $contentRu = clearStr(str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $_POST['content_ru']));
               $contentEn = $contentRu;
               $mail = clearStr($_POST['mail']);
+              $userName = clearStr($_POST['user_name']);
+              $numberFlight = clearStr($_POST['number_flight']);
+              $routeFlight = clearStr($_POST['route_flight']);
+              
               $ip = $currentUserIp;
               $userAgent = $currentUserAgent;
       
-              $idVoluntaryPosts = insertVoluntaryPosts($idSection, $idSubsection, $idDepartment, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $ip, $userAgent);	
+              $idVoluntaryPosts = insertVoluntaryPosts($idSection, $idSubsection, $idDepartment, $nameRu, $nameEn, $contentRu, $contentEn, $mail, $userName, $numberFlight, $routeFlight, $ip, $userAgent);	
         
               
           // Отправка на маил
