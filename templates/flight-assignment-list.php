@@ -39,7 +39,8 @@
             <?=fullNameUser($assignmentFlight['pic_a_last_name_'.$lang], $assignmentFlight['pic_a_name_'.$lang], $assignmentFlight['pic_a_first_name_'.$lang]);?>
           </td>
           <td class="flight-assignment-list__flight-assignment">
-            <?= linkAssignmentForFlight($currentSubsection[0]['id_section'], $currentSubsection[0]['id'], $assignmentFlight['id'], $assignmentFlight['id_aircraft'], $assignmentFlight['aircraft_'.$lang].'-'.$assignmentFlight['number_assignment'].'-'.convertDateMonth($assignmentFlight['date_departure']).'-'.convertDateYear($assignmentFlight['date_departure'])); ?>
+            <?php $NUMBER_ASSIGMENT_FLIGHT = NUMBER_ASSIGMENT_FLIGHT($GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment'], $assignmentFlight['aircraft_'.$lang], $assignmentFlight['model'], $assignmentFlight['number_assignment'], $assignmentFlight['date_departure']); ?>
+            <?= linkAssignmentForFlight($currentSubsection[0]['id_section'], $currentSubsection[0]['id'], $assignmentFlight['id'], $assignmentFlight['id_aircraft'], $NUMBER_ASSIGMENT_FLIGHT); ?>
           </td>
           <td class="flight-assignment-list__aircraft hidden-xs">
             <span class="fa fa-plane"></span> 

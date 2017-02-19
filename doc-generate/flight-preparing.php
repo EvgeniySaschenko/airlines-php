@@ -87,7 +87,7 @@
 			$table->addCell(m2t(), $cellColSpan6NoBorder)->addText('ПО  МАРШРУТАМ  И  АЭРОДРОМАМ', 'font-bold', 'paragrap-cell');
 			
 		$table->addRow(m2t(5));
-			$table->addCell(m2t(), $cellColSpan6NoBorder)->addText('ЛИСТ КОНТРОЛЬНОЙ ПРОВЕРКИ,  а/к “МАКСИМУС ЭЙРЛАЙНС”', 'font-cell', 'paragrap-cell');
+			$table->addCell(m2t(), $cellColSpan6NoBorder)->addText('ЛИСТ КОНТРОЛЬНОЙ ПРОВЕРКИ,  а/к '.$GENERAL_SITE_SETTINGS[0]['name_company_ru'], 'font-cell', 'paragrap-cell');
 			
 		$table->addRow(m2t(5));
 			$table->addCell(m2t(0), $cell)->addText('Тип ВС: '.$currentAssignmentFlight[0]['aircraft_'.$lang], 'font-cell', 'paragrap-cell-left');

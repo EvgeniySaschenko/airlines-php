@@ -77,7 +77,7 @@
 	$phpWord->addParagraphStyle('paragrap-cell-left', array('align' => 'left', 'spaceBefore' => 0, 'spaceAfter' => 0));
 	$phpWord->addParagraphStyle('paragrap-cell-right', array('align' => 'right', 'spaceBefore' => 0, 'spaceAfter' => 0));
 	
-			$REPORT_OF_FLIGHT = $word[325]['name_'.$lang].' № '.$currentAssignmentFlight[0]['aircraft_'.$lang].'-'.$currentAssignmentFlight[0]['number_assignment'].'-'.convertDateMonth($currentAssignmentFlight[0]['date_departure']).'-'.convertDateYear($currentAssignmentFlight[0]['date_departure']);
+			$REPORT_OF_FLIGHT = $word[325]['name_'.$lang].' № '.$CURRENT_NUMBER_ASSIGMENT_FLIGHT;
 	
 	 $allReportFlight = selectAllReportFlight($getIdFlightAssignment);
 	// Таблица
@@ -458,12 +458,12 @@
 	// Таблица
 	$table = $section->addTable('table1');
 		$table->addRow(m2t(13));
-			$table->addCell(m2t(65), $cellNoBorder)->addText('ООО "МАКСИМУС ЭЙРЛАЙНС"', 'font-bold', 'paragrap-cell');
+			$table->addCell(m2t(65), $cellNoBorder)->addText($GENERAL_SITE_SETTINGS[0]['name_company_ru'], 'font-bold', 'paragrap-cell');
 			$table->addCell(m2t(60), $cellNoBorder)->addImage('../images/logo-doc.png', array('align' => 'center'));
-			$table->addCell(m2t(65), $cellNoBorder)->addText('LLC "MAXIMUS AIRLINES"', 'font-bold', 'paragrap-cell');
+			$table->addCell(m2t(65), $cellNoBorder)->addText($GENERAL_SITE_SETTINGS[0]['name_company_en'], 'font-bold', 'paragrap-cell');
 			
 
-			$ASSIGNMENT_FOR_FLIGHT = $word[331]['name_'.$lang].' № '.$currentAssignmentFlight[0]['aircraft_'.$lang].'-'.$currentAssignmentFlight[0]['number_assignment'].'-'.convertDateMonth($currentAssignmentFlight[0]['date_departure']).'-'.convertDateYear($currentAssignmentFlight[0]['date_departure']);
+			$ASSIGNMENT_FOR_FLIGHT = $word[331]['name_'.$lang].' № '.$CURRENT_NUMBER_ASSIGMENT_FLIGHT;
 			
 		$table->addRow(m2t(8));
 			$table->addCell(null, $cellColSpan3BorderTopBottom)->addText($ASSIGNMENT_FOR_FLIGHT, 'font-header', 'paragrap-cell');

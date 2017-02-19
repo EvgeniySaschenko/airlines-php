@@ -67,7 +67,7 @@
 	if(!empty($currentAssignmentFlight[0]['id']) and empty($_GET['id_user']))
 	{
 		$breadAssignmentFlight = '&id_aircraft='.$currentAssignmentFlight[0]['id_aircraft'].'&id_flight_assignment='.$currentAssignmentFlight[0]['id'];
-		echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$breadAssignmentFlight.'#navBottom">'.$currentAssignmentFlight[0]['aircraft_'.$lang].'-'.$currentAssignmentFlight[0]['number_assignment'].'-'.convertDateMonth($currentAssignmentFlight[0]['date_departure']).'-'.convertDateYear($currentAssignmentFlight[0]['date_departure']).'</a> </li>';
+		echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$breadAssignmentFlight.'#navBottom">'.$CURRENT_NUMBER_ASSIGMENT_FLIGHT.'</a> </li>';
 	}
 
 	// ВЗЛЕТЫ И ЗАХОДЫ В АЭРОПОРТАХ

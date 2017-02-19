@@ -1,7 +1,7 @@
 <h1 class="title-page text-center text-uppercase"> <?= $currentSubsection[0]['name_'.$lang]; ?> </h1>
 
 <?php
-	$asigmentTitle = ' № '.$currentAssignmentFlight[0]['aircraft_'.$lang].'-'.$currentAssignmentFlight[0]['number_assignment'].'-'.convertDateMonth($currentAssignmentFlight[0]['date_departure']).'-'.convertDateYear($currentAssignmentFlight[0]['date_departure']);
+	$asigmentTitle = ' № '.$CURRENT_NUMBER_ASSIGMENT_FLIGHT;
 ?>
 
 <div class="flight-assignment-list-doc">

@@ -13,7 +13,7 @@
         <tr>
           <td class="text-bold">
             <?= $word[124]['name_'.$lang]; ?>
-            <?= $currentAssignmentFlight[0]['aircraft_'.$lang].'-'.$currentAssignmentFlight[0]['number_assignment'].'-'.convertDateMonth($currentAssignmentFlight[0]['date_departure']).'-'.convertDateYear($currentAssignmentFlight[0]['date_departure']); ?>
+            <?= $CURRENT_NUMBER_ASSIGMENT_FLIGHT; ?>
           </td>
           <td class="text-right">
             <form role="form" method="post" action="update.php?lang=<?= $lang; ?>&amp;id_section=<?= $getIdSection; ?>&amp;id_subsection=<?= $getIdSubsection; ?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;action=delete">

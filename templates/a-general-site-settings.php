@@ -47,7 +47,16 @@
               <?= $word[360]['name_'.$lang]; ?>
             </td>
             <td>
-              <input name="numbering_flight_assignment" value="<?= $GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment']; ?>">
+              <div class="form-group">
+                <div class="input-group">
+                <select name="numbering_flight_assignment" data-selected-option="<?= $GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment']; ?>">
+                  <option value="name_aircraft-number_flight_assignment-month-year">"Название ВС"-"номер задания (уникальный для текущего года и ВС)"-"месяц"-"год"</option>
+                  <option value="reg_number_last_leter-day-month-year">"Последняя буква Рег. номера ВС"-"день"-"месяц"-"год"</option>
+                  <option value="name_aircraft-reg_number-day-month-year">"Название ВС"-"Рег. номер"-"день"-"месяц"-"год"</option>
+                  <option value="name_aircraft-reg_number-day-month-year/number_flight_assignment">"Название ВС"-"Рег. номер"-"день"-"месяц"-"год"/"номер задания (уникальный для текущего года и ВС)"</option>
+                </select>
+                </div>
+              </div>
             </td>
          </tr>
          <!--Подсветка документов 1-й период - менее критическая дата (указывать дни), подсветка оранжевым цветом-->

@@ -10,7 +10,7 @@
 </div>
 
 <h1 class="title-page text-center text-uppercase">
-  <?= $word[138]['name_'.$lang].' № '.$currentAssignmentFlight[0]['aircraft_'.$lang].'-'.$currentAssignmentFlight[0]['number_assignment'].'-'.convertDateMonth($currentAssignmentFlight[0]['date_departure']).'-'.convertDateYear($currentAssignmentFlight[0]['date_departure']); ?>
+  <?= $word[138]['name_'.$lang].' № '.$CURRENT_NUMBER_ASSIGMENT_FLIGHT; ?>
 </h1>
 <div class="a-a-flight-preparing">
   <form role="form" method="post" action="update.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$allSubAssignmentFlight[0]['id'];?>&amp;id_flight_preparing=<?=$flightPreparing[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;action=flight_preparing"">

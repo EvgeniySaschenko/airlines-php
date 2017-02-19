@@ -637,6 +637,15 @@
 		else
 			return '-';
 	}
+    
+    
+	//Преобразует дату в формат d-m-Y
+	function convertDateDayMonthYearDash($date){
+		if($date != 0)
+			return date('d-m-Y', strtotime($date));
+		else
+			return '-';
+	}
 
 
 	//Преобразует дату в формат Y.m
@@ -1167,5 +1176,35 @@ function checkEmptyOr0($data) {
   }
   return $result;
 }
+
+// Получить последний символ строки
+function getLastSymbol($str) {
+  return substr($str, -1);
+}
+
+
+function NUMBER_ASSIGMENT_FLIGHT($GSS_numberingFlightAssignment, $nameAircraft, $modelAircraft, $numberAssignment, $dateDeparture) {
+    // "Название ВС"-"номер задания (уникальный для текущего года и ВС)"-"месяц"-"год"
+	if($GSS_numberingFlightAssignment == 'name_aircraft-number_flight_assignment-month-year')
+	{
+		$NUMBER_ASSIGMENT_FLIGHT = $nameAircraft.'-'.$numberAssignment.'-'.convertDateMonth($dateDeparture).'-'.convertDateYear($dateDeparture);
+	}
+    // "Последняя буква Рег. номера ВС"-"день"-"месяц"-"год"
+	elseif($GSS_numberingFlightAssignment == 'reg_number_last_leter-day-month-year')
+	{
+		$NUMBER_ASSIGMENT_FLIGHT = getLastSymbol($modelAircraft).'-'.convertDateDayMonthYearDash($dateDeparture);
+	}
+    // "Название ВС"-"Рег. номер"-"день"-"месяц"-"год"
+	elseif($GSS_numberingFlightAssignment == 'name_aircraft-reg_number-day-month-year')
+	{
+		$NUMBER_ASSIGMENT_FLIGHT = $nameAircraft.'-'.$modelAircraft.'-'.convertDateDayMonthYearDash($dateDeparture);
+	}
+    // "Название ВС"-"Рег. номер"-"день"-"месяц"-"год"/"номер задания (уникальный для текущего года и ВС)"
+	elseif($GSS_numberingFlightAssignment == 'name_aircraft-reg_number-day-month-year/number_flight_assignment')
+	{
+		$NUMBER_ASSIGMENT_FLIGHT = $nameAircraft.'-'.$modelAircraft.'-'.convertDateDayMonthYearDash($dateDeparture).'/'.$numberAssignment;
+	}
+    return $NUMBER_ASSIGMENT_FLIGHT;
+}   
 
 ?>

@@ -1,5 +1,5 @@
 <h1 class="title-page text-center text-uppercase"> 
-  <?= $word[137]['name_'.$lang].' № '.$currentAssignmentFlight[0]['aircraft_'.$lang].'-'.$currentAssignmentFlight[0]['number_assignment'].'-'.convertDateMonth($currentAssignmentFlight[0]['date_departure']).'-'.convertDateYear($currentAssignmentFlight[0]['date_departure']); ?></h1>
+  <?= $word[137]['name_'.$lang].' № '.$CURRENT_NUMBER_ASSIGMENT_FLIGHT; ?></h1>
 <div class="nav-tabs--a-user">
   <!-- Навигация -->
   <ul class="nav nav-tabs" role="tablist">

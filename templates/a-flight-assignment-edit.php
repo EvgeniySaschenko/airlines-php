@@ -162,7 +162,15 @@
         <tr>
           <td class="text-bold"><?= $word[84]['name_'.$lang]; ?> 2 (<?= $word[342]['name_'.$lang]; ?> <?= $word[343]['name_'.$lang]; ?>)</td>
           <td>
-            <?php dropDownListUsers('id_manager_f', $allUserSortLastNameNoHide, $currentAssignmentFlight[0]['id_manager_f']); ?>
+             <?php 
+                if(empty($currentAssignmentFlight[0]['id_manager_f'])) {
+                  $id_manager_f = $GENERAL_SITE_SETTINGS[0]['id_flight_manager'];
+                } else {
+                  $id_manager_f = $currentAssignmentFlight[0]['id_manager_f'];
+                }
+               ?> 
+              
+            <?php dropDownListUsers('id_manager_f', $allUserSortLastNameNoHide, $id_manager_f); ?>
           </td>
         </tr>
         <!--Дата документа-->

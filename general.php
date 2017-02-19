@@ -150,7 +150,7 @@
 	//Текущее задание на полет
 	if($_GET['id_flight_assignment'] != 0)
 	{
-		$currentAssignmentFlight = selectAssignmentFlight($getIdFlightAssignment);
+		$currentAssignmentFlight = selectAssignmentFlight($getIdFlightAssignment); 
 	}
     
 	//Текущее воздушное судно
@@ -158,8 +158,12 @@
 	{
 		$currentAircraft = selectCurrentAircraft($getIdAircraft);
 	}
-
-
+    
+	# НОМЕР ЗАДАНИЯ НА ПОЛЁТ
+    $CURRENT_NUMBER_ASSIGMENT_FLIGHT = NUMBER_ASSIGMENT_FLIGHT($GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment'], $currentAssignmentFlight[0]['aircraft_'.$lang], $currentAssignmentFlight[0]['model'], $currentAssignmentFlight[0]['number_assignment'], $currentAssignmentFlight[0]['date_departure']);
+    
+    
+    
 
 	$lastNews = selectLastNews();
 	//Права доступа
@@ -175,7 +179,7 @@
 	$permissionAssignmentFlight = strstr($currentUser[0]['permission'], '%');//ЗАДАНИЕ НА ПОЛЕТ Запретить редактирование
 	//Разрешенные расширения
 	$allowExtension = array('pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'xlsx', 'xls', 'mp4');
-  $allSections =	selectAllSections();
+    $allSections =	selectAllSections();
 	$allSubsections =	selectAllSubSections();
 	$word = selectAllWord();
 ?>

@@ -4,7 +4,7 @@
   lang = $('body').data('lang');
   $('.date-picker').datetimepicker({
     pickTime: false,
-    language: lang
+    language: 'ru'
   });
 }).call(this);
 
