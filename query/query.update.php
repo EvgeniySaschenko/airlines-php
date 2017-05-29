@@ -145,7 +145,7 @@
 	}
   
 	//ОБНОВИТЬ - Воздушные суда
-	function updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $numberingFlightAssignment, $ip, $userAgent) {
+	function updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $ip, $userAgent) {
 		global $db;
 		$query =
 		"UPDATE ae_general_settings
@@ -158,6 +158,7 @@
             doc_days_red = ?,
             doc_days_orange = ?,
             mails_voluntary_posts = ?,
+            mails_doc = ?,
             numbering_flight_assignment = ?,
 			ip = ?,
 			user_agent = ?
@@ -166,7 +167,7 @@
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "iiissiissssi", $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $numberingFlightAssignment, $ip, $userAgent, $idGeneralSettings);
+		mysqli_stmt_bind_param($stmt, "iiissiisssssi", $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $ip, $userAgent, $idGeneralSettings);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
@@ -802,6 +803,30 @@
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
+    
+	//ПОЛЬЗОВАТЕЛЬ
+	function updateUserPermission($idUserPermission, $idAuthor, $nameRu, $nameEn, $description, $permission, $ip, $userAgent){
+		global $db;
+		$query =
+		"UPDATE ae_user_permission
+		SET
+			id_author = ?,
+			name_ru = ?,
+			name_en = ?,
+			description = ?,
+			permission = ?,
+			ip = ?,
+			user_agent = ?
+		WHERE id = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "issssssi", $idAuthor, $nameRu, $nameEn, $description, $permission, $ip, $userAgent, $idUserPermission);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+	}
+    
   
 	# Удалить пользователя (удалить логин)
 	function updateUserDeleteLoginDisadle($idUser){

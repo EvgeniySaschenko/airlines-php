@@ -1,4 +1,8 @@
 <div class="control__doc-user-received accordion-open-first-tab panel-group" id="collapse-control-doc-user-received">
+  <div class="alert alert-warning" role="alert">
+    <?= $word[383]['name_'.$lang]; ?>
+  </div>
+    
   <?php foreach($allSections as $section): ?>
     <?php if($section['count_user'] > 0): ?>
     <div class="panel panel-default">

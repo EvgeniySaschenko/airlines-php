@@ -27,13 +27,13 @@
       <!--Задание на полет-->
       <tr>
         <td class="flight-assignment-list-doc__download text-center">
-          <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>">
+          <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>">
             <span class="fa fa-file-word-o text-color-word" data-toggle="tooltip" title="<?= $word[13]['name_'.$lang]; ?>"></span>
           </a>
         </td>
         <td class="flight-assignment-list-doc__name">
           <div class="cut-text">
-            <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>">
+            <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>">
               <?= $word[126]['name_'.$lang].$asigmentTitle; ?>
             </a>
           </div>
@@ -43,7 +43,7 @@
         </td>
         <td class="text-center">
         <?php if(($currentAssignmentFlight[0]['date_not_edit_a'] == 0 and $permissionEditFlightGenerateDoc or $permissionAssignmentFlight) and $permissionEditSubsection): ?>
-          <a href="index.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;id_aircraft=<?=$currentAssignmentFlight[0]['id_aircraft'];?>&amp;action=edit_assignment#navBottom">
+          <a href="index.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;id_aircraft=<?=$currentAssignmentFlight[0]['id_aircraft'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>&amp;action=edit_assignment#navBottom">
            <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="<?= $word[24]['name_'.$lang]; ?>"></span>
           </a>
         <?php endif; ?>
@@ -52,13 +52,13 @@
       <!--Отчет о полете-->
       <tr>
         <td class="flight-assignment-list-doc__download text-center">
-          <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>">
+          <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>">
             <span class="fa fa-file-word-o text-color-word" data-toggle="tooltip" title="<?= $word[13]['name_'.$lang]; ?>"></span>
           </a>
         </td>
         <td class="flight-assignment-list-doc__name">
           <div class="cut-text">
-            <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>">
+            <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>">
               <?= $word[137]['name_'.$lang].$asigmentTitle; ?>
             </a>
           </div>
@@ -68,7 +68,7 @@
         </td>
         <td class="text-center">
         <?php if(($currentAssignmentFlight[0]['date_not_edit_r'] == 0 and $permissionEditFlightGenerateDoc or $permissionAssignmentFlight) and $permissionEditSubsection): ?>
-          <a href="index.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;id_aircraft=<?=$currentAssignmentFlight[0]['id_aircraft'];?>&amp;action=edit_report#navBottom">
+          <a href="index.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;id_aircraft=<?=$currentAssignmentFlight[0]['id_aircraft'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>&amp;action=edit_report#navBottom">
            <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="<?= $word[24]['name_'.$lang]; ?>"></span>
           </a>
         <?php endif; ?>
@@ -77,13 +77,13 @@
       <!--Предварительная подготовка-->
       <tr>
         <td class="flight-assignment-list-doc__download text-center">
-          <a href="doc-generate/report-flight.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>">
+          <a href="doc-generate/flight-preparing.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>">
             <span class="fa fa-file-word-o text-color-word" data-toggle="tooltip" title="<?= $word[13]['name_'.$lang]; ?>"></span>
           </a>
         </td>
         <td class="flight-assignment-list-doc__name">
           <div class="cut-text">
-            <a href="doc-generate/flight-preparing.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>">
+            <a href="doc-generate/flight-preparing.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id'];?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>">
               <?= $word[138]['name_'.$lang].$asigmentTitle; ?>
             </a>
           </div>
@@ -96,7 +96,7 @@
 					(($flightPreparing[0]['date_not_edit'] == 0 and ($permissionEditFlightGenerateDoc or $currentUser[0]['id'] == $flightPreparing[0]['id_manager_e'])
 				or
 					$permissionAssignmentFlight)) and $permissionEditSubsection):?>
-          <a href="index.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id']?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;id_aircraft=<?=$currentAssignmentFlight[0]['id_aircraft'];?>&amp;action=edit_flight_preparing#navBottom">
+          <a href="index.php?lang=<?=$lang;?>&amp;id_section=<?=$currentSubsection[0]['id_section'];?>&amp;id_subsection=<?=$currentSubsection[0]['id']?>&amp;id_flight_assignment=<?=$currentAssignmentFlight[0]['id'];?>&amp;id_aircraft=<?=$currentAssignmentFlight[0]['id_aircraft'];?>&amp;num_asignment_month_get=<?=$_GET['num_asignment_month_get'];?>&amp;action=edit_flight_preparing#navBottom">
            <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="<?= $word[24]['name_'.$lang]; ?>"></span>
           </a>
         <?php endif; ?>

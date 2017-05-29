@@ -31,6 +31,7 @@
 	$getIdSectionUser = clearInt($_GET['id_section_user']);
 	$getIdSentDoc = clearInt($_GET['id_sent_doc']);
 	$getYear = clearInt($_GET['year']);
+	$getMonth = clearStr($_GET['month']);
 	$getIdFlightAssignment = clearInt($_GET['id_flight_assignment']);
 	$getIdRank = clearInt($_GET['id_rank']);
 	$getIdCrew = clearInt($_GET['id_crew']);
@@ -41,6 +42,7 @@
 	$getIdFlightPreparing = clearInt($_GET['id_flight_preparing']);
 	$getIdReportAs = clearInt($_GET['id_report_as']);
     $getIdAircraft = clearInt($_GET['id_aircraft']);
+    $getIdUserPermission = clearInt($_GET['id_user_permission']);
 	if(empty($_SERVER['REMOTE_ADDR']))
 		$currentUserIp = 0;
 	if(empty($_SERVER['HTTP_USER_AGENT']))
@@ -69,6 +71,8 @@
 		$getIdSentDoc = 0;
 	if(empty($_GET['year']))
 		$getYear = date('Y');
+	if(empty($_GET['month']))
+		$getMonth = date('m');
 	if(empty($_GET['id_flight_assignment']))
 		$getIdFlightAssignment = 0;
 	if(empty($_GET['id_rank']))
@@ -89,6 +93,9 @@
 		$getIdReportAs = 0;
 	if(empty($_GET['id_aircraft']))
 		$getIdAircraft = 0;
+	if(empty($_GET['id_user_permission']))
+		$getIdUserPermission = 0;
+    
     
 	//Данные о текущем пользователе
 	$currentUserLogin = clearStr($_SESSION['login']);
@@ -160,8 +167,10 @@
 	}
     
 	# НОМЕР ЗАДАНИЯ НА ПОЛЁТ
-    $CURRENT_NUMBER_ASSIGMENT_FLIGHT = NUMBER_ASSIGMENT_FLIGHT($GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment'], $currentAssignmentFlight[0]['aircraft_'.$lang], $currentAssignmentFlight[0]['model'], $currentAssignmentFlight[0]['number_assignment'], $currentAssignmentFlight[0]['date_departure']);
-    
+
+      $getNumAsignmentMonthGet = $_GET['num_asignment_month_get'];
+
+    $CURRENT_NUMBER_ASSIGMENT_FLIGHT = NUMBER_ASSIGMENT_FLIGHT($GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment'], $currentAssignmentFlight[0]['aircraft_'.$lang], $currentAssignmentFlight[0]['model'], $currentAssignmentFlight[0]['number_assignment'], $currentAssignmentFlight[0]['date_departure'], $currentAssignmentFlight[0]['num_assignment_month'], $currentAssignmentFlight[0]['count_flight_assignment_month'], $getNumAsignmentMonthGet);
     
     
 

@@ -35,23 +35,39 @@
       
       
       $allFlightConsolidatedReportAircraftYear = selectAllFlightConsolidatedReportAircraftYear($getYear, $getIdAircraft);
+      $allFlightConsolidatedReportAircraftYearMonth = selectAllFlightConsolidatedReportAircraftYearMonth($getYear, $getMonth, $getIdAircraft);
       
-      $allFlightConsolidatedReportCrewYear = selectAllFlightConsolidatedReportCrewYear($getYear);
-      $allFlightConsolidatedReportCrewYearGroupUsers = selectAllFlightConsolidatedReportCrewYearGroupUsers($getYear);
+      
+
       $allFlightReportGroupYearGroupAircraft = selectAllFlightReportGroupYearGroupAircraft();
+      
+      $aircraftGroupName = selectAircraftGroupName();
       
 			if($_GET['action'] == 'flight_consolidated_report_aircraft_year')
 			{
-        # Сводный отчет по ВС 
+            # Сводный отчет по ВС 
 				include('templates/flight-consolidated-report-aircraft-year.php');
 			}
+			if($_GET['action'] == 'flight_consolidated_report_aircraft_year_month')
+			{
+            # Сводный отчет по ВС по месяцам
+				include('templates/flight-consolidated-report-aircraft-year-month.php');
+			}
+            
       
 			if($_GET['action'] == 'flight_consolidated_report_crew_year')
 			{
-        # Сводный отчет по Экипажам 
+                # Сводный отчет по Экипажам 
+                $allFlightConsolidatedReportCrewYearUser = selectAllFlightConsolidatedReportCrewYearUser($getYear);
+                $allFlightConsolidatedReportCrewYearAircraftType = selectAllFlightConsolidatedReportCrewYearAircraftType($getYear);
+                $allFlightConsolidatedReportCrewYearAircraft = selectAllFlightConsolidatedReportCrewYearAircraft($getYear);
+
+                $allFlightConsolidatedReportCrewYearGroupUsers = selectAllFlightConsolidatedReportCrewYearGroupUsers($getYear);
+                $allFlightConsolidatedReportCrewYearGroupAircraftType = selectAllFlightConsolidatedReportCrewYearGroupAircraftType($getYear);
+                $allFlightConsolidatedReportCrewYearGroupAircraft = selectAllFlightConsolidatedReportCrewYearGroupAircraft($getYear);
 				include('templates/flight-consolidated-report-crew-year.php');
 			}
-        # Сводный отчет по кабинным Экипажам 
+                 # Сводный отчет по кабинным Экипажам 
 			if($_GET['action'] == 'flight_consolidated_report_cabin_crew_year')
 			{
 				include('templates/flight-consolidated-report-cabin-crew-year.php');

@@ -1,4 +1,7 @@
 <div class="control__doc" data-anchor-pagination="#doc">
+  <div class="alert alert-warning" role="alert">
+    <?= $word[385]['name_'.$lang]; ?>
+  </div>
   <nav class="text-right">
     <ul class="pagination" data-page="<?= $_GET['page']; ?>">
         <li><span class="fa fa-arrows-h"></span></li>

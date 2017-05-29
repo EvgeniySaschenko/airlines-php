@@ -49,6 +49,9 @@
     # Воздушное судно
     include('controller/insert/aircraft.php');
     
+    # Права доступа пользователя
+    include('controller/insert/user-peremission.php');
+    
 	}
     
     # БЕЗ АВТОРИЗАЦИИ!!!!!!!!!!!!!!!!!!

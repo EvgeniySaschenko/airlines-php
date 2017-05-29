@@ -37,6 +37,8 @@
   data-current-id-section="<?= $currentSection[0]['id']; ?>"
   data-current-id-subsection="<?= $currentSubsection[0]['id']; ?>"
   data-current-id-book="<?= $currentBook[0]['id']; ?>"
+  data-doc-days-red="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_red']; ?>"
+  data-doc-days-orange="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_orange']; ?>"
   data-result-query="">
 <div class="box-header">    
   <header class="header">

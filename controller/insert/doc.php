@@ -81,6 +81,9 @@
 							{
 								$idDoc = insertDoc($idAuthor, $idUser, $idSection, $idSubsection, $idNews, $idBook, $idChapter, $idType, $idAircraft, $nameRu, $nameEn, $extension, $month, $dateCreate, $dateUploads, $dateDoc, $dateEnd, $ip, $userAgent);
 								rename($path.'/new_file.'.$extension, $path.'/'.$idDoc.'.'.$extension);
+                                
+                                $nameAuthor = $currentUser[0]['last_name_'.$lang].' '.$currentUser[0]['name_'.$lang].' '.$currentUser[0]['first_name_'.$lang];
+                                sendMessageAddOrUpdateDoc($GENERAL_SITE_SETTINGS[0]['mails_doc'], $nameRu, $idDoc, $idUser, $idAuthor, $nameAuthor, 'Add');
                 $ancor = '#noticeAddedAddDoc';
 							}
 							else
@@ -135,7 +138,10 @@
         {
           $idAircraft = 0;
         }
-        insertDocLink($idAuthor, $idUser, $idSection, $idSubsection, $idNews, $idBook, $idChapter, $idType, $idAircraft, $nameRu, $nameEn, $link, $month, $dateCreate, $dateUploads, $dateDoc, $dateEnd, $ip, $userAgent);
+        $idDoc = insertDocLink($idAuthor, $idUser, $idSection, $idSubsection, $idNews, $idBook, $idChapter, $idType, $idAircraft, $nameRu, $nameEn, $link, $month, $dateCreate, $dateUploads, $dateDoc, $dateEnd, $ip, $userAgent);
+        
+        $nameAuthor = $currentUser[0]['last_name_'.$lang].' '.$currentUser[0]['name_'.$lang].' '.$currentUser[0]['first_name_'.$lang];
+        sendMessageAddOrUpdateDoc($GENERAL_SITE_SETTINGS[0]['mails_doc'], $nameRu, $idDoc, $idUser, $idAuthor, $nameAuthor, 'Add');
         $ancor = '#noticeAddedAddDoc';
         redirect($ancor);
       }

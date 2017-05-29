@@ -10,6 +10,7 @@
 					$idAuthor = $currentUser[0]['id'];
 					$idSection = $getIdSection;
 					$idRank = clearInt($_POST['id_rank']);
+					$idUserPermission = clearInt($_POST['id_user_permission']);
 					$idCrew = clearInt($_POST['id_crew']);
 					$login = clearStr($_POST['login']);
 					$pass = codePass($_POST['pass']);
@@ -142,7 +143,7 @@
 						$extension = extensionFile($_FILES['uploadfile']['name']);
 						if(empty($extension))
 							$extension = 0;
-						$idUser = insertUser($idAuthor, $idSection, $idRank, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $extension, $ip, $userAgent);
+						$idUser = insertUser($idAuthor, $idSection, $idRank, $idUserPermission, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $extension, $ip, $userAgent);
 						if($extension == 'jpg' or $extension == 'jpeg')
 						{
 							$extension = 'jpg';

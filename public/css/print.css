@@ -1,0 +1,28 @@
+@media print {
+    .pagination,
+    .breadcrumb,
+    .nav-tabs,
+    .menu-content,
+    .footer,
+    .header {
+        display: none;
+    }
+    
+    .content {
+        width: 100%;
+        margin: auto;
+    }
+    
+    a:after {
+      content: "" !important;
+    }
+    
+    table th,
+    table td {
+        border: 1px solid #000;
+    }
+}
+
+.menu-manage__print {
+    cursor: pointer;
+}

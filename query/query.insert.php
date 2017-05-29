@@ -433,13 +433,14 @@
 	}
 	
 	//ПОЛЬЗОВАТЕЛЬ
-	function insertUser($idAuthor, $idSection, $idRank, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $extension, $ip, $userAgent){
+	function insertUser($idAuthor, $idSection, $idRank, $idUserPermission, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $extension, $ip, $userAgent){
 		global $db;
 		$query = 
 		"INSERT INTO ae_user
 			(id_author,
 			id_section,
 			id_rank,
+            id_user_permission,
 			id_crew,
 			login,
 			pass,
@@ -463,12 +464,37 @@
 			extension,
 			ip,
 			user_agent)
-		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?, ?)";
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?, ?)";
 		if(!$stmt = mysqli_prepare($db, $query))
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "iiiisssssssssssssssssssss", $idAuthor, $idSection, $idRank, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $extension, $ip, $userAgent);
+		mysqli_stmt_bind_param($stmt, "iiiiisssssssssssssssssssss", $idAuthor, $idSection, $idRank, $idUserPermission, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $extension, $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
+    
+	//ПОЛЬЗОВАТЕЛЬ
+	function insertUserPermission($idAuthor, $idSection, $nameRu, $nameEn, $description, $permission, $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_user_permission
+			(id_author,
+			id_section,
+            name_ru,
+            name_en,
+            description,
+			permission,
+            date_create,
+			ip,
+			user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iissssss",$idAuthor, $idSection, $nameRu, $nameEn, $description, $permission, $ip, $userAgent);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 		return 	mysqli_insert_id($db);

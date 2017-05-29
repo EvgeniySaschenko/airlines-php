@@ -66,7 +66,7 @@
 	// Задание на полет
 	if(!empty($currentAssignmentFlight[0]['id']) and empty($_GET['id_user']))
 	{
-		$breadAssignmentFlight = '&id_aircraft='.$currentAssignmentFlight[0]['id_aircraft'].'&id_flight_assignment='.$currentAssignmentFlight[0]['id'];
+		$breadAssignmentFlight = '&id_aircraft='.$currentAssignmentFlight[0]['id_aircraft'].'&id_flight_assignment='.$currentAssignmentFlight[0]['id'].'&amp;num_asignment_month_get='.$_GET['num_asignment_month_get'];
 		echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$breadAssignmentFlight.'#navBottom">'.$CURRENT_NUMBER_ASSIGMENT_FLIGHT.'</a> </li>';
 	}
 
@@ -80,11 +80,18 @@
 		}
 	}
         
-	//  Отчет по ВС      
-        if($_GET['action'] == 'flight_consolidated_report_aircraft_year')
+	//  Отчет по ВС год по мецам   
+        if($_GET['action'] == 'flight_consolidated_report_aircraft_year' or $_GET['action'] == 'flight_consolidated_report_aircraft_year_month')
         {
                 $flight_consolidated_report_aircraft_year = '&id_aircraft='.$_GET['id_aircraft'].'&year='.$_GET['year'].'&action=flight_consolidated_report_aircraft_year#navBottom';
                 echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$flight_consolidated_report_aircraft_year.'">'.$word[251]['name_'.$lang].' '.$_GET['year'].' - '.$currentAircraft[0]['name_'.$lang].' '.$currentAircraft[0]['model'].'</a> </li>';
+        }
+        
+	//  Отчет по ВС за месяц   
+        if($_GET['action'] == 'flight_consolidated_report_aircraft_year_month')
+        {
+                $flight_consolidated_report_aircraft_year_month = '&id_aircraft='.$_GET['id_aircraft'].'&year='.$_GET['year'].'&month='.$_GET['month'].'&action=flight_consolidated_report_aircraft_year_month#navBottom';
+                echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$flight_consolidated_report_aircraft_year_month.'">'.showNameMonth($_GET['year'].'&month='.$_GET['month'].'01').'</a> </li>';
         }
         
 	//   Отчет по экипажам          

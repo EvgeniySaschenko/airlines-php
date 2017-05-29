@@ -44,6 +44,15 @@
             <?= dropDownList('id_rank', $allRank, $user[0]['id_rank']); ?>
           </td>
         </tr>
+        <!--Права доступа-->
+        <tr>
+          <td class="title text-bold">
+            <?= $word[22]['name_'.$lang]; ?>
+          </td>
+          <td>
+            <?= dropDownListRquired('id_user_permission', $allUserPermission, $user[0]['id_user_permission']); ?>
+          </td>
+        </tr>
         <!--Загрузить фото-->
         <tr>
           <td class="title text-bold">
@@ -321,6 +330,7 @@
         </tr>
         
         <!--Права доступа-->
+        <?php if(false): ?>
         <tr>
           <td class="title text-bold">
             <?= $word[22]['name_'.$lang]; ?>  
@@ -393,8 +403,8 @@
                       <?= $subsectionHide['name_'.$lang]; ?>
                     </td>
                     <!--Чтение-->
-                    <td data-premission-read="<?= strstr($user[0]['permission'], $subsectionHide['mark'].$subsectionHide['id']); ?>"
-                        data-premission-read-you="<?= strstr($currentUser[0]['permission'], $subsectionHide['mark'].$subsectionHide['id']); ?>">
+                    <td data-premission-read="<?= strstr($user[0]['permission'], $subsectionHide['mark'].$subsectionHide['id'].'~'); ?>"
+                        data-premission-read-you="<?= strstr($currentUser[0]['permission'], $subsectionHide['mark'].$subsectionHide['id'].'~'); ?>">
                       <div class="form-group text-center">
                        <div class="input-group">
                         <input type="checkbox" value="1">
@@ -484,6 +494,12 @@
             </tbody>
           </table>
          </div>
+          </td>
+        </tr>
+        <?php endif; ?>
+        <tr class="text-bold">
+          <td class="text-right" colspan="2">
+            <button type="submit" class="btn btn-success"><?= $word[83]['name_'.$lang]; ?></button>
           </td>
         </tr>
       </tbody>

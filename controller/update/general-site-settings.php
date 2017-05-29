@@ -1,5 +1,5 @@
 <?php
-    # Ð’Ð¾Ð·Ð´ÑƒÑˆÐ½Ð¾Ðµ ÑÑƒÐ´Ð½Ð¾
+    # Îáùèå íàñòðîéêè ñàéòà
     if($_GET['action'] == 'general_site_settings' and $permissionManageSite)
     {
 
@@ -14,9 +14,10 @@
         $docDaysRed = clearInt($_POST['doc_days_red']);
         $docDaysOrange = clearInt($_POST['doc_days_orange']);
         $mailsVoluntaryPosts = clearStr($_POST['mails_voluntary_posts']);
+        $mailsDoc = clearStr($_POST['mails_doc']);
         $numberingFlightAssignment = clearStr($_POST['numbering_flight_assignment']);
         
-		updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $numberingFlightAssignment, $ip, $userAgent);
+		updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $ip, $userAgent);
         
         $ancor = '#noticeGeneralSiteSettings';
         

@@ -12,7 +12,11 @@
     <?= $word[145]['name_'.$lang]; ?>
   </div>
 </div>
+
 <div class="a-user-add">
+  <div class="alert alert-warning" role="alert">
+    <?= $word[394]['name_'.$lang]; ?>
+  </div>
   <form role="form" method="post" enctype="multipart/form-data" action="insert.php?lang=<?= $lang; ?>&amp;id_section=<?= $_GET['id_section']; ?>&amp;action=user_add">
     <table class="table table-bordered table-align-middle">
       <caption class="text-bold text-center"><?= $word[141]['name_'.$lang]; ?></caption>
@@ -20,16 +24,25 @@
         <!--Должность-->
         <tr>
           <td class="title text-bold">
-            <?= $word[15]['name_'.$lang]; ?>  
+            <?= $word[15]['name_'.$lang]; ?> *
           </td>
           <td>
-            <?= dropDownList('id_rank', $allRank); ?>
+            <?= dropDownListRquired('id_rank', $allRank); ?>
+          </td>
+        </tr>
+        <!--Права доступа-->
+        <tr>
+          <td class="title text-bold">
+            <?= $word[22]['name_'.$lang]; ?> *
+          </td>
+          <td>
+            <?= dropDownListRquired('id_user_permission', $allUserPermission); ?>
           </td>
         </tr>
         <!--Ф.И.О.-->
         <tr>
           <td class="title text-bold">
-            <?= $word[46]['name_'.$lang]; ?>  
+            <?= $word[46]['name_'.$lang]; ?> *
           </td>
           <td>
             <!--ru-->
@@ -69,7 +82,7 @@
         <!--Логин-->
         <tr>
           <td class="title text-bold">
-            <?= $word[1]['name_'.$lang]; ?>  
+            <?= $word[1]['name_'.$lang]; ?> *
           </td>
           <td>
             <div class="form-group form-inline has-success">
@@ -82,7 +95,7 @@
         <!--Пароль-->
         <tr>
           <td class="title text-bold">
-            <?= $word[2]['name_'.$lang]; ?>  
+            <?= $word[2]['name_'.$lang]; ?> *
           </td>
           <td>
             <div class="form-group form-inline has-success">
@@ -104,7 +117,7 @@
         <!--Дата рождения-->
         <tr>
           <td class="title text-bold">
-            <?= $word[5]['name_'.$lang]; ?>  
+            <?= $word[5]['name_'.$lang]; ?> *
           </td>
           <td>
             <div class="input-group date date-picker has-success">
@@ -243,13 +256,18 @@
             </div>
           </td>
         </tr>
-       
+        
+        
+      
         <!--Права доступа-->
+      <? if(false): ?>
         <tr>
           <td class="title text-bold">
             <?= $word[22]['name_'.$lang]; ?>  
           </td>
           <td>
+              
+              
             <table class="a-user-add__permission table table-condensed">
               <thead>
                 <tr>
@@ -311,7 +329,8 @@
                       <?= $subsectionHide['name_'.$lang]; ?>
                     </td>
                     <!--Чтение-->
-                    <td data-premission-read-you="<?= strstr($currentUser[0]['permission'], ':'.$subsectionHide['mark'].':'); ?>">
+                    <td data-premission-read-you="<?= strstr($currentUser[0]['permission'], $subsectionHide['mark'].$subsectionHide['id'].'~'); ?>">
+                        
                       <div class="form-group text-center">
                        <div class="input-group">
                         <input type="checkbox" value="1">
@@ -320,7 +339,7 @@
                       </div>
                     </td>
                     <!--Редактировать-->
-                    <td data-premission-edit-you="<?= strstr($currentUser[0]['permission'], '!:'.$subsectionHide['mark'].':'); ?>">
+                    <td data-premission-edit-you="<?= strstr($currentUser[0]['permission'], '!'.$subsectionHide['mark'].$subsectionHide['id'].'~'); ?>">
                       <div class="form-group text-center">
                        <div class="input-group">
                         <input type="checkbox" value="1">
@@ -329,7 +348,7 @@
                       </div>
                     </td>
                     <!--Удалить навседа-->
-                    <td data-premission-delete-you="<?= strstr($currentUser[0]['permission'], '_!:'.$subsectionHide['mark'].':'); ?>">
+                    <td data-premission-delete-you="<?= strstr($currentUser[0]['permission'], '_!'.$subsectionHide['mark'].$subsectionHide['id'].'~'); ?>">
                       <div class="form-group text-center">
                        <div class="input-group">
                         <input type="checkbox" value="1">
@@ -395,6 +414,13 @@
                 </tr>
             </tbody>
           </table>
+          </td>
+        </tr>
+     <? endif; ?>
+     
+        <tr class="text-bold">
+          <td class="text-right" colspan="2">
+            <button type="submit" class="btn btn-success"><?= $word[83]['name_'.$lang]; ?></button>
           </td>
         </tr>
       </tbody>

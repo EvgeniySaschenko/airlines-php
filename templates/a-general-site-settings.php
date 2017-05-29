@@ -54,6 +54,7 @@
                   <option value="reg_number_last_leter-day-month-year">"Последняя буква Рег. номера ВС"-"день"-"месяц"-"год"</option>
                   <option value="name_aircraft-reg_number-day-month-year">"Название ВС"-"Рег. номер"-"день"-"месяц"-"год"</option>
                   <option value="name_aircraft-reg_number-day-month-year/number_flight_assignment">"Название ВС"-"Рег. номер"-"день"-"месяц"-"год"/"номер задания (уникальный для текущего года и ВС)"</option>
+                  <option value="reg_number_last_leter-number_task_in_month-month-year">"Последняя буква Рег. номера ВС"-"Поряд. номер задан. в месяце"-"месяц"-"год"</option>
                 </select>
                 </div>
               </div>
@@ -65,7 +66,7 @@
               <?= $word[361]['name_'.$lang]; ?> en
             </td>
             <td>
-              <input name="doc_days_red"  value="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_red']; ?>">
+              <input name="doc_days_orange"  value="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_orange']; ?>">
             </td>
          </tr>
          <!--Подсветка документов 2-й период - более критическая дата (указывать дни), подсветка красным цветом-->
@@ -74,7 +75,7 @@
               <?= $word[362]['name_'.$lang]; ?> en
             </td>
             <td>
-              <input name="doc_days_orange"  value="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_orange']; ?>">
+              <input name="doc_days_red"  value="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_red']; ?>">
             </td>
          </tr>
          
@@ -108,6 +109,15 @@
             </td>
          </tr>
 
+         <!--Эмейл при загрузке / апдейте документов-->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+                <?= $word[382]['name_'.$lang]; ?>
+            </td>
+            <td>
+                <textarea name="mails_doc" class="form-control"><?=$GENERAL_SITE_SETTINGS[0]['mails_doc'];?></textarea>
+            </td>
+         </tr>
         <!--Отправить-->
         <tr>
           <td colspan="2">

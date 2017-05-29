@@ -105,5 +105,10 @@ and
   
     # Добровольные сообщения
   include('controller/update/voluntary-posts.php'); 
+  
+    # Права доступа пользователя
+  include('controller/update/user-peremission.php'); 
+  
+  
 }
 ?>

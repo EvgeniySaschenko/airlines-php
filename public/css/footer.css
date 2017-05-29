@@ -143,13 +143,6 @@
   background-size: cover;
 }
 
-.footer__logo-developer--link:hover {
-  background: url(../../images/logo-dev-2.png);
-  background-size: cover;
-  /*box-shadow: 0 0 0 1px #fff;*/
-  transition: 1s;
-}
-
 .footer__logo-design--link{
   /*box-shadow: 0 0 0 1px #fff;*/
 }

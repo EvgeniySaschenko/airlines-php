@@ -46,7 +46,7 @@
              <!-- <td rowspan="2" class="img-v-1 vertical-text"><div><?//=$langTakeoffWeight;?></div></td>-->
               <td rowspan="2" class="img-v-1 vertical-text"><div><?= $word[230]['name_'.$lang]; ?></div></td>
               <td rowspan="2" class="img-v-2 vertical-text"><div><?= $word[231]['name_'.$lang]; ?></div></td>
-            <!--<td rowspan="3" class="img-v-1 vertical-text text-save"><div><?//=$langSave;?></div></td>-->
+    <!--          <td rowspan="3" class="img-v-1 vertical-text text-save"><div><?//=$langSave;?></div></td>-->
               <td rowspan="3" class="img-v-1 vertical-text text-delete"><div><?= $word[26]['name_'.$lang]; ?></div></td>
             </tr>
             <tr class="level-2">
@@ -73,7 +73,7 @@
               <td><?= $word[283]['name_'.$lang]; ?></td>
               <td><?= $word[283]['name_'.$lang]; ?></td>
               <td><?= $word[241]['name_'.$lang]; ?></td>
-              <td><?= $word[349]['name_'.$lang]; ?></td>
+              <td>чел.</td>
               <td>%CAX</td>
               <td>%CAX</td>
              <!--<td><?//=$langT;?></td>-->

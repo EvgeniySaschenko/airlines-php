@@ -65,7 +65,7 @@ or
 	or
 		!empty($currentDoc[0]['id_section']) and $permissionReadSection
 	or
-		$currentDoc[0]['id_user'] == $currentUser[0]['id']
+		$currentSentDoc[0]['id_user'] == $currentUser[0]['id']
 	or
 		$currentDoc[0]['type_section'] == 'home')
 	{

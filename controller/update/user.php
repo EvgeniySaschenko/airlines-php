@@ -1,5 +1,4 @@
 <?php
-
 	if
 		($currentSection[0]['user'] == 1 and $permissionManageUsers)
   {
@@ -168,6 +167,9 @@
           $login = 'admin';
           $permission = $permission.'#*%';
         }
+        
+        
+        
 				$checkLogin = selectUserCheckLogin($login);
         
 				if($checkLogin[0]['login'] == $user[0]['login'] or empty($checkLogin))

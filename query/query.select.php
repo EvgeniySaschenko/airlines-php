@@ -57,7 +57,9 @@
 			(SELECT COUNT(*) FROM ae_subsection WHERE id_section = se.id AND hide = 0) as count_subsection,
 			(SELECT COUNT(*) FROM ae_user WHERE id_section = se.id AND hide = 0) as count_user
 		FROM ae_section se
-		ORDER BY se.priority ASC";
+		ORDER BY 
+          se.priority ASC,
+          se.id ASC";
 		if(!$result = mysqli_query($db, $query))
 			return false;
 		$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -76,7 +78,9 @@
 			(SELECT COUNT(*) FROM ae_user WHERE id_section = se.id AND hide = 0) as count_user
 		FROM ae_section se
     WHERE type = 'department'
-		ORDER BY se.priority ASC";
+		ORDER BY 
+          se.priority ASC,
+          se.id ASC";
 		if(!$result = mysqli_query($db, $query))
 			return false;
 		$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -129,7 +133,9 @@
 		INNER JOIN ae_section se ON se.id = su.id_section
 		ORDER BY
 			se.priority ASC,
-			su.priority ASC";
+			su.priority ASC,
+			su.id ASC,
+			se.id ASC";
 		if(!$result = mysqli_query($db, $query))
 			return false;
 		$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -210,12 +216,15 @@
 	//Пользователь который вошел в систему
 	function selectUserСurrent($login, $pass){
 		global $db;
+        global $GENERAL_SITE_SETTINGS;
+        
 		$query =
 		"SELECT
 			u.id,
 			u.id_author,
 			u.id_section,
 			u.id_rank,
+            u.id_user_permission,
 			u.id_crew,
 			u.team,
 			u.login,
@@ -241,11 +250,15 @@
 			u.permission,
 			u.extension,
 			s.mark,
-			(SELECT date_end FROM ae_doc WHERE id_user = u.id AND hide = 0 AND date_end < NOW() + INTERVAL 60 DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
+			(SELECT date_end FROM ae_doc WHERE id_user = u.id AND hide = 0 AND date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
 			(SELECT date_end FROM ae_doc_sent WHERE id_user = u.id AND date_studied = 0 AND hide = 0 ORDER BY date_end ASC LIMIT 1) as date_end_sent_doc,
-			(SELECT COUNT(*) FROM ae_doc_sent WHERE id_user = u.id AND hide = 0 AND date_studied = 0) as count_not_studied_doc
+			(SELECT COUNT(*) FROM ae_doc_sent WHERE id_user = u.id AND hide = 0 AND date_studied = 0) as count_not_studied_doc,
+            up.permission as permission_new,
+            up.name_ru as permission_name_ru,
+            up.name_en as permission_name_en
 		FROM ae_user u
 		INNER JOIN ae_section s ON s.id = u.id_section
+        LEFT OUTER JOIN ae_user_permission up ON up.id = u.id_user_permission
 		WHERE
 			u.login = ?
 		AND
@@ -256,6 +269,50 @@
 		if(!mysqli_stmt_prepare($stmt, $query))
 			return false;
 		mysqli_stmt_bind_param($stmt, "ss", $login, $pass);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+    
+	// Все права доступа
+	function selectAllUserPermission($idSection){
+		global $db;
+		$query =
+		"SELECT
+			*
+		FROM ae_user_permission
+		WHERE 
+          id_section = ?
+		AND
+          hide = 0
+        ORDER BY name_ru ASC, id ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idSection);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+    
+	function selectUserPermission($idUserPermission){
+		global $db;
+		$query =
+		"SELECT
+			*
+		FROM ae_user_permission
+		WHERE 
+          id = ?";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idUserPermission);
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
 		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -298,7 +355,7 @@
 		INNER JOIN ae_user u ON u.id = du.id_user
 		LEFT OUTER JOIN ae_rank r ON r.id = du.id_rank
 		LEFT OUTER JOIN ae_crew c ON c.id = u.id_crew
-		LEFT OUTER JOIN ae_news n ON n.id = u.id_news
+		LEFT OUTER JOIN ae_news n ON n.id = du.id_news
 		WHERE du.id_section = ? AND u.hide = 0 AND du.hide = 0
 		ORDER BY
 			n.priority ASC,
@@ -321,12 +378,14 @@
 	//Пользователь который вошел в систему
 	function selectUserСurrent1($login, $pass){
 		global $db;
+        global $GENERAL_SITE_SETTINGS;
 		$query =
 		"SELECT
 			u.id,
 			u.id_author,
 			u.id_section,
 			u.id_rank,
+			u.id_user_permission,
 			u.id_crew,
 			u.team,
 			u.login,
@@ -352,11 +411,15 @@
 			u.permission,
 			u.extension,
 			s.mark,
-			(SELECT date_end FROM ae_doc WHERE id_user = u.id AND hide = 0 AND date_end < NOW() + INTERVAL 60 DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
+			(SELECT date_end FROM ae_doc WHERE id_user = u.id AND hide = 0 AND date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
 			(SELECT date_end FROM ae_doc_sent WHERE id_user = u.id AND date_studied = 0 AND hide = 0 ORDER BY date_end ASC LIMIT 1) as date_end_sent_doc,
-			(SELECT COUNT(*) FROM ae_doc_sent WHERE id_user = u.id AND hide = 0 AND date_studied = 0) as count_not_studied_doc
+			(SELECT COUNT(*) FROM ae_doc_sent WHERE id_user = u.id AND hide = 0 AND date_studied = 0) as count_not_studied_doc,
+            up.permission as permission_new,
+            up.name_ru as permission_name_ru,
+            up.name_en as permission_name_en
 		FROM ae_user u
 		INNER JOIN ae_section s ON s.id = u.id_section
+        LEFT OUTER JOIN ae_user_permission up ON up.id = u.id_user_permission
 		WHERE
 			u.login = ?
 		AND
@@ -379,6 +442,7 @@
 	//Все пользователи
 	function selectAllUser(){
 		global $db;
+        global $GENERAL_SITE_SETTINGS;
 		$query =
 		"SELECT
 			u.*,
@@ -392,7 +456,7 @@
 			c.name_en as crew_en,
 			c.location_ru,
 			c.location_en,
-			(SELECT date_end FROM ae_doc WHERE date_end <> 0 AND hide = 0 AND id_user = u.id AND date_end < NOW() + INTERVAL 60 DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
+			(SELECT date_end FROM ae_doc WHERE date_end <> 0 AND hide = 0 AND id_user = u.id AND date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
 			(SELECT date_studied FROM ae_doc_sent WHERE id_user = u.id AND date_studied = 0 AND hide = 0 ORDER BY date_studied ASC LIMIT 1) as date_studied_doc
 		FROM ae_user u
 		LEFT OUTER JOIN ae_section s ON s.id = u.id_section
@@ -415,6 +479,7 @@
 	//Все пользователи - упорядочить по имени, не показывать скрытых
 	function selectAllUserSortLastNameNoHide(){
 		global $db;
+        global $GENERAL_SITE_SETTINGS;
 		$query =
 		"SELECT
 			u.id,
@@ -457,7 +522,7 @@
 			c.name_en as crew_en,
 			c.location_ru,
 			c.location_en,
-			(SELECT date_end FROM ae_doc WHERE hide = 0 AND id_user = u.id AND date_end < NOW() + INTERVAL 60 DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
+			(SELECT date_end FROM ae_doc WHERE hide = 0 AND id_user = u.id AND date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY ORDER BY date_end ASC LIMIT 1) as date_end_doc,
 			(SELECT date_studied FROM ae_doc_sent WHERE id_user = u.id AND date_studied = 0 AND hide = 0 ORDER BY date_studied ASC LIMIT 1) as date_studied_doc
 		FROM ae_user u
 		LEFT OUTER JOIN ae_section s ON s.id = u.id_section
@@ -479,9 +544,10 @@
   
   
   
-	//Все пользователи Контроль
+	//Все пользователи Раздела Контроль 
 	function selectAllUserControl($idSection){
 		global $db;
+        global $GENERAL_SITE_SETTINGS;
 		$query =
 		"SELECT
 			u.id,
@@ -533,7 +599,7 @@
           hide = 0
          AND 
           id_user = u.id 
-         AND date_end < NOW() + INTERVAL 60 DAY
+         AND date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY
          ORDER BY date_end ASC 
          LIMIT 1) as date_end_doc,
         (SELECT 
@@ -571,6 +637,93 @@
 		return $arr;
 	}
 
+    
+  
+	//Все пользователи всех Раздела Контроль 
+	function selectAllUserAllSectionControl(){
+		global $db;
+        global $GENERAL_SITE_SETTINGS;
+		$query =
+		"SELECT
+			u.id,
+			u.id as id_user,
+			u.id_author,
+			u.id_section,
+			u.id_rank,
+			u.id_crew,
+			u.team,
+			u.login,
+			u.pass,
+			u.name_ru,
+			u.name_en,
+			u.last_name_ru,
+			u.last_name_en,
+			u.first_name_ru,
+			u.first_name_en,
+			u.address_ru,
+			u.address_en,
+			u.mail,
+			u.phone,
+			u.phone_corp,
+			u.remark,
+			u.date_birth,
+			u.date_replace,
+			u.date_create,
+			u.date_entered,
+			u.number_retries,
+			u.hide,
+			u.permission,
+			s.mark,
+			s.name_ru as section_ru,
+			s.name_en as section_en,
+			r.name_ru as rank_ru,
+			r.name_en as rank_en,
+			r.manager,
+			c.name_ru as crew_ru,
+			c.name_en as crew_en,
+			c.location_ru,
+			c.location_en,
+        (SELECT 
+          date_end
+         FROM ae_doc
+         WHERE 
+          date_end <> 0
+         AND 
+          hide = 0
+         AND 
+          id_user = u.id 
+         AND date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY
+         ORDER BY date_end ASC 
+         LIMIT 1) as date_end_doc,
+        (SELECT 
+          sent.date_studied
+         FROM ae_doc_sent sent
+         INNER JOIN ae_user user ON user.id = sent.id_author
+         WHERE 
+          sent.date_studied = 0
+         AND 
+          sent.id_user = u.id 
+         AND 
+          sent.hide = 0
+         LIMIT 1) as date_studied_doc
+		FROM ae_user u
+		LEFT OUTER JOIN ae_section s ON s.id = u.id_section
+		LEFT OUTER JOIN ae_rank r ON r.id = u.id_rank
+		LEFT OUTER JOIN ae_crew c ON c.id = u.id_crew
+		ORDER BY
+			u.hide ASC,
+			u.id_section ASC,
+			c.id ASC,
+			r.priority ASC,
+			u.date_create DESC";
+		if(!$result = mysqli_query($db, $query))
+			return false;
+		$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		mysqli_free_result($result);
+		return $arr;
+	}
+    
+    
 	//Один пользователь
 	function selectUser($idUser){
 		global $db;
@@ -580,6 +733,7 @@
 			u.id_author,
 			u.id_section,
 			u.id_rank,
+            u.id_user_permission,
 			u.id_crew,
 			u.team,
 			u.login,
@@ -611,11 +765,15 @@
 			r.name_ru as rank_ru,
 			r.name_en as rank_en,
 			c.name_ru as crew_ru,
-			c.name_en as crew_en
+			c.name_en as crew_en,
+            up.permission as permission_new,
+            up.name_ru as permission_name_ru,
+            up.name_en as permission_name_en
 		FROM ae_user u
 		LEFT OUTER JOIN ae_section s ON s.id = u.id_section
 		LEFT OUTER JOIN ae_rank r ON r.id = u.id_rank
 		LEFT OUTER JOIN ae_crew c ON c.id = u.id_crew
+        LEFT OUTER JOIN ae_user_permission up ON up.id = u.id_user_permission
 		WHERE u.id = ?";
 		$stmt = mysqli_stmt_init($db);
 		if(!mysqli_stmt_prepare($stmt, $query))
@@ -1435,6 +1593,7 @@
 	function selectAllDocSectionControl($idSection, $page){
     $record = $page * 30;
 		global $db;
+        global $GENERAL_SITE_SETTINGS;
 		$query =
 		"SELECT
 		d.id,
@@ -1473,7 +1632,7 @@
         AND
           id_user = 0
         AND
-          date_end < NOW() + INTERVAL 60 DAY) as count_doc
+          date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY) as count_doc
 		FROM ae_doc d
 		WHERE
 			d.id_section = ?
@@ -1484,7 +1643,7 @@
     AND
       d.id_user = 0
     AND
-      d.date_end < NOW() + INTERVAL 60 DAY
+      d.date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY
 		ORDER BY
       d.date_end ASC, 
       d.name_ru ASC
@@ -1499,6 +1658,70 @@
 			$arr[] = $row;
 		mysqli_stmt_close($stmt);
 		return $arr;
+	}
+    
+	//ВСЕ ДОКУМЕНТЫ всего сайта Контроль
+	function selectAllDocControl($page){
+    $record = $page * 30;
+		global $db;
+        global $GENERAL_SITE_SETTINGS;
+		$query =
+		"SELECT
+		d.id,
+		d.id_author,
+		d.id_user,
+		d.id_section,
+		d.id_subsection,
+		d.id_news,
+		d.id_book,
+		d.id_chapter,
+		d.id_type,
+		d.id_aircraft,
+		d.name_ru,
+		d.name_en,
+        d.link,
+		d.extension,
+		d.month,
+		d.date_create,
+		d.date_uploads,
+		d.date_doc,
+		d.date_end,
+		d.ip,
+		d.user_agent,
+		d.priority,
+		d.hide,
+		TO_DAYS(d.date_end) - TO_DAYS(NOW()) as days_left,
+      (SELECT 
+        COUNT(*)
+        FROM ae_doc
+        WHERE
+          id_section = ?
+        AND
+          hide = 0
+        AND
+          date_end <> 0
+        AND
+          id_user = 0
+        AND
+          date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY) as count_doc
+		FROM ae_doc d
+		WHERE
+			d.hide = 0
+    AND
+      d.date_end <> 0
+    AND
+      d.id_user = 0
+    AND
+      d.date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY
+		ORDER BY
+      d.date_end ASC, 
+      d.name_ru ASC
+      LIMIT $record, 30";
+      if(!$result = mysqli_query($db, $query))
+          return false;
+      $arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      mysqli_free_result($result);
+      return $arr;
 	}
   
   
@@ -1556,6 +1779,7 @@
 	//ДОКУМЕНТЫ - групировка по и годам
 	function selectDocDateEnd(){
 		global $db;
+        global $GENERAL_SITE_SETTINGS;
 		$query =
 		"SELECT
 			id_user,
@@ -1564,7 +1788,7 @@
 		WHERE
 			id_user > 0
 		AND
-			date_end < NOW() + INTERVAL 60 DAY
+			date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY
 		ORDER BY
 			id_section ASC,
 			id_user ASC,
@@ -2321,6 +2545,7 @@
 		global $db;
 		$query =
 		"SELECT
+          COUNT(r.distance) as count_flight,
 			SUM(r.distance) as distance,
       SUM(TIME_TO_SEC(r.time_flight)) as time_flight,
       SUM(TIME_TO_SEC(r.time_night)) as time_night,
@@ -2328,7 +2553,7 @@
       SUM(TIME_TO_SEC(r.time_block_hours)) as time_block_hours,
       SUM(TIME_TO_SEC(r.time_hours_crew)) as time_hours_crew,
       SUM(r.weight_cargo) as weight_cargo,
-			SUM(r.weight_passenger) as weight_passenger,
+      SUM(r.weight_passenger) as weight_passenger,
       SUM(r.landing_weight) as landing_weight,
       SUM(r.fuel_spent) as fuel_spent,
       SUM(r.oil_spent) as oil_spent,
@@ -2347,7 +2572,7 @@
         AND 
           r.hide = 0
         AND 
-          a.id_aircraft = ?) as count_flight
+          a.id_aircraft = ?) as count_flight_year
 		FROM ae_flight_report r
     INNER JOIN ae_flight_assignment a ON a.id = r.id_flight_assignment
     INNER JOIN ae_aircraft air ON air.id = a.id_aircraft
@@ -2370,10 +2595,60 @@
 		mysqli_stmt_close($stmt);
 		return $arr;
 	} 
+    
+  # Отчет по воздушным за месяц
+	function selectAllFlightConsolidatedReportAircraftYearMonth($year, $month, $idAircraft){
+		global $db;
+		$query =
+		"SELECT
+          COUNT(r.distance) as count_flight,
+			SUM(r.distance) as distance,
+      SUM(TIME_TO_SEC(r.time_flight)) as time_flight,
+      SUM(TIME_TO_SEC(r.time_night)) as time_night,
+      SUM(TIME_TO_SEC(r.time_job_ground)) as time_job_ground,
+      SUM(TIME_TO_SEC(r.time_block_hours)) as time_block_hours,
+      SUM(TIME_TO_SEC(r.time_hours_crew)) as time_hours_crew,
+      SUM(r.weight_cargo) as weight_cargo,
+      SUM(r.weight_passenger) as weight_passenger,
+      SUM(r.landing_weight) as landing_weight,
+      SUM(r.fuel_spent) as fuel_spent,
+      SUM(r.oil_spent) as oil_spent,
+      r.date_shipping,
+      a.id_aircraft,
+      SUM(a.weight_aircraft) as weight_aircraft,
+      SUM(a.curb_weight_aircraft) as curb_weight_aircraft,
+      air.name_ru,
+      air.name_en,
+      air.model
+	FROM ae_flight_report r
+    INNER JOIN ae_flight_assignment a ON a.id = r.id_flight_assignment
+    INNER JOIN ae_aircraft air ON air.id = a.id_aircraft
+	WHERE 
+      DATE_FORMAT(r.date_shipping, '%Y') = ?
+    AND 
+      DATE_FORMAT(r.date_shipping, '%m') = ?
+    AND 
+      r.hide = 0
+    AND 
+      a.id_aircraft = ?
+        GROUP BY r.date_shipping
+		ORDER BY r.date_shipping DESC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "ssi", $year, $month, $idAircraft);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	} 
+    
  
         
-  # Отчет по экипажам 
-	function selectAllFlightConsolidatedReportCrewYear($year){
+  # Отчет по экипажам по Пользователям
+	function selectAllFlightConsolidatedReportCrewYearUser($year){
 		global $db;
 		$query =
 		"SELECT
@@ -2421,6 +2696,111 @@
 		return $arr;
 	} 
         
+  # Отчет по экипажам по типам ВС
+	function selectAllFlightConsolidatedReportCrewYearAircraftType($year){
+		global $db;
+		$query =
+		"SELECT
+			fu.id_user,
+			u.id_crew,
+			u.id_section,
+			ac.name_ru as aircraft_name_ru,
+			ac.name_en as aircraft_name_en,
+      SUM(TIME_TO_SEC(r.time_flight)) as time_flight,
+      SUM(TIME_TO_SEC(r.time_night)) as time_night,
+      SUM(TIME_TO_SEC(r.time_job_ground)) as time_job_ground,
+      SUM(TIME_TO_SEC(r.time_block_hours)) as time_block_hours,
+      SUM(TIME_TO_SEC(r.time_hours_crew)) as time_hours_crew,
+      r.date_shipping
+    FROM ae_flight_report r   
+    INNER JOIN ae_flight_assignment a ON a.id = r.id_flight_assignment
+    INNER JOIN ae_flight_user fu ON fu.id_flight_assignment = r.id_flight_assignment
+    INNER JOIN ae_user u ON u.id = fu.id_user
+    INNER JOIN ae_aircraft ac ON ac.id = a.id_aircraft
+    LEFT OUTER JOIN ae_section s ON s.id = u.id_section
+    LEFT OUTER JOIN ae_rank rank ON rank.id = u.id_rank
+    LEFT OUTER JOIN ae_crew c ON c.id = u.id_crew
+    WHERE 
+            DATE_FORMAT(r.date_shipping, '%Y') = ?
+    AND 
+        r.hide = 0
+    AND 
+        fu.hide = 0
+    GROUP BY DATE_FORMAT(r.date_shipping, '%Y-%m'), fu.id_user, ac.name_en
+    ORDER BY 
+            u.hide ASC,
+            u.id_section ASC,
+            c.priority ASC,
+            c.id ASC,
+            rank.priority ASC,
+            u.date_create DESC,
+            fu.id_user DESC,
+            r.date_shipping ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $year);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	} 
+    
+  # Отчет по экипажам по ВС
+	function selectAllFlightConsolidatedReportCrewYearAircraft($year){
+		global $db;
+		$query =
+		"SELECT
+			fu.id_user,
+			u.id_crew,
+			u.id_section,
+			ac.name_ru as aircraft_name_ru,
+			ac.name_en as aircraft_name_en,
+			ac.id as id_aircraft,
+      SUM(TIME_TO_SEC(r.time_flight)) as time_flight,
+      SUM(TIME_TO_SEC(r.time_night)) as time_night,
+      SUM(TIME_TO_SEC(r.time_job_ground)) as time_job_ground,
+      SUM(TIME_TO_SEC(r.time_block_hours)) as time_block_hours,
+      SUM(TIME_TO_SEC(r.time_hours_crew)) as time_hours_crew,
+      r.date_shipping
+    FROM ae_flight_report r   
+    INNER JOIN ae_flight_assignment a ON a.id = r.id_flight_assignment
+    INNER JOIN ae_flight_user fu ON fu.id_flight_assignment = r.id_flight_assignment
+    INNER JOIN ae_user u ON u.id = fu.id_user
+    INNER JOIN ae_aircraft ac ON ac.id = a.id_aircraft
+    LEFT OUTER JOIN ae_section s ON s.id = u.id_section
+    LEFT OUTER JOIN ae_rank rank ON rank.id = u.id_rank
+    LEFT OUTER JOIN ae_crew c ON c.id = u.id_crew
+    WHERE 
+            DATE_FORMAT(r.date_shipping, '%Y') = ?
+    AND 
+        r.hide = 0
+    AND 
+        fu.hide = 0
+    GROUP BY DATE_FORMAT(r.date_shipping, '%Y-%m'), fu.id_user, ac.id
+    ORDER BY 
+            u.hide ASC,
+            u.id_section ASC,
+            c.priority ASC,
+            c.id ASC,
+            rank.priority ASC,
+            u.date_create DESC,
+            fu.id_user DESC,
+            r.date_shipping ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $year);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	} 
+    
         
   # Отчет по экипажам Групировка по пользователям
 	function selectAllFlightConsolidatedReportCrewYearGroupUsers($year){
@@ -2478,8 +2858,136 @@
 		mysqli_stmt_close($stmt);
 		return $arr;
 	} 
+    
+        
+  # Отчет по экипажам Групировка по типам ВС 
+	function selectAllFlightConsolidatedReportCrewYearGroupAircraftType($year){
+		global $db;
+		$query =
+		"SELECT
+			fu.id_user,
+			u.id_crew,
+            a.id_aircraft,
+			u.id_section,
+			u.name_ru,
+			u.name_en,
+			u.last_name_ru,
+			u.last_name_en,
+			u.first_name_ru,
+			u.first_name_en,
+			rank.name_ru as rank_ru,
+			rank.name_en as rank_en,
+			ac.name_ru as aircraft_ru,
+			ac.name_en as aircraft_en,
+      SUM(TIME_TO_SEC(r.time_flight)) as time_flight,
+      SUM(TIME_TO_SEC(r.time_night)) as time_night,
+      SUM(TIME_TO_SEC(r.time_job_ground)) as time_job_ground,
+      SUM(TIME_TO_SEC(r.time_block_hours)) as time_block_hours,
+      SUM(TIME_TO_SEC(r.time_hours_crew)) as time_hours_crew,
+      r.date_shipping,
+      ac.name_ru as aircraft_name_ru,
+      ac.name_en as aircraft_name_en
+    FROM ae_flight_report r   
+    INNER JOIN ae_flight_assignment a ON a.id = r.id_flight_assignment
+    INNER JOIN ae_flight_user fu ON fu.id_flight_assignment = r.id_flight_assignment
+    INNER JOIN ae_user u ON u.id = fu.id_user
+    INNER JOIN ae_aircraft ac ON ac.id = a.id_aircraft
+    LEFT OUTER JOIN ae_section s ON s.id = u.id_section
+    LEFT OUTER JOIN ae_rank rank ON rank.id = u.id_rank
+    LEFT OUTER JOIN ae_crew c ON c.id = u.id_crew
+    WHERE 
+            DATE_FORMAT(r.date_shipping, '%Y') = ?
+    AND 
+        r.hide = 0
+    AND 
+        fu.hide = 0
+    GROUP BY fu.id_user, ac.name_en
+    ORDER BY 
+            u.hide ASC,
+            u.id_section ASC,
+            c.priority ASC,
+            c.id ASC,
+            rank.priority ASC,
+            u.date_create DESC,
+            fu.id_user DESC,
+            r.date_shipping ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $year);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	} 
 
+  # Отчет по экипажам Групировка по  ВС 
+	function selectAllFlightConsolidatedReportCrewYearGroupAircraft($year){
+		global $db;
+		$query =
+		"SELECT
+			fu.id_user,
+			u.id_crew,
+            a.id_aircraft,
+			u.id_section,
+			u.name_ru,
+			u.name_en,
+			u.last_name_ru,
+			u.last_name_en,
+			u.first_name_ru,
+			u.first_name_en,
+			rank.name_ru as rank_ru,
+			rank.name_en as rank_en,
+			ac.name_ru as aircraft_ru,
+			ac.name_en as aircraft_en,
+      SUM(TIME_TO_SEC(r.time_flight)) as time_flight,
+      SUM(TIME_TO_SEC(r.time_night)) as time_night,
+      SUM(TIME_TO_SEC(r.time_job_ground)) as time_job_ground,
+      SUM(TIME_TO_SEC(r.time_block_hours)) as time_block_hours,
+      SUM(TIME_TO_SEC(r.time_hours_crew)) as time_hours_crew,
+      r.date_shipping,
+      ac.name_ru as aircraft_name_ru,
+      ac.name_en as aircraft_name_en
+    FROM ae_flight_report r   
+    INNER JOIN ae_flight_assignment a ON a.id = r.id_flight_assignment
+    INNER JOIN ae_flight_user fu ON fu.id_flight_assignment = r.id_flight_assignment
+    INNER JOIN ae_user u ON u.id = fu.id_user
+    INNER JOIN ae_aircraft ac ON ac.id = a.id_aircraft
+    LEFT OUTER JOIN ae_section s ON s.id = u.id_section
+    LEFT OUTER JOIN ae_rank rank ON rank.id = u.id_rank
+    LEFT OUTER JOIN ae_crew c ON c.id = u.id_crew
+    WHERE 
+            DATE_FORMAT(r.date_shipping, '%Y') = ?
+    AND 
+        r.hide = 0
+    AND 
+        fu.hide = 0
+    GROUP BY fu.id_user, ac.id
+    ORDER BY 
+            u.hide ASC,
+            u.id_section ASC,
+            c.priority ASC,
+            c.id ASC,
+            rank.priority ASC,
+            u.date_create DESC,
+            fu.id_user DESC,
+            r.date_shipping ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $year);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	} 
 
+    
+    
 	//ЗАДАНИЕ НА ПОЛЕТ (проверка существуещего)
 	function selectAssignmentFlightCheck($idAircraft, $numberAssignment, $yearDeparture){
 		global $db;
@@ -2799,48 +3307,19 @@
 		return $arr;
 	}
 
-
-
-	// ЛС - ЗАДАНИЯ НА ПОЛЕТ
+    
 	function selectAllAssignmentFlightAircraft($page, $idAircraft){
 		$record = $page * 30;
 		global $db;
 		$query =
-		"SELECT
-			fa.id,
-			fa.id_author,
-			fa.id_manager_f,
-			fa.id_crew,
-			fa.id_pic_a,
-			fa.id_pic_r,
-			fa.id_navigator_r,
-			fa.id_rank_manager_f,
-			fa.id_rank_pic_a,
-			fa.id_rank_pic_r,
-			fa.id_rank_navigator_r,
-			fa.id_aircraft,
-			fa.number_assignment,
-			fa.subnumber_assignment,
-			fa.number_flight,
-			fa.purpose_flight_ru,
-			fa.purpose_flight_en,
-			fa.route_flight_ru,
-			fa.route_flight_en,
-			fa.weight_cargo,
-			fa.weight_aircraft,
-			fa.remark_navigator_r,
-			fa.remark_pic_r,
-			fa.remark_manager_flight_r,
-			fa.date_manager_flight_a,
-			fa.date_pic_a,
-			fa.date_not_edit_a,
-			fa.date_navigator_r,
-			fa.date_pic_r,
-			fa.date_manager_flight_r,
-			fa.date_not_edit_r,
-			fa.date_departure,
-			fa.date_arrival,
-			fa.date_create,
+		"SELECT 
+            (SELECT COUNT(DISTINCT number_assignment, DATE_FORMAT(date_departure, '%Y'), id_aircraft)
+            FROM ae_flight_assignment
+            WHERE hide = 0 AND id_aircraft = ?) as count_flight_assignment,
+            (SELECT COUNT(DISTINCT number_assignment, DATE_FORMAT(date_departure, '%Y'), id_aircraft)
+            FROM ae_flight_assignment
+            WHERE hide = 0 AND id_aircraft = ? AND DATE_FORMAT(fa_mon.date_departure, '%Y-%m') = DATE_FORMAT(date_departure, '%Y-%m')) as count_flight_assignment_month,
+            fa_mon.*,
 			a.name_ru as aircraft_ru,
 			a.name_en as aircraft_en,
 			a.model,
@@ -2887,140 +3366,41 @@
 			rNavigatorR.name_ru as navigator_r_rank_ru,
 			rNavigatorR.name_en as navigator_r_rank_en,
 			c.name_ru as author_crew_ru,
-			c.name_en as author_crew_en,
-      (SELECT
-        COUNT(DISTINCT number_assignment, DATE_FORMAT(date_departure, '%Y'), id_aircraft)
-      FROM ae_flight_assignment
-      WHERE hide = 0 AND id_aircraft = ?) as count_flight_assignment
-		FROM ae_flight_assignment fa
-		LEFT OUTER JOIN ae_aircraft a ON a.id = fa.id_aircraft
-		LEFT OUTER JOIN ae_flight_user fu ON fu.id_flight_assignment = fa.id AND fu.report_flight = 1
-		LEFT OUTER JOIN ae_user u ON u.id = fu.id_user
-		LEFT OUTER JOIN ae_rank r ON r.id = u.id_rank
-		LEFT OUTER JOIN ae_crew c ON c.id = fa.id_crew
-		LEFT OUTER JOIN ae_user uManagerF ON uManagerF.id = fa.id_manager_f
-		LEFT OUTER JOIN ae_rank rManagerF ON rManagerF.id = fa.id_rank_manager_f
-		LEFT OUTER JOIN ae_user uPicA ON uPicA.id = fa.id_pic_a
-		LEFT OUTER JOIN ae_rank rPicA ON rPicA.id = fa.id_rank_pic_a
-		LEFT OUTER JOIN ae_user uPicR ON uPicR.id = fa.id_pic_r
-		LEFT OUTER JOIN ae_rank rPicR ON rPicR.id = fa.id_rank_pic_r
-		LEFT OUTER JOIN ae_user uNavigatorR ON uNavigatorR.id = fa.id_navigator_r
-		LEFT OUTER JOIN ae_rank rNavigatorR ON rNavigatorR.id = fa.id_rank_navigator_r
-    WHERE fa.hide = 0 AND fa.id_aircraft = ?
-    GROUP BY fa.number_assignment, DATE_FORMAT(fa.date_departure, '%Y'), fa.id_aircraft
-    ORDER BY fa.date_departure DESC
-		LIMIT $record, 30";
-		$stmt = mysqli_stmt_init($db);
-		if(!mysqli_stmt_prepare($stmt, $query))
-		{
-			return false;
-		}
-		mysqli_stmt_bind_param($stmt, "ii", $idAircraft, $idAircraft);
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-			$arr[] = $row;
-		mysqli_stmt_close($stmt);
-		return $arr;
-	}
-
-	// ЛС - ЗАДАНИЯ НА ПОЛЕТ
-	function selectAllSubAssignmentFlight($numberFlightAssignment, $yearFlightAssignment, $idCrew){
-		global $db;
-		$query =
-		"SELECT
-			fa.id,
-			fa.id_author,
-			fa.id_crew,
-			fa.id_pic_a,
-			fa.id_pic_r,
-			fa.id_navigator_r,
-			fa.id_rank_author,
-			fa.id_rank_pic_a,
-			fa.id_rank_pic_r,
-			fa.id_rank_navigator_r,
-			fa.id_aircraft,
-			fa.number_assignment,
-			fa.subnumber_assignment,
-			fa.number_flight,
-			fa.purpose_flight_ru,
-			fa.purpose_flight_en,
-			fa.route_flight_ru,
-			fa.route_flight_en,
-			fa.weight_cargo,
-			fa.weight_aircraft,
-			fa.remark_navigator_r,
-			fa.remark_pic_r,
-			fa.remark_manager_flight_r,
-			fa.date_manager_flight_a,
-			fa.date_pic_a,
-			fa.date_not_edit_a,
-			fa.date_navigator_r,
-			fa.date_pic_r,
-			fa.date_manager_flight_r,
-			fa.date_not_edit_r,
-			fa.date_departure,
-			fa.date_arrival,
-			fa.date_create,
-			a.name_ru as aircraft_ru,
-			a.name_en as aircraft_en,
-			a.model,
-			uAuthor.id_section,
-			uAuthor.name_ru as author_name_ru,
-			uAuthor.name_en as author_name_en,
-			uAuthor.last_name_ru as author_last_name_ru,
-			uAuthor.last_name_en as author_last_name_en,
-			uAuthor.first_name_ru as author_first_name_ru,
-			uAuthor.first_name_en as author_first_name_en,
-			rAuthor.name_ru as author_rank_ru,
-			rAuthor.name_en as author_rank_en,
-			uPicA.name_ru as pic_a_name_ru,
-			uPicA.name_en as pic_a_name_en,
-			uPicA.last_name_ru as pic_a_last_name_ru,
-			uPicA.last_name_en as pic_a_last_name_en,
-			uPicA.first_name_ru as pic_a_first_name_ru,
-			uPicA.first_name_en as pic_a_first_name_en,
-			rPicA.name_ru as pic_a_rank_ru,
-			rPicA.name_en as pic_a_rank_en,
-			uPicR.name_ru as pic_r_name_ru,
-			uPicR.name_en as pic_r_name_en,
-			uPicR.last_name_ru as pic_r_last_name_ru,
-			uPicR.last_name_en as pic_r_last_name_en,
-			uPicR.first_name_ru as pic_r_first_name_ru,
-			uPicR.first_name_en as pic_r_first_name_en,
-			rPicR.name_ru as pic_r_rank_ru,
-			rPicR.name_en as pic_r_rank_en,
-			uNavigatorR.name_ru as navigator_r_name_ru,
-			uNavigatorR.name_en as navigator_r_name_en,
-			uNavigatorR.last_name_ru as navigator_r_last_name_ru,
-			uNavigatorR.last_name_en as navigator_r_last_name_en,
-			uNavigatorR.first_name_ru as navigator_r_first_name_ru,
-			uNavigatorR.first_name_en as navigator_r_first_name_en,
-			rNavigatorR.name_ru as navigator_r_rank_ru,
-			rNavigatorR.name_en as navigator_r_rank_en,
-			c.name_ru as author_crew_ru,
 			c.name_en as author_crew_en
-		FROM ae_flight_assignment fa
-		LEFT OUTER JOIN ae_aircraft a ON a.id = fa.id_aircraft
-		LEFT OUTER JOIN ae_flight_user fu ON fu.id_flight_assignment = fa.id AND fu.report_flight = 1
-		LEFT OUTER JOIN ae_user u ON u.id = fu.id_user
-		LEFT OUTER JOIN ae_crew c ON c.id = fa.id_crew
-		LEFT OUTER JOIN ae_user uAuthor ON uAuthor.id = fa.id_author
-		LEFT OUTER JOIN ae_rank rAuthor ON rAuthor.id = fa.id_rank_author
-		LEFT OUTER JOIN ae_user uPicA ON uPicA.id = fa.id_pic_a
-		LEFT OUTER JOIN ae_rank rPicA ON rPicA.id = fa.id_rank_pic_a
-		LEFT OUTER JOIN ae_user uPicR ON uPicR.id = fa.id_pic_r
-		LEFT OUTER JOIN ae_rank rPicR ON rPicR.id = fa.id_rank_pic_r
-		LEFT OUTER JOIN ae_user uNavigatorR ON uNavigatorR.id = fa.id_navigator_r
-		LEFT OUTER JOIN ae_rank rNavigatorR ON rNavigatorR.id = fa.id_rank_navigator_r
-		WHERE fa.number_assignment = ? AND DATE_FORMAT(fa.date_departure, '%Y') = ? AND fa.id_crew = ? AND fa.hide = 0
-    ORDER BY fa.subnumber_assignment ASC";
+          FROM 
+          (
+          SELECT fa.*,
+          IF(@typex=DATE_FORMAT(fa.date_departure, '%Y-%m'), 
+          @NUMBER:=@NUMBER+1, 
+          @NUMBER:=1+least(0,@typex:=DATE_FORMAT(fa.date_departure, '%Y-%m'))) num_assignment_month
+          FROM 
+            (SELECT 
+              * 
+              FROM ae_flight_assignment
+              WHERE hide = 0 AND id_aircraft = ?
+              GROUP BY number_assignment, DATE_FORMAT(date_departure, '%Y'), id_aircraft) fa, (SELECT @NUMBER:=1, @typex:='_') zz
+          ORDER BY fa.date_departure DESC, fa.date_create DESC
+          ) fa_mon
+          LEFT OUTER JOIN ae_aircraft a ON a.id = fa_mon.id_aircraft
+          LEFT OUTER JOIN ae_flight_user fu ON fu.id_flight_assignment = fa_mon.id AND fu.report_flight = 1
+          LEFT OUTER JOIN ae_user u ON u.id = fu.id_user
+          LEFT OUTER JOIN ae_rank r ON r.id = u.id_rank
+          LEFT OUTER JOIN ae_crew c ON c.id = fa_mon.id_crew
+          LEFT OUTER JOIN ae_user uManagerF ON uManagerF.id = fa_mon.id_manager_f
+          LEFT OUTER JOIN ae_rank rManagerF ON rManagerF.id = fa_mon.id_rank_manager_f
+          LEFT OUTER JOIN ae_user uPicA ON uPicA.id = fa_mon.id_pic_a
+          LEFT OUTER JOIN ae_rank rPicA ON rPicA.id = fa_mon.id_rank_pic_a
+          LEFT OUTER JOIN ae_user uPicR ON uPicR.id = fa_mon.id_pic_r
+          LEFT OUTER JOIN ae_rank rPicR ON rPicR.id = fa_mon.id_rank_pic_r
+          LEFT OUTER JOIN ae_user uNavigatorR ON uNavigatorR.id = fa_mon.id_navigator_r
+          LEFT OUTER JOIN ae_rank rNavigatorR ON rNavigatorR.id = fa_mon.id_rank_navigator_r
+        LIMIT $record, 30";
 		$stmt = mysqli_stmt_init($db);
 		if(!mysqli_stmt_prepare($stmt, $query))
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "iii", $numberFlightAssignment, $yearFlightAssignment, $idCrew);
+		mysqli_stmt_bind_param($stmt, "iii", $idAircraft, $idAircraft, $idAircraft);
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
 		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -3028,7 +3408,7 @@
 		mysqli_stmt_close($stmt);
 		return $arr;
 	}
-
+    
 	// ЛС - ЗАДАНИЕ НА ПОЛЕТ
 	function selectAssignmentFlight($idAssignmentFlight){
 		global $db;
@@ -3158,7 +3538,111 @@
 		mysqli_stmt_close($stmt);
 		return $arr;
 	}
-
+	
+	// ЛС - ЗАДАНИЯ НА ПОЛЕТ
+	function selectAllSubAssignmentFlight($numberFlightAssignment, $yearFlightAssignment, $idCrew){
+		global $db;
+		$query =
+		"SELECT
+			fa.id,
+			fa.id_author,
+			fa.id_crew,
+			fa.id_pic_a,
+			fa.id_pic_r,
+			fa.id_navigator_r,
+			fa.id_rank_author,
+			fa.id_rank_pic_a,
+			fa.id_rank_pic_r,
+			fa.id_rank_navigator_r,
+			fa.id_aircraft,
+			fa.number_assignment,
+			fa.subnumber_assignment,
+			fa.number_flight,
+			fa.purpose_flight_ru,
+			fa.purpose_flight_en,
+			fa.route_flight_ru,
+			fa.route_flight_en,
+			fa.weight_cargo,
+			fa.weight_aircraft,
+			fa.remark_navigator_r,
+			fa.remark_pic_r,
+			fa.remark_manager_flight_r,
+			fa.date_manager_flight_a,
+			fa.date_pic_a,
+			fa.date_not_edit_a,
+			fa.date_navigator_r,
+			fa.date_pic_r,
+			fa.date_manager_flight_r,
+			fa.date_not_edit_r,
+			fa.date_departure,
+			fa.date_arrival,
+			fa.date_create,
+			a.name_ru as aircraft_ru,
+			a.name_en as aircraft_en,
+			a.model,
+			uAuthor.id_section,
+			uAuthor.name_ru as author_name_ru,
+			uAuthor.name_en as author_name_en,
+			uAuthor.last_name_ru as author_last_name_ru,
+			uAuthor.last_name_en as author_last_name_en,
+			uAuthor.first_name_ru as author_first_name_ru,
+			uAuthor.first_name_en as author_first_name_en,
+			rAuthor.name_ru as author_rank_ru,
+			rAuthor.name_en as author_rank_en,
+			uPicA.name_ru as pic_a_name_ru,
+			uPicA.name_en as pic_a_name_en,
+			uPicA.last_name_ru as pic_a_last_name_ru,
+			uPicA.last_name_en as pic_a_last_name_en,
+			uPicA.first_name_ru as pic_a_first_name_ru,
+			uPicA.first_name_en as pic_a_first_name_en,
+			rPicA.name_ru as pic_a_rank_ru,
+			rPicA.name_en as pic_a_rank_en,
+			uPicR.name_ru as pic_r_name_ru,
+			uPicR.name_en as pic_r_name_en,
+			uPicR.last_name_ru as pic_r_last_name_ru,
+			uPicR.last_name_en as pic_r_last_name_en,
+			uPicR.first_name_ru as pic_r_first_name_ru,
+			uPicR.first_name_en as pic_r_first_name_en,
+			rPicR.name_ru as pic_r_rank_ru,
+			rPicR.name_en as pic_r_rank_en,
+			uNavigatorR.name_ru as navigator_r_name_ru,
+			uNavigatorR.name_en as navigator_r_name_en,
+			uNavigatorR.last_name_ru as navigator_r_last_name_ru,
+			uNavigatorR.last_name_en as navigator_r_last_name_en,
+			uNavigatorR.first_name_ru as navigator_r_first_name_ru,
+			uNavigatorR.first_name_en as navigator_r_first_name_en,
+			rNavigatorR.name_ru as navigator_r_rank_ru,
+			rNavigatorR.name_en as navigator_r_rank_en,
+			c.name_ru as author_crew_ru,
+			c.name_en as author_crew_en
+		FROM ae_flight_assignment fa
+		LEFT OUTER JOIN ae_aircraft a ON a.id = fa.id_aircraft
+		LEFT OUTER JOIN ae_flight_user fu ON fu.id_flight_assignment = fa.id AND fu.report_flight = 1
+		LEFT OUTER JOIN ae_user u ON u.id = fu.id_user
+		LEFT OUTER JOIN ae_crew c ON c.id = fa.id_crew
+		LEFT OUTER JOIN ae_user uAuthor ON uAuthor.id = fa.id_author
+		LEFT OUTER JOIN ae_rank rAuthor ON rAuthor.id = fa.id_rank_author
+		LEFT OUTER JOIN ae_user uPicA ON uPicA.id = fa.id_pic_a
+		LEFT OUTER JOIN ae_rank rPicA ON rPicA.id = fa.id_rank_pic_a
+		LEFT OUTER JOIN ae_user uPicR ON uPicR.id = fa.id_pic_r
+		LEFT OUTER JOIN ae_rank rPicR ON rPicR.id = fa.id_rank_pic_r
+		LEFT OUTER JOIN ae_user uNavigatorR ON uNavigatorR.id = fa.id_navigator_r
+		LEFT OUTER JOIN ae_rank rNavigatorR ON rNavigatorR.id = fa.id_rank_navigator_r
+		WHERE fa.number_assignment = ? AND DATE_FORMAT(fa.date_departure, '%Y') = ? AND fa.id_crew = ? AND fa.hide = 0
+    ORDER BY fa.subnumber_assignment ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iii", $numberFlightAssignment, $yearFlightAssignment, $idCrew);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
 
 	// ЛС - ЗАДАНИЕ НА ПОЛЕТ (по номеру задания)
 	function selectCheckAssignmentFlight($numberAssignment, $subnumberAssignment, $idCrew, $dateDeparture){
@@ -4172,10 +4656,7 @@
 		global $db;
 		$query =
 		"SELECT
-			id,
-			name_ru,
-			name_en,
-			model
+			*
 		FROM ae_aircraft
 		ORDER BY name_ru ASC";
 		if(!$result = mysqli_query($db, $query))
@@ -4302,7 +4783,8 @@
             u.last_name_ru as user_last_name_ru,
             u.last_name_en as user_last_name_en,
             u.first_name_ru as user_first_name_ru,
-            u.first_name_en as user_first_name_en
+            u.first_name_en as user_first_name_en,
+            s.mark
 		FROM ae_news n
 		INNER JOIN ae_section s ON s.id = n.id_section
         LEFT OUTER JOIN ae_section se_d ON se_d.id = n.id_department

@@ -1,4 +1,7 @@
 <div class="control__doc-user">
+  <div class="alert alert-warning" role="alert">
+    <?= $word[384]['name_'.$lang]; ?>
+  </div>
   <table class="table table-striped table-bordered tablesorter tablesorter-control__doc-user">
     <thead>
       <tr>

@@ -65,3 +65,7 @@
 .table.table-align-middle .a-news__priority .input-group {
   margin: 0;
 }
+
+.news__current-doc .doc__download {
+	width: 30px;
+}

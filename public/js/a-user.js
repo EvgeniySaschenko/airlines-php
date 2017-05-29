@@ -29,112 +29,84 @@
 /* Добавить пользователя "Права доступа" */
 
 (function() {
-  var premissionRead, premissionEdit, premissionManageUsers;
-  /* Чтение */
-  $('.a-user-add__permission [data-premission-read-you]').each(function() {
-    premissionRead = $(this).data('premission-read-you');
-    if(premissionRead) {
-      $(this).find('input[type="checkbox"]').attr('checked', 'checked');
-      $(this).find('input[type="hidden"]').val('1');
-    } else {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-      $(this).find('input[type="hidden"]').val('0');
-    }
-  });
-  
-  /* Редактирование */
-  $('.a-user-add__permission [data-premission-edit-you]').each(function() {
-    premissionEdit = $(this).data('premission-edit-you');
-    if(!premissionEdit) {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-      $(this).find('input[type="hidden"]').val('0');
-    }
-  });
-  
-  /* Удалить */
-  $('.a-user-add__permission [data-premission-delete-you]').each(function() {
-    premissionDelete = $(this).data('premission-delete-you');
-    if(!premissionDelete) {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-      $(this).find('input[type="hidden"]').val('0');
-    }
-  });
-  
-  /* Управление пользователями */
-  $('.a-user-add__permission [data-premission-manage-users-you]').each(function() {
-    premissionManageUsers = $(this).data('premission-manage-users-you');
-    if(!premissionManageUsers) {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-      $(this).find('input[type="hidden"]').val('0');
-    }
-  });
+
+  function addPermissionUser(selectorGeneral, selectorPermissionYou) {
+    $(selectorGeneral).each(function() {
+      var premission = $(this).data(selectorPermissionYou);
+      if(!premission) {
+        $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
+        $(this).find('input[type="hidden"]').val('0');
+      }
+    });
+  }
+
+
+/* Старая версия (права проставлялись в профилях пользователей)*/
+// Чтение
+addPermissionUser('.a-user-add__permission [data-premission-read-you]', 'premission-read-you');
+// Редактрорование
+addPermissionUser('.a-user-add__permission [data-premission-edit-you]', 'premission-edit-you');
+// Удалить
+addPermissionUser('.a-user-add__permission [data-premission-delete-you]', 'premission-delete-you');
+// Управление пользователями
+addPermissionUser('.a-user-add__permission [data-premission-manage-users-you]', 'premission-manage-users-you');
+
+/* Новая версия (права отдельно от профилей пользователя)*/
+// Чтение
+addPermissionUser('.a-user-permission-add__permission [data-premission-read-you]', 'premission-read-you');
+// Редактрорование
+addPermissionUser('.a-user-permission-add__permission [data-premission-edit-you]', 'premission-edit-you');
+// Удалить
+addPermissionUser('.a-user-permission-add__permission [data-premission-delete-you]', 'premission-delete-you');
+// Управление пользователями
+addPermissionUser('.a-user-permission-add__permission [data-premission-manage-users-you]', 'premission-manage-users-you');
+
+
 }).call(this);
 
 /* Редактировать пользователя "Права доступа" */
 
 (function() {
-  var premissionRead, premissionEdit, premissionManageUsers, premissionReadYou, premissionEditYou, premissionManageUsersYou;
-  /* Чтение */
-  $('.a-user-edit__permission [data-premission-read]').each(function() {
-    premissionRead = $(this).data('premission-read');
-    premissionReadYou = $(this).data('premission-read-you');
-    if(premissionRead) {
-      $(this).find('input[type="checkbox"]').attr('checked', 'checked');
-      $(this).find('input[type="hidden"]').val('1');
-    } else {
-      $(this).find('input[type="hidden"]').val('0');
+
+
+    function editPermissionUser(selectorGeneral, selectorGeneralThis, selectorPermissionYou) {
+        $(selectorGeneral).each(function() {
+          if($(this).data(selectorGeneralThis)) {
+            $(this).find('input[type="checkbox"]').attr('checked', 'checked');
+            $(this).find('input[type="hidden"]').val('1');
+          } else {
+            $(this).find('input[type="hidden"]').val('0');
+          }
+          /* Блокирует чекбоксы в зависимости от прав доступа */
+          if(!$(this).data(selectorPermissionYou)) {
+            $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
+          }
+        });
     }
-    /* Блокирует чекбоксы в зависимости от прав доступа */
-    if(!premissionReadYou) {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-    }
-  });
-  
-  /* Редактирование */
-  $('.a-user-edit__permission [data-premission-edit]').each(function() {
-    premissionEdit = $(this).data('premission-edit');
-    premissionEditYou = $(this).data('premission-edit-you');
-    if(premissionEdit) {
-      $(this).find('input[type="checkbox"]').attr('checked', 'checked');
-      $(this).find('input[type="hidden"]').val('1');
-    } else {
-      $(this).find('input[type="hidden"]').val('0');
-    }
-    /* Блокирует чекбоксы в зависимости от прав доступа */
-    if(!premissionEditYou) {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-    }
-  });
-  
-  /* Удаление */
-  $('.a-user-edit__permission [data-premission-delete]').each(function() {
-    premissionEdit = $(this).data('premission-delete');
-    premissionEditYou = $(this).data('premission-delete-you');
-    if(premissionEdit) {
-      $(this).find('input[type="checkbox"]').attr('checked', 'checked');
-      $(this).find('input[type="hidden"]').val('1');
-    } else {
-      $(this).find('input[type="hidden"]').val('0');
-    }
-    /* Блокирует чекбоксы в зависимости от прав доступа */
-    if(!premissionEditYou) {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-    }
-  });
-  
-  /* Управление пользователями */
-  $('.a-user-edit__permission [data-premission-manage-users]').each(function() {
-    premissionManageUsers = $(this).data('premission-manage-users');
-    premissionManageUsersYou = $(this).data('premission-manage-users-you');
-    if(premissionManageUsers) {
-      $(this).find('input[type="checkbox"]').attr('checked', 'checked');
-      $(this).find('input[type="hidden"]').val('1');
-    } else {
-      $(this).find('input[type="hidden"]').val('0');
-    }
-    /* Блокирует чекбоксы в зависимости от прав доступа */
-    if(!premissionManageUsersYou) {
-      $(this).find('input[type="checkbox"]').attr('disabled', 'disabled');
-    }
-  });
+    /* Старая версия (права проставлялись в профилях пользователей)*/
+    /* Чтение */
+    editPermissionUser('.a-user-edit__permission [data-premission-read]', 'premission-read', 'premission-read-you');
+
+    /* Редактирование */
+    editPermissionUser('.a-user-edit__permission [data-premission-edit]', 'premission-edit', 'premission-edit-you');
+
+    /*  Удаление */
+    editPermissionUser('.a-user-edit__permission [data-premission-delete]', 'premission-delete', 'premission-delete-you');
+
+    /*  Управление пользователями */
+    editPermissionUser('.a-user-edit__permission [data-premission-manage-users]', 'premission-manage-users', 'premission-manage-users-you');
+    
+    
+    /* Новая версия (права отдельно от профилей пользователя)*/
+    /* Чтение */
+    editPermissionUser('.a-user-permission-edit [data-premission-read]', 'premission-read', 'premission-read-you');
+
+    /* Редактирование */
+    editPermissionUser('.a-user-permission-edit [data-premission-edit]', 'premission-edit', 'premission-edit-you');
+
+    /*  Удаление */
+    editPermissionUser('.a-user-permission-edit [data-premission-delete]', 'premission-delete', 'premission-delete-you');
+
+    /*  Управление пользователями */
+    editPermissionUser('.a-user-permission-edit [data-premission-manage-users]', 'premission-manage-users', 'premission-manage-users-you');
 }).call(this);

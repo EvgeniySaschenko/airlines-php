@@ -39,8 +39,8 @@
             <?=fullNameUser($assignmentFlight['pic_a_last_name_'.$lang], $assignmentFlight['pic_a_name_'.$lang], $assignmentFlight['pic_a_first_name_'.$lang]);?>
           </td>
           <td class="flight-assignment-list__flight-assignment">
-            <?php $NUMBER_ASSIGMENT_FLIGHT = NUMBER_ASSIGMENT_FLIGHT($GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment'], $assignmentFlight['aircraft_'.$lang], $assignmentFlight['model'], $assignmentFlight['number_assignment'], $assignmentFlight['date_departure']); ?>
-            <?= linkAssignmentForFlight($currentSubsection[0]['id_section'], $currentSubsection[0]['id'], $assignmentFlight['id'], $assignmentFlight['id_aircraft'], $NUMBER_ASSIGMENT_FLIGHT); ?>
+            <?php $NUMBER_ASSIGMENT_FLIGHT = NUMBER_ASSIGMENT_FLIGHT($GENERAL_SITE_SETTINGS[0]['numbering_flight_assignment'], $assignmentFlight['aircraft_'.$lang], $assignmentFlight['model'], $assignmentFlight['number_assignment'], $assignmentFlight['date_departure'], $assignmentFlight['num_assignment_month'], $assignmentFlight['count_flight_assignment_month'], ""); ?>
+            <?= linkAssignmentForFlight($currentSubsection[0]['id_section'], $currentSubsection[0]['id'], $assignmentFlight['id'], $assignmentFlight['id_aircraft'], ($assignmentFlight['count_flight_assignment_month'] - ($assignmentFlight['num_assignment_month'] - 1)), $NUMBER_ASSIGMENT_FLIGHT); ?>
           </td>
           <td class="flight-assignment-list__aircraft hidden-xs">
             <span class="fa fa-plane"></span> 

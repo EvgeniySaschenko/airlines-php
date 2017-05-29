@@ -46,7 +46,9 @@
 						if(copy($_FILES['uploadfile']['tmp_name'], $path.'/new_file.'.$extension))
 						{
 							rename($path.'/new_file.'.$extension, $path.'/'.$idDoc.'.'.$extension);
-              updateDocUpload($idAuthor, $idSection, $idSubsection, $extension, $dateUploads, $ip, $userAgent, $idDoc);
+                            updateDocUpload($idAuthor, $idSection, $idSubsection, $extension, $dateUploads, $ip, $userAgent, $idDoc);
+                            $nameAuthor = $currentUser[0]['last_name_'.$lang].' '.$currentUser[0]['name_'.$lang].' '.$currentUser[0]['first_name_'.$lang];
+                            sendMessageAddOrUpdateDoc($GENERAL_SITE_SETTINGS[0]['mails_doc'], $currentDoc[0]['name_ru'], $idDoc, $currentDoc[0]['id_user'], $idAuthor, $nameAuthor, 'Update upload');
 							$ancor = '#noticeUploadDoc';
 						}
 						else
@@ -79,7 +81,11 @@
         $userAgent = $currentUserAgent;
         
         updateDocLink($idAuthor, $idSection, $idSubsection, $link, $dateUploads, $ip, $userAgent, $idDoc);
-				$ancor = '#noticeUpdateDocLink';
+        
+        $nameAuthor = $currentUser[0]['last_name_'.$lang].' '.$currentUser[0]['name_'.$lang].' '.$currentUser[0]['first_name_'.$lang];
+        sendMessageAddOrUpdateDoc($GENERAL_SITE_SETTINGS[0]['mails_doc'],  $currentDoc[0]['name_ru'], $idDoc, $currentDoc[0]['id_user'], $idAuthor, $nameAuthor, 'Update upload');
+          
+		$ancor = '#noticeUpdateDocLink';
         redirect($ancor);
       }
     }

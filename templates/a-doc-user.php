@@ -45,7 +45,7 @@
         data-date-end-doc="<?= $doc['date_end']; ?>"
         data-name="<?= $doc['type_'.$lang].' '.$doc['name_'.$lang]; ?>"
         data-link-doc="<?= $doc['link']; ?>"
-        data-id-sent-doc="0"
+				data-id-sent-doc="0"
         data-action="doc_user_upload">
         <td class="a-user-doc__info text-center">
           <span class="place-notice fa fa-file-text" data-toggle="tooltip" title="<?= $word[89]['name_'.$lang].' '.$doc['days_left'].' '.$word[90]['name_'.$lang]; ?>"></span>

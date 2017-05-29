@@ -119,10 +119,11 @@
           }
       
           
+          $currentDoc = selectDoc($idDoc);
+          
           # Удаление файла
           if($_POST['delete'][$i] == 1 and ($permissionDeleteSection or $permissionDeleteSubsection))
           {
-            $currentDoc = selectDoc($idDoc);
             $path = '../docs/'.convertDate($currentDoc[0]['date_create']).'/'.$currentDoc[0]['id'].'.'.$currentDoc[0]['extension'];
             unlink($path);
             $hide = 1;
@@ -131,6 +132,9 @@
           
           updateDoc($idDoc, $idAuthor, $idSection, $idSubsection, $idBook, $idChapter, $idType, $idAircraft, $nameRu, $nameEn, $extension, $month, $dateDoc, $dateEnd, $ip, $userAgent, $priority, $hide);
           $ancor = '#noticeEditDoc';
+          
+          $nameAuthor = $currentUser[0]['last_name_'.$lang].' '.$currentUser[0]['name_'.$lang].' '.$currentUser[0]['first_name_'.$lang];
+          sendMessageAddOrUpdateDoc($GENERAL_SITE_SETTINGS[0]['mails_doc'], $nameRu, $idDoc, $currentDoc[0]['id_user'], $idAuthor, $nameAuthor, 'Update');
         }
         else
         {

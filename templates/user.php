@@ -10,13 +10,21 @@
       </tr>
       <tr class="user__photo">
         <td class="col-lg-2 col-md-3 col-sm-3 hidden-xs" rowspan="12">
-          <img class="user__photo-img img-rounded img-responsive center-block" src="<?= checkFileSign('images/user/'.$user[0]['id'].'.'.$user[0]['extension']); ?>">
+          <img class="user__photo-img img-rounded img-responsive center-block" src="<?= checkFileSign('images/user/'.$user[0]['id'].'.'.$user[0]['extension']); ?>" alt="<?= $user[0]['last_name_'.$lang]; ?>">
         </td>
       </tr>
       <!--User info-->
       <tr class="user__rank">
         <td class="title-row text-bold col-lg-3 col-md-3 col-sm-3 col-xs-6"> <?= $word[15]['name_'.$lang]; ?> </td>
         <td class="value-cell col-lg-7 col-md-6 col-sm-6 col-xs-6"> <?= $user[0]['rank_'.$lang]; ?> </td>
+      </tr>
+      <tr class="user__permission">
+        <td class="title-row text-bold col-lg-3 col-md-3 col-sm-3 col-xs-6"> <?= $word[22]['name_'.$lang]; ?> </td>
+        <td class="value-cell col-lg-7 col-md-6 col-sm-6 col-xs-6"> 
+            <a href="index.php?lang=<?= $lang; ?>&id_section=<?= $user[0]['id_section']; ?>&id_user_permission=<?= $user[0]['id_user_permission']; ?>&action=user_premission_edit">
+              <?= $user[0]['permission_name_'.$lang]; ?> 
+            </a>
+        </td>
       </tr>
       <tr class="user__full-name">
         <td class="title-row text-bold"> <?= $word[46]['name_'.$lang]; ?> </td>
@@ -36,11 +44,11 @@
       </tr>
       <tr class="user__mail">
         <td class="title-row text-bold"> <?= $word[310]['name_'.$lang]; ?> </td>
-        <td class="value-cell"> <?= checkEmptyOr0($user[0]['mail']); ?> </td>
+        <td class="value-cell"> <?= $user[0]['mail']; ?> </td>
       </tr>
       <tr class="user__mail">
         <td class="title-row text-bold"> <?= $word[311]['name_'.$lang]; ?> </td>
-        <td class="value-cell"> <?= checkEmptyOr0($user[0]['mail_2']); ?> </td>
+        <td class="value-cell"> <?= $user[0]['mail_2']; ?> </td>
       </tr>
       <tr class="user__skype">
         <td class="title-row text-bold"> <?= $word[312]['name_'.$lang]; ?> </td>

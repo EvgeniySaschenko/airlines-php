@@ -1,17 +1,20 @@
 /* Если срок действия документа заканчиваеться через 30 / 60 дней меняет цвет потомка с классом .place-notice, предок должен иметь атрибут [data-date-end-doc] */
 (function() {
-  var dateEndDoc, date, daysLeft;
+  var dateEndDoc, date, daysLeft, daysRed, daysOrange;
   date = moment().format('YYYY-MM-DD');
+  daysRed = $('body').data('doc-days-red');
+  daysOrange = $('body').data('doc-days-orange');
+  
   $('[data-date-end-doc]').each(function(i, elem) {
     dateEndDoc = $(this).data('date-end-doc');
       if(dateEndDoc) {
         daysLeft = moment(dateEndDoc).diff(date, 'days');
-        if(daysLeft <= 30 && dateEndDoc !== '0000-00-00') {
+        if(daysLeft <= daysRed && dateEndDoc !== '0000-00-00') {
           $(this).find('.place-notice').addClass('text-red');
           $(this).find('.call-modal-doc').addClass('text-red');
           $(this).addClass('text-red');
           
-        } else if(daysLeft > 30 && daysLeft < 60 && dateEndDoc !== '0000-00-00'){
+        } else if(daysLeft > daysRed && daysLeft < daysOrange && dateEndDoc !== '0000-00-00'){
           $(this).find('.place-notice').addClass('text-orange');
           $(this).find('.call-modal-doc').addClass('text-orange');
           $(this).addClass('text-orange');

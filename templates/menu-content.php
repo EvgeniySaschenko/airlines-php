@@ -74,5 +74,8 @@
           <span class="glyphicon glyphicon-user"></span>
       </a>
     <?php endif; ?>
+      <a class="menu-manage__print" title="<?= $word[393]['name_'.$lang]; ?>" onclick="javascript: print();">
+          <span class="glyphicon glyphicon-print"></span>
+      </a>
   </div>
 </div>

@@ -33,6 +33,9 @@
         <th>
           <?= $word[267]['name_'.$lang]; ?> 
         </th>
+        <th>
+          <?= $word[389]['name_'.$lang]; ?> 
+        </th>
       </tr>
     </thead>
     
@@ -41,7 +44,11 @@
         <!--Месяц-->
         <?php $takeoffWeight = convertKgToT($flightConsolidatedReportAircraftYear['weight_aircraft']) + convertKgToT($flightConsolidatedReportAircraftYear['curb_weight_aircraft']) + $flightConsolidatedReportAircraftYear['fuel_balance'] + $flightConsolidatedReportAircraftYear['fuel_fueled'] + convertKgToT($flightConsolidatedReportAircraftYear['oil_balance'] + $flightConsolidatedReportAircraftYear['oil_fueled']) + $flightConsolidatedReportAircraftYear['weight_cargo'] + ($flightConsolidatedReportAircraftYear['weight_passenger'] * 80) / 1000; ?>
         <tr>
-          <td class="text-bold"><?= showNameMonth($flightConsolidatedReportAircraftYear['date_shipping']); ?></td>
+          <td class="text-bold">
+             <a href="index.php?lang=<?= $lang ;?>&id_section=<?= $getIdSection ;?>&id_subsection=<?= $getIdSubsection ;?>&id_aircraft=<?= $flightConsolidatedReportAircraftYear['id_aircraft'];?>&year=<?= convertDateYear($flightConsolidatedReportAircraftYear['date_shipping']); ?>&month=<?= convertDateMonth($flightConsolidatedReportAircraftYear['date_shipping']); ?>&action=flight_consolidated_report_aircraft_year_month#navBottom">  
+               <?= showNameMonth($flightConsolidatedReportAircraftYear['date_shipping']); ?>
+             </a>
+          </td>
             <!--Растояние-->
           <td><?= $flightConsolidatedReportAircraftYear['distance']; ?></td>
             <!--Время полета-->
@@ -56,6 +63,7 @@
           <td><?= round($flightConsolidatedReportAircraftYear['weight_cargo'] + $flightConsolidatedReportAircraftYear['weight_passenger'] / 1000, 2); ?></td>
             <!-- КПД Т / КМ = (Время полета * Груз * Ср. скорость * 24) / 1000 --> 
           <td><?= round(($flightConsolidatedReportAircraftYear['weight_cargo'] + $flightConsolidatedReportAircraftYear['weight_passenger']) / $flightConsolidatedReportAircraftYear['distance'] * 10, 2); ?></td>
+          <td><?= $flightConsolidatedReportAircraftYear['count_flight']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>

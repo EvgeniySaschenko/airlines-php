@@ -261,10 +261,10 @@
 	}
 
 	//Ссылка ЗАДАНИЕ НА ПОЛЕТ
-	function linkAssignmentForFlight($idSection, $idSubsection, $idFlightAssignment, $idAircraft, $numberFlightAssignment){
+	function linkAssignmentForFlight($idSection, $idSubsection, $idFlightAssignment, $idAircraft, $numAsignmentMonthGet, $numberFlightAssignment){
 		global $lang;
 		$data =
-		'<a href="index.php?lang='.$lang.'&id_section='.$idSection.'&id_subsection='.$idSubsection.'&id_flight_assignment='.$idFlightAssignment.'&id_aircraft='.$idAircraft.'#navBottom">'
+		'<a href="index.php?lang='.$lang.'&id_section='.$idSection.'&id_subsection='.$idSubsection.'&id_flight_assignment='.$idFlightAssignment.'&id_aircraft='.$idAircraft.'&num_asignment_month_get='.$numAsignmentMonthGet.'#navBottom">'
 			.$numberFlightAssignment.
 		'</a>';
 		return $data;
@@ -905,6 +905,31 @@ function dropdownListTime($time, $id, $start){
 	"</select>
   </div>";
   }
+  
+	//Выпадающий список с обязательным полем
+ function dropDownListRquired($nameList, $arrRecords, $idSelected, $notice){
+	global $lang;
+	echo "<div class=\"form-group form-inline\">";
+
+    echo   "<select required=\"required\"  class=\"form-control\" name=\"{$nameList}\">";
+
+	foreach($arrRecords as $record)
+	{
+		if($record['hide'] == 0)
+		{
+			if($record['id'] == $idSelected)
+				$selected = 'selected="selected"';
+			if(empty($idSelected) and !empty($notice))
+				$notice = 'SAVE';
+			echo
+			"<option {$selected} value=\"{$record['id']}\">{$notice} {$record['name_'.$lang]}</option>";
+			unset($selected);
+		}
+	}
+	echo
+	"</select>
+  </div>";
+  }
 
 	//Выпадающий список пользователей
  function dropDownListUsers($nameList, $arrRecords, $idSelected){
@@ -1182,8 +1207,8 @@ function getLastSymbol($str) {
   return substr($str, -1);
 }
 
-
-function NUMBER_ASSIGMENT_FLIGHT($GSS_numberingFlightAssignment, $nameAircraft, $modelAircraft, $numberAssignment, $dateDeparture) {
+// Номер полетного задания для списка
+function NUMBER_ASSIGMENT_FLIGHT($GSS_numberingFlightAssignment, $nameAircraft, $modelAircraft, $numberAssignment, $dateDeparture, $numAsignmentMonth, $countFlightAssignmentMonth, $numAsignmentMonthGet) {
     // "Название ВС"-"номер задания (уникальный для текущего года и ВС)"-"месяц"-"год"
 	if($GSS_numberingFlightAssignment == 'name_aircraft-number_flight_assignment-month-year')
 	{
@@ -1204,7 +1229,32 @@ function NUMBER_ASSIGMENT_FLIGHT($GSS_numberingFlightAssignment, $nameAircraft, 
 	{
 		$NUMBER_ASSIGMENT_FLIGHT = $nameAircraft.'-'.$modelAircraft.'-'.convertDateDayMonthYearDash($dateDeparture).'/'.$numberAssignment;
 	}
+	elseif($GSS_numberingFlightAssignment == 'reg_number_last_leter-number_task_in_month-month-year')
+	{
+        if($numAsignmentMonthGet == 0) {
+          $NUMBER_ASSIGMENT_FLIGHT = getLastSymbol($modelAircraft).'-'.($countFlightAssignmentMonth - ($numAsignmentMonth - 1)).'-'.convertDateMonth($dateDeparture).'-'.convertDateYear($dateDeparture);
+        }
+        else {
+          $NUMBER_ASSIGMENT_FLIGHT = getLastSymbol($modelAircraft).'-'.$numAsignmentMonthGet.'-'.convertDateMonth($dateDeparture).'-'.convertDateYear($dateDeparture);
+        }
+	}
+    
     return $NUMBER_ASSIGMENT_FLIGHT;
-}   
+}
 
+
+// Отправка уведомления на почту о загрузке / обноновлении документа
+function sendMessageAddOrUpdateDoc($mails, $nameDoc, $idDoc, $idUser, $idAuthor, $nameAuthor, $addOrUpdate) {
+  if($mails) {
+    $subject = $_SERVER['HTTP_HOST'].' - '.$addOrUpdate.' - '.$nameDoc.' id-doc: '.$idDoc.' id-user: '.$idUser.' id-author: '.$idAuthor; 
+    $message = 'Author: '.$nameAuthor.' - '.$addOrUpdate.' - '.$nameDoc.' id-doc: '.$idDoc.' id-user: '.$idUser.' id-author: '.$idAuthor;
+    $headers = 'From: doc <doc@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+    $headers .= 'Content-type: text/html; charset="utf-8"';
+    $arrMail = explode(",", $mails);
+    foreach($arrMail as $itemMail) {
+      $to = $itemMail;
+      mail($to, $subject, $message, $headers); 
+    }
+  }
+}
 ?>
