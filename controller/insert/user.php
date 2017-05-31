@@ -136,6 +136,9 @@
 							$permission = $permission.'%';
 					}
           
+                    if(empty($permission)) {
+                      $permission = 0;
+                    }
 					
 					$checkLogin = selectUserCheckLogin($login);
 					if(empty($checkLogin))

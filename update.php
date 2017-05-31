@@ -109,6 +109,8 @@ and
     # Права доступа пользователя
   include('controller/update/user-peremission.php'); 
   
-  
+  # Обновить всех пользователей
+  include('controller/update/users-all.php'); 
+
 }
 ?>

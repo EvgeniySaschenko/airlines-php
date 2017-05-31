@@ -1,7 +1,12 @@
+<div class="a-user-list">
 <div class="notice">
   <!--User Added-->
   <div data-notice="#noticeAddedUserDisable" data-ancor="userList" class="hidden alert alert-success" role="alert">
     <?= $word[146]['name_'.$lang]; ?>
+  </div>
+  <!--User Permission Update-->
+  <div data-notice="#noticeUserPermissionUpdate" data-ancor="userList" class="hidden alert alert-success" role="alert">
+    <?= $word[218]['name_'.$lang]; ?>
   </div>
   <!--User Error-->
   <div data-notice="#noticeErrorUserDisable" data-ancor="userList" class="hidden alert alert-danger" role="alert">
@@ -9,8 +14,10 @@
   </div>
 </div>
 
-<div class="a-user-list">
+
+<form role="form" method="post" enctype="multipart/form-data" action="update.php?lang=<?= $lang; ?>&amp;id_section=<?= $_GET['id_section']; ?>&amp;action=user_all_edit_permission">
 <table class="table table-striped table-bordered tablesorter tablesorter-a-user-list">
+  <caption class="text-bold text-center"><?= $word[140]['name_'.$lang]; ?></caption>  
   <thead>
     <tr>
       <th class="title text-center"><span class="fa fa-info-circle"></span></th>
@@ -23,6 +30,7 @@
         <span class="fa fa-times visible-xs" data-toggle="tooltip" title="<?= $word[144]['name_'.$lang]; ?>"></span>
         <span class="hidden-xs"><?= $word[144]['name_'.$lang]; ?></span>
       </th>
+      <th class="title text-center hidden-xs"><?= $word[22]['name_'.$lang]; ?></th>
       <th class="title text-bold text-center">
         <span class="glyphicon glyphicon-user" data-toggle="tooltip" title="<?= $word[45]['name_'.$lang]; ?>"></span>
       </td>
@@ -34,6 +42,7 @@
       <tr data-user-hide="<?= $user['hide']; ?>" data-user-date-birth="<?= userDateBirth10days($user['date_birth']); ?>">
         <td class="a-user-list__info text-center">
           <span class="place-notice"></span>
+          <input type="hidden" name="id_user[]" value="<?= $user['id'] ?>"/>
         </td>
         <td class="a-user-list__rank hidden-xs">
           <?= $user['rank_'.$lang]; ?>
@@ -54,6 +63,9 @@
           <a href="update.php?lang=<?= $lang; ?>&amp;id_section=<?= $user['id_section']; ?>&amp;id_user=<?= $user['id']; ?>&amp;action=user_delete">
            <span class="fa fa-times"></span>
           </a>
+        </td>
+        <td class="a-user-list__permission text-center">
+           <?= dropDownListRquiredNo('id_user_permission[]', $allUserPermission, $user['id_user_permission']); ?>
         </td>
         <td class="text-center">
           <!--Пользователь заблокирован-->  
@@ -76,6 +88,12 @@
       </tr>
       <?php endif; ?>
     <?php endforeach; ?>
+      <tr class="text-bold">
+        <td class="text-right" colspan="9">
+          <button type="submit" class="btn btn-success"><?= $word[83]['name_'.$lang]; ?></button>
+        </td>
+      </tr>
   </tbody>
 </table>
+</form>
 </div>

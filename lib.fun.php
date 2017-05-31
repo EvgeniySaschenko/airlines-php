@@ -930,6 +930,33 @@ function dropdownListTime($time, $id, $start){
 	"</select>
   </div>";
   }
+  
+  //Выпадающий список с обязательным полем + нет
+ function dropDownListRquiredNo($nameList, $arrRecords, $idSelected, $notice){
+	global $lang;
+	echo "<div class=\"form-group form-inline\">";
+
+    echo   "<select required=\"required\"  class=\"form-control\" name=\"{$nameList}\">
+      <option value=\"0\">НЕТ</option>";
+
+	foreach($arrRecords as $record)
+	{
+		if($record['hide'] == 0)
+		{
+			if($record['id'] == $idSelected)
+				$selected = 'selected="selected"';
+			if(empty($idSelected) and !empty($notice))
+				$notice = 'SAVE';
+			echo
+			"<option {$selected} value=\"{$record['id']}\">{$notice} {$record['name_'.$lang]}</option>";
+			unset($selected);
+		}
+	}
+	echo
+	"</select>
+  </div>";
+  }
+  
 
 	//Выпадающий список пользователей
  function dropDownListUsers($nameList, $arrRecords, $idSelected){

@@ -38,7 +38,7 @@
             <td class="title text-center text-bold"><span class="glyphicon glyphicon-envelope" data-toggle="tooltip" title="<?= $word[93]['name_'.$lang]; ?>"></span></td>
           </tr>
             <?php foreach($allUser as $user): ?>
-              <?php if($user['hide'] == 0 and $user['id_section'] == $section['id']): ?>
+              <?php if($user['hide'] == 0 and $user['id_section'] == $section['id'] and $user['remove_mailing_list'] == '0'): ?>
                 <tr data-id-section="<?= $user['id_section']; ?>"
                     data-id-user="<?= $user['id']; ?>">
                   <td class="send-doc__user-rank hidden-xs">

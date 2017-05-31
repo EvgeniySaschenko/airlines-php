@@ -50,7 +50,7 @@
             <?= $word[22]['name_'.$lang]; ?>
           </td>
           <td>
-            <?= dropDownListRquired('id_user_permission', $allUserPermission, $user[0]['id_user_permission']); ?>
+            <?= dropDownListRquiredNo('id_user_permission', $allUserPermission, $user[0]['id_user_permission']); ?>
           </td>
         </tr>
         <!--Загрузить фото-->
@@ -292,6 +292,26 @@
             </div>
           </td>
         </tr>
+        
+        <!--Убрать из разсылки-->
+        <?php
+          if($user[0]['remove_mailing_list'] != 0)
+            $checkeRemoveMailingList = 'checked="checked"';
+        ?>
+        <tr>
+          <td class="title text-bold">
+            <?= $word[395]['name_'.$lang]; ?>  
+          </td>
+          <td>
+            <div class="form-group">
+             <div class="input-group">
+              <input type="checkbox" value="1" <?= $checkeRemoveMailingList; ?>>
+              <input name="remove_mailing_list" type="hidden" value="<?= $user[0]['remove_mailing_list']; ?>">
+             </div>
+            </div>
+          </td>
+        </tr>
+        
         <!--Скрыть пользователя-->
         <?php
           if($user[0]['hide'] != 0)
@@ -310,6 +330,7 @@
             </div>
           </td>
         </tr>
+        
         <!--Пользователь заблокирован-->
         <?php
           if($user[0]['number_retries'] != 0)
@@ -329,8 +350,9 @@
           </td>
         </tr>
         
+        
         <!--Права доступа-->
-        <?php if(false): ?>
+        <?php if(empty($user[0]['permission_new'])): ?>
         <tr>
           <td class="title text-bold">
             <?= $word[22]['name_'.$lang]; ?>  
@@ -497,11 +519,14 @@
           </td>
         </tr>
         <?php endif; ?>
+        
+        <?php if(!empty($user[0]['permission_new'])): ?>
         <tr class="text-bold">
           <td class="text-right" colspan="2">
             <button type="submit" class="btn btn-success"><?= $word[83]['name_'.$lang]; ?></button>
           </td>
         </tr>
+        <?php endif; ?>
       </tbody>
     </table>
   </form>

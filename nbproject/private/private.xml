@@ -5,12 +5,22 @@
         <group>
             <file>file:/D:/WEB/airlines-dev/query/query.insert.php</file>
             <file>file:/D:/WEB/airlines-dev/templates/a-user-add.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/send-doc.php</file>
+            <file>file:/D:/WEB/airlines-dev/query/query.update.php</file>
+            <file>file:/D:/WEB/airlines-dev/route/user.php</file>
+            <file>file:/D:/WEB/airlines-dev/controller/insert/user.php</file>
+            <file>file:/D:/WEB/airlines-dev/general.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-user-list.php</file>
+            <file>file:/D:/WEB/airlines-dev/controller/update/user.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/control-doc-user-received.php</file>
+            <file>file:/D:/WEB/airlines-dev/update.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-user-permission-edit.php</file>
             <file>file:/D:/WEB/airlines-dev/query/query.select.php</file>
             <file>file:/D:/WEB/airlines-dev/lib.fun.php</file>
+            <file>file:/D:/WEB/airlines-dev/controller/update/users-all.php</file>
             <file>file:/D:/WEB/airlines-dev/templates/a-user-edit.php</file>
-            <file>file:/D:/WEB/airlines-dev/route/user.php</file>
             <file>file:/D:/WEB/airlines-dev/templates/user.php</file>
-            <file>file:/D:/WEB/airlines-dev/controller/insert/user.php</file>
+            <file>file:/D:/WEB/airlines-dev/route/send-doc.php</file>
         </group>
     </open-files>
 </project-private>

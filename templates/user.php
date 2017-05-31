@@ -9,7 +9,7 @@
         </td>
       </tr>
       <tr class="user__photo">
-        <td class="col-lg-2 col-md-3 col-sm-3 hidden-xs" rowspan="12">
+        <td class="col-lg-2 col-md-3 col-sm-3 hidden-xs" rowspan="13">
           <img class="user__photo-img img-rounded img-responsive center-block" src="<?= checkFileSign('images/user/'.$user[0]['id'].'.'.$user[0]['extension']); ?>" alt="<?= $user[0]['last_name_'.$lang]; ?>">
         </td>
       </tr>

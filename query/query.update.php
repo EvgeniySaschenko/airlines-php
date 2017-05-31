@@ -19,6 +19,25 @@
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
+    
+	//Обновить права доступа всех пользователей !!! Таблица user_permission должна была называться permission_user
+	function updateUserFieldPermission($idUser, $idUserPermission){
+		global $db;
+		$query =
+		"UPDATE ae_user
+		SET
+          id_user_permission = ?
+		WHERE id = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "ii", $idUserPermission, $idUser);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+	}
+    
+    
 	//ДОКУМЕНТ ОТПРАВЛЕННЫЙ пользователю
 	function updateSentDoc($idAuthor, $idSentDoc, $dateEnd, $hide){
 		global $db;
@@ -762,7 +781,7 @@
 	}
 
 	//ПОЛЬЗОВАТЕЛЬ
-	function updateUser($idUser, $idAuthor, $idSection, $idRank, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $hide, $numberRetries, $extension, $ip, $userAgent){
+	function updateUser($idUser, $idAuthor, $idSection, $idRank, $idCrew, $idUserPermission, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $hide, $removeMailingList, $numberRetries, $extension, $ip, $userAgent){
 		global $db;
 		$query =
 		"UPDATE ae_user
@@ -771,6 +790,7 @@
 			id_section = ?,
 			id_rank = ?,
 			id_crew = ?,
+            id_user_permission = ?,
 			login = ?,
 			pass = ?,
 			name_ru = ?,
@@ -790,6 +810,7 @@
 			date_birth = ?,
 			permission = ?,
 			hide = ?,
+            remove_mailing_list = ?,
 			number_retries = ?,
 			extension = ?,
 			ip = ?,
@@ -799,7 +820,7 @@
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "iiiissssssssssssssssssiisssi", $idAuthor, $idSection, $idRank, $idCrew, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $hide, $numberRetries, $extension, $ip, $userAgent, $idUser);
+		mysqli_stmt_bind_param($stmt, "iiiiissssssssssssssssssiiisssi", $idAuthor, $idSection, $idRank, $idCrew, $idUserPermission, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $hide, $removeMailingList, $numberRetries, $extension, $ip, $userAgent, $idUser);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}

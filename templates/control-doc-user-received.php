@@ -32,7 +32,7 @@
             </thead>
             <tbody>
             <?php foreach($allUserControl as $user): ?>
-              <?php if($user['hide'] == 0 and $user['id_section'] == $section['id']): ?>
+              <?php if($user['hide'] == 0 and $user['id_section'] == $section['id'] and $user['remove_mailing_list'] == '0'): ?>
                 <tr 
                   data-date-studied="<?= $user['date_studied_doc']; ?>"
                   data-id-section="<?= $user['id_section']; ?>"

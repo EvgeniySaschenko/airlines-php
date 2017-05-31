@@ -176,16 +176,33 @@
 
 	$lastNews = selectLastNews();
 	//Права доступа
-	$permissionReadSection = strstr($currentUser[0]['permission'], ':'.$permissionSectionMark.':');//Чтение разделов
-	$permissionReadSubsection = strstr($currentUser[0]['permission'], $permissionSectionMark.$permissionSubsectionId.'~');//Чтение подразделов
-	$permissionEditSection = strstr($currentUser[0]['permission'], '!:'.$permissionSectionMark.':');//Редактирование разделов
-	$permissionEditSubsection = strstr($currentUser[0]['permission'], '!'.$permissionSectionMark.$permissionSubsectionId.'~');//Редактирование подразделов
-	$permissionDeleteSection = strstr($currentUser[0]['permission'], '_!:'.$permissionSectionMark.':');//Удаление документов разделов
-	$permissionDeleteSubsection = strstr($currentUser[0]['permission'], '_!'.$permissionSectionMark.$permissionSubsectionId.'~');//Удаление документов  подразделов
-	$permissionManageUsers = strstr($currentUser[0]['permission'], '@'.$permissionSectionMark);//Управление пользователями
-	$permissionReadPersonalDoc = strstr($currentUser[0]['permission'], '#');//Просмотр персональных документов
-	$permissionManageSite = strstr($currentUser[0]['permission'], '*');//Редактироване сайта
-	$permissionAssignmentFlight = strstr($currentUser[0]['permission'], '%');//ЗАДАНИЕ НА ПОЛЕТ Запретить редактирование
+    if(empty($currentUser[0]['permission_new'])) {
+      // Старые
+      $permissionReadSection = strstr($currentUser[0]['permission'], ':'.$permissionSectionMark.':');//Чтение разделов
+      $permissionReadSubsection = strstr($currentUser[0]['permission'], $permissionSectionMark.$permissionSubsectionId.'~');//Чтение подразделов
+      $permissionEditSection = strstr($currentUser[0]['permission'], '!:'.$permissionSectionMark.':');//Редактирование разделов
+      $permissionEditSubsection = strstr($currentUser[0]['permission'], '!'.$permissionSectionMark.$permissionSubsectionId.'~');//Редактирование подразделов
+      $permissionDeleteSection = strstr($currentUser[0]['permission'], '_!:'.$permissionSectionMark.':');//Удаление документов разделов
+      $permissionDeleteSubsection = strstr($currentUser[0]['permission'], '_!'.$permissionSectionMark.$permissionSubsectionId.'~');//Удаление документов  подразделов
+      $permissionManageUsers = strstr($currentUser[0]['permission'], '@'.$permissionSectionMark);//Управление пользователями
+      $permissionReadPersonalDoc = strstr($currentUser[0]['permission'], '#');//Просмотр персональных документов
+      $permissionManageSite = strstr($currentUser[0]['permission'], '*');//Редактироване сайта
+      $permissionAssignmentFlight = strstr($currentUser[0]['permission'], '%');//ЗАДАНИЕ НА ПОЛЕТ Запретить редактирование
+    } else {
+      // Новые
+      $permissionReadSection = strstr($currentUser[0]['permission_new'], ':'.$permissionSectionMark.':');//Чтение разделов
+      $permissionReadSubsection = strstr($currentUser[0]['permission_new'], $permissionSectionMark.$permissionSubsectionId.'~');//Чтение подразделов
+      $permissionEditSection = strstr($currentUser[0]['permission_new'], '!:'.$permissionSectionMark.':');//Редактирование разделов
+      $permissionEditSubsection = strstr($currentUser[0]['permission_new'], '!'.$permissionSectionMark.$permissionSubsectionId.'~');//Редактирование подразделов
+      $permissionDeleteSection = strstr($currentUser[0]['permission_new'], '_!:'.$permissionSectionMark.':');//Удаление документов разделов
+      $permissionDeleteSubsection = strstr($currentUser[0]['permission_new'], '_!'.$permissionSectionMark.$permissionSubsectionId.'~');//Удаление документов  подразделов
+      $permissionManageUsers = strstr($currentUser[0]['permission_new'], '@'.$permissionSectionMark);//Управление пользователями
+      $permissionReadPersonalDoc = strstr($currentUser[0]['permission_new'], '#');//Просмотр персональных документов
+      $permissionManageSite = strstr($currentUser[0]['permission_new'], '*');//Редактироване сайта
+      $permissionAssignmentFlight = strstr($currentUser[0]['permission_new'], '%');//ЗАДАНИЕ НА ПОЛЕТ Запретить редактирование
+      $currentUser[0]['permission'] = $currentUser[0]['permission_new'];
+    }
+
 	//Разрешенные расширения
 	$allowExtension = array('pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'xlsx', 'xls', 'mp4');
     $allSections =	selectAllSections();
