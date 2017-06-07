@@ -1695,13 +1695,13 @@
 		d.user_agent,
 		d.priority,
 		d.hide,
+        s.name_ru as section_ru,
+        s.name_en as section_en,
 		TO_DAYS(d.date_end) - TO_DAYS(NOW()) as days_left,
       (SELECT 
         COUNT(*)
         FROM ae_doc
         WHERE
-          id_section = ?
-        AND
           hide = 0
         AND
           date_end <> 0
@@ -1710,6 +1710,7 @@
         AND
           date_end < NOW() + INTERVAL ".$GENERAL_SITE_SETTINGS[0]['doc_days_orange']." DAY) as count_doc
 		FROM ae_doc d
+        LEFT OUTER JOIN ae_section s ON s.id = d.id_section
 		WHERE
 			d.hide = 0
     AND
@@ -1722,11 +1723,11 @@
       d.date_end ASC, 
       d.name_ru ASC
       LIMIT $record, 30";
-      if(!$result = mysqli_query($db, $query))
-          return false;
-      $arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-      return $arr;
+		if(!$result = mysqli_query($db, $query))
+			return false;
+		$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		mysqli_free_result($result);
+		return $arr;
 	}
   
   
@@ -4919,6 +4920,132 @@
 			return false;
 		$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
 		mysqli_free_result($result);
+		return $arr;
+	}
+        
+        
+	//ВСЕ опросы подраздела раздела
+	function selectAllPoolTemplate($idSubsection){
+		global $db;
+		$query =
+		"SELECT
+                    *
+                FROM ae_pool_template
+                WHERE
+                    id_subsection = ?
+                AND
+                    hide = 0
+		ORDER BY
+                    priority DESC,
+                    name_ru ASC,
+                    date_create DESC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idSubsection);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+	//Текущий опрос
+	function selectCurrentPoolTemplate($idPoolTemplate){
+		global $db;
+		$query =
+		"SELECT
+                    *
+		FROM ae_pool_template
+		WHERE id = ?";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idPoolTemplate);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+        // Вопросы
+	function selectAllPoolTemplateQuestion($idPoolTemplate){
+		global $db;
+		$query =
+		"SELECT
+                    *
+		FROM ae_pool_template_question
+		WHERE id_pool_template = ? AND hide = 0
+                ORDER BY priority ASC, name_ru ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idPoolTemplate);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+        
+	//ВСЕ опросы подраздела раздела - отправленные
+	function selectAllPool($idSubsection){
+		global $db;
+		$query =
+		"SELECT
+                    p.*,
+                    pt.id_section,
+                    pt.id_subsection
+                FROM ae_pool p
+                INNER JOIN ae_pool_template pt ON pt.id = p.id_pool_template
+                WHERE
+                    pt.id_subsection = ?
+                AND
+                    p.hide = 0
+		ORDER BY
+                    p.date_create DESC,
+                    p.name_ru ASC,
+                    p.id ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idSubsection);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+	function selectAllPoolQuestion($idPool){
+		global $db;
+		$query =
+		"SELECT
+                    *
+                FROM ae_pool_question
+                WHERE
+                    id_pool = ?
+                AND
+                    hide = 0
+		ORDER BY
+                    priority ASC,
+                    name_ru ASC,
+                    id ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idPool);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
 		return $arr;
 	}
 	?>

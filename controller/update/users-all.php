@@ -14,8 +14,8 @@
             updateUserFieldPermission($idUser, $idUserPermission);
           }
           $ancor = '#noticeUserPermissionUpdate';
+          redirect($ancor);
         }
-    redirect($ancor);
   }
 
 ?>

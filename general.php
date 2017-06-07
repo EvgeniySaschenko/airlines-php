@@ -41,8 +41,11 @@
 	$getYearFlightAssignment = clearInt($_GET['year_flight_assignment']);
 	$getIdFlightPreparing = clearInt($_GET['id_flight_preparing']);
 	$getIdReportAs = clearInt($_GET['id_report_as']);
-    $getIdAircraft = clearInt($_GET['id_aircraft']);
-    $getIdUserPermission = clearInt($_GET['id_user_permission']);
+        $getIdAircraft = clearInt($_GET['id_aircraft']);
+        $getIdUserPermission = clearInt($_GET['id_user_permission']);
+        $getIdPoolTemplate = clearInt($_GET['id_pool_template']);
+        $getIdPool = clearInt($_GET['id_pool']);
+        
 	if(empty($_SERVER['REMOTE_ADDR']))
 		$currentUserIp = 0;
 	if(empty($_SERVER['HTTP_USER_AGENT']))
@@ -95,7 +98,10 @@
 		$getIdAircraft = 0;
 	if(empty($_GET['id_user_permission']))
 		$getIdUserPermission = 0;
-    
+	if(empty($_GET['id_pool_template']))
+		$getIdPoolTemplate = 0;
+	if(empty($_GET['id_pool']))
+		$getIdPool = 0;
     
 	//Данные о текущем пользователе
 	$currentUserLogin = clearStr($_SESSION['login']);
@@ -164,6 +170,12 @@
 	if($_GET['id_aircraft'] != 0)
 	{
 		$currentAircraft = selectCurrentAircraft($getIdAircraft);
+	}
+        
+	//Текущий опрос - шаблон
+	if($_GET['id_pool_template'] != 0)
+	{
+		$currentPool = selectCurrentPoolTemplate($getIdPoolTemplate);
 	}
     
 	# НОМЕР ЗАДАНИЯ НА ПОЛЁТ

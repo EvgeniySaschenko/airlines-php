@@ -16,7 +16,7 @@
                 <div class="division-department--user">
                     <div class="division-department--user-circle">
                       <?php if(!empty($userDivisionDepartment['extension'])): ?>
-                        <img class="division-department--user-img" src="images/user/<?= $userDivisionDepartment['id_user']; ?>.<?= $userDivisionDepartment['extension']; ?>?v=3">
+                        <img class="division-department--user-img" src="images/user/<?= $userDivisionDepartment['id_user']; ?>.<?= $userDivisionDepartment['extension']; ?>?v=4">
                       <?php else: ?>
                         <img class="division-department--user-img" src="images/user.png">
                       <?php endif; ?>

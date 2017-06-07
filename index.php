@@ -73,6 +73,9 @@
       
       # Контактная информация
       include('route/contact.php');
+      
+      # Оценка рисков
+      include('route/pool.php');
     }
     
     # Добровольные сообщения

@@ -1108,4 +1108,31 @@
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
+        
+        
+	// Вопросы в опросе
+	function updatePoolTemplateQuestion($idAuthor, $idPool, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent, $hide, $idPoolTemplateQuestion){
+		global $db;
+		$query =
+		"UPDATE ae_pool_template_question
+		SET
+                    id_author = ?,
+                    id_pool_template = ?,
+                    id_user = ?,
+                    priority = ?,
+                    name_ru = ?,
+                    name_en = ?,
+                    name_departament = ?,
+                    ip = ?,
+                    user_agent = ?,
+                    hide = ?
+		WHERE id = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iiissssssii", $idAuthor, $idPool, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent, $hide, $idPoolTemplateQuestion);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+	}
 ?>

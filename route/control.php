@@ -10,8 +10,12 @@
         if
           ($currentSubsection[0]['type'] == 'control-all' and $permissionReadSubsection)
         {
+          $allDocSectionControl = selectAllDocSectionControl($getIdSection, $getPage);
+          $allUserControl = selectAllUserControl($getIdSection);
+          
           $allUserAllSectionControl = selectAllUserAllSectionControl();
-          $allDocControl = selectAllDocControl($page);
+          
+          $allDocControl = selectAllDocControl($getPage);
           include('templates/control-all.php');
         }
  ?>

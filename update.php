@@ -111,6 +111,9 @@ and
   
   # Обновить всех пользователей
   include('controller/update/users-all.php'); 
+  
+  # Обновить опрос
+  include('controller/update/pool.php'); 
 
 }
 ?>

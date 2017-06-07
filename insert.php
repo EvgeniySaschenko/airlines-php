@@ -52,6 +52,9 @@
     # Права доступа пользователя
     include('controller/insert/user-peremission.php');
     
+    # Опрос
+    include('controller/insert/pool.php');
+    
 	}
     
     # БЕЗ АВТОРИЗАЦИИ!!!!!!!!!!!!!!!!!!

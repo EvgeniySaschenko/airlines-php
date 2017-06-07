@@ -611,4 +611,107 @@
 		return 	mysqli_insert_id($db);
 	}
 	
+	//ДОБАВИТЬ Опрос
+	function insertPoolTemplate($idAuthor, $idSection, $idSubsection, $nameRu, $nameEn, $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_pool_template
+			(id_author,
+			id_section,
+			id_subsection,
+			name_ru,
+			name_en,
+			date_create,
+			ip,
+			user_agent)
+		VALUES(?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iiissss", $idAuthor, $idSection, $idSubsection, $nameRu, $nameEn, $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
+        
+        
+	//ДОБАВИТЬ Опрос - шаблон
+	function insertPoolTemplateQuestion($idAuthor, $idPoolTemplate, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_pool_template_question
+			(id_author,
+			id_pool_template,
+			id_user,
+                        priority,
+			name_ru,
+			name_en,
+                        name_departament,
+			date_create,
+			ip,
+			user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iiissssss", $idAuthor, $idPoolTemplate, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
+        
+	//ДОБАВИТЬ Вопросы - отправленный
+	function insertPool($idAuthor, $idPoolTemplate, $idBook, $nameRu, $nameEn, $remark, $dateDoc, $dateEnd, $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_pool
+			(id_author,
+			id_pool_template,
+                        id_book,
+			name_ru,
+			name_en,
+                        remark,
+			date_doc,
+			date_end,
+			date_create,
+			ip,
+			user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iiisssssss", $idAuthor, $idPoolTemplate, $idBook, $nameRu, $nameEn, $remark, $dateDoc, $dateEnd, $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
+        
+	//ДОБАВИТЬ вопросы
+	function insertPoolQuestion($idAuthor, $idPool, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_pool_question
+			(id_author,
+			id_pool,
+			id_user,
+                        priority,
+			name_ru,
+			name_en,
+                        name_departament,
+			date_create,
+			ip,
+			user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iiissssss", $idAuthor, $idPool, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
 ?>

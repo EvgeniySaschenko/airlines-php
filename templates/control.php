@@ -34,9 +34,4 @@
       <?php include('templates/control-doc.php'); ?>
     </div>
   </div>
-</div>
-
-
-			
-			
-			
+</div>		
