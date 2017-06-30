@@ -6,9 +6,25 @@
       $allPoolTemplate = selectAllPoolTemplate($getIdSubsection);
       $allUser = selectAllUser();
       $allPoolTempleateQuestion = selectAllPoolTemplateQuestion($getIdPoolTemplate);
-      $allPool = selectAllPool($getIdSubsection);
+      $allPool = selectAllPool($getIdSubsection, $getPage);
       $allPoolQuestion = selectAllPoolQuestion($getIdPool);
+      $allPoolGroupMonth = selectAllPoolGroupMonth($getIdSubsection);
       
+      
+        // Позьзователь
+        if(empty($_GET['action'])) {
+          include('templates/pool-list.php');
+        } 
+
+        if($_GET['action'] == 'pool_edit_user') {
+          include('templates/a-pool-edit-user.php');
+        } 
+
+        
+        
+        
+        
+      // Админ
       if($permissionEditSubsection) {
         if($_GET['action'] == 'edit') {
           include('templates/a-pool.php');

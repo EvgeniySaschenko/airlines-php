@@ -1,5 +1,5 @@
 <div class="a-pool-template-edit">
-   <h1 class="title-page text-center text-uppercase"> <?= $currentPool[0]['name_'.$lang]; ?> </h1>    
+   <h1 class="title-page text-center text-uppercase"> <?= $currentPoolTemplate[0]['name_'.$lang]; ?> </h1>    
   <div class="notice">
     <!-- Added-->
     <div data-notice="#noticeAddedPoolTemplateQuestion" data-ancor="noticeAddedPoolTemplateQuestion" class="hidden alert alert-success" role="alert">
@@ -23,8 +23,12 @@
           <td>
             <div class="form-group">
               <div class="input-group">
-                <div class="input-group-addon"></div>
+                <div class="input-group-addon">ru</div>
                 <input name="name_ru" type="text" class="form-control" required="required" placeholder="<?= $word[150]['name_'.$lang]; ?>">
+              </div>
+              <div class="input-group">
+                <div class="input-group-addon">en</div>
+                <input name="name_en" type="text" class="form-control" required="required" placeholder="<?= $word[150]['name_'.$lang]; ?>">
               </div>
             </div> 
             <div class="form-group">
@@ -66,11 +70,16 @@
         <td>
           <input name="id_pool_template_question[]" type="hidden" class="form-control" value="<?= $poolTempleateQuestion['id'] ?>">
             
-          <!--ru-->
+          <!--ru en-->
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon"></div>
               <input name="name_ru[]" type="text" class="form-control" value="<?= $poolTempleateQuestion['name_ru'] ?>" required="required" placeholder="<?= $word[150]['name_'.$lang]; ?>">
+            </div>
+              
+            <div class="input-group">
+              <div class="input-group-addon"></div>
+              <input name="name_en[]" type="text" class="form-control" value="<?= $poolTempleateQuestion['name_en'] ?>" required="required" placeholder="<?= $word[150]['name_'.$lang]; ?>">
             </div>
           </div> 
         </td>

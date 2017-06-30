@@ -4993,14 +4993,102 @@
 	}
         
         
-	//ВСЕ опросы подраздела раздела - отправленные
-	function selectAllPool($idSubsection){
+        // Вопросы опроса
+	function selectAllPoolQuestion($idPool){
 		global $db;
+		$query =
+		"SELECT
+                    pq.*,
+                    u.id_section as id_section_user,
+                    u.name_ru as user_name_ru,
+                    u.name_en as user_name_en,
+                    u.last_name_ru as user_last_name_ru,
+                    u.last_name_en as user_last_name_en,
+                    u.first_name_ru as user_first_name_ru ,
+                    u.first_name_en as user_first_name_en
+                FROM ae_pool_question pq
+                INNER JOIN ae_user u ON u.id = pq.id_user
+                INNER JOIN ae_pool p ON p.id = pq.id_pool
+                WHERE
+                    pq.id_pool = ?
+                AND
+                    pq.hide = 0
+                AND
+                    p.hide = 0
+		ORDER BY
+                    pq.priority ASC,
+                    pq.name_ru ASC,
+                    pq.id ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idPool);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+        
+        // Вопросы опроса
+	function selectAllPoolQuestionGroupUser($idPool){
+		global $db;
+		$query =
+		"SELECT
+                    pq.*,
+                    u.mail as user_mail,
+                    u.mail_2 as user_mail_2,
+                    u.id_section as id_section_user,
+                    u.name_ru as user_name_ru,
+                    u.name_en as user_name_en,
+                    u.last_name_ru as user_last_name_ru,
+                    u.last_name_en as user_last_name_en,
+                    u.first_name_ru as user_first_name_ru ,
+                    u.first_name_en as user_first_name_en,
+                    u.mail as user_mail,
+                    u.mail_2 as user_mail_2
+                FROM ae_pool_question pq
+                INNER JOIN ae_user u ON u.id = pq.id_user
+                INNER JOIN ae_pool p ON p.id = pq.id_pool
+                WHERE
+                    pq.id_pool = ?
+                AND
+                    pq.hide = 0
+                AND
+                    p.hide = 0
+                GROUP BY pq.id_user   
+		ORDER BY
+                    pq.priority ASC,
+                    pq.name_ru ASC,
+                    pq.id ASC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $idPool);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+	//ВСЕ опросы подраздела раздела - отправленные
+	function selectAllPool($idSubsection, $page){
+		global $db;
+                $record = $page *30;
 		$query =
 		"SELECT
                     p.*,
                     pt.id_section,
-                    pt.id_subsection
+                    pt.id_subsection,
+                    (SELECT 
+                        COUNT(p_c.id) 
+                    FROM ae_pool p_c
+                    INNER JOIN ae_pool_template pt_c ON pt_c.id = p_c.id_pool_template 
+                    WHERE pt_c.id_subsection = ? AND p_c.hide = 0) as count_pool
                 FROM ae_pool p
                 INNER JOIN ae_pool_template pt ON pt.id = p.id_pool_template
                 WHERE
@@ -5008,9 +5096,38 @@
                 AND
                     p.hide = 0
 		ORDER BY
-                    p.date_create DESC,
+                    p.date_doc DESC,
                     p.name_ru ASC,
-                    p.id ASC";
+                    p.id ASC 
+                    LIMIT $record, 30";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "ii", $idSubsection, $idSubsection);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+	//ВСЕ опросы подраздела раздела - отправленные - Групировка по месяцам
+	function selectAllPoolGroupMonth($idSubsection){
+		global $db;
+		$query =
+		"SELECT
+                    p.*
+                FROM ae_pool p
+                INNER JOIN ae_pool_template pt ON pt.id = p.id_pool_template 
+                WHERE
+                      pt.id_subsection = ?
+                  AND
+                      p.hide = 0
+		GROUP BY DATE_FORMAT(p.date_doc, '%Y-%m')
+		ORDER BY
+			p.date_doc DESC,
+			p.name_ru ASC";
 		$stmt = mysqli_stmt_init($db);
 		if(!mysqli_stmt_prepare($stmt, $query))
 			return false;
@@ -5023,29 +5140,31 @@
 		return $arr;
 	}
         
-	function selectAllPoolQuestion($idPool){
-		global $db;
-		$query =
-		"SELECT
-                    *
-                FROM ae_pool_question
-                WHERE
-                    id_pool = ?
-                AND
-                    hide = 0
-		ORDER BY
-                    priority ASC,
-                    name_ru ASC,
-                    id ASC";
-		$stmt = mysqli_stmt_init($db);
-		if(!mysqli_stmt_prepare($stmt, $query))
-			return false;
-		mysqli_stmt_bind_param($stmt, "i", $idPool);
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-			$arr[] = $row;
-		mysqli_stmt_close($stmt);
-		return $arr;
-	}
-	?>
+        // Текущий опрос
+        function selectCurrentPool($idPool) {
+            global $db;
+            $query =
+            "SELECT
+                p.*,
+                su.name_ru as subsection_name_ru,
+                su.name_en as subsection_name_en
+            FROM ae_pool p
+            INNER JOIN ae_pool_template pt ON pt.id = p.id_pool_template
+            INNER JOIN ae_subsection su ON su.id = pt.id_subsection
+            WHERE
+                 p.id= ?
+            AND
+                 p.hide = 0";
+            $stmt = mysqli_stmt_init($db);
+            if(!mysqli_stmt_prepare($stmt, $query))
+                return false;
+            mysqli_stmt_bind_param($stmt, "i", $idPool);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                    $arr[] = $row;
+            mysqli_stmt_close($stmt);
+            return $arr;
+        }
+        
+?>

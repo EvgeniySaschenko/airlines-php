@@ -3,11 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/WEB/airlines-dev/controller/insert/pool.php</file>
             <file>file:/D:/WEB/airlines-dev/query/query.insert.php</file>
+            <file>file:/D:/WEB/airlines-dev/public/css/pool.css</file>
             <file>file:/D:/WEB/airlines-dev/route/pool.php</file>
-            <file>file:/D:/WEB/airlines-dev/query/query.select.php</file>
             <file>file:/D:/WEB/airlines-dev/templates/a-pool.php</file>
+            <file>file:/D:/WEB/airlines-dev/query/query.update.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-pool-edit.php</file>
+            <file>file:/D:/WEB/airlines-dev/general.php</file>
+            <file>file:/D:/WEB/airlines-dev/public/css/styles.css</file>
+            <file>file:/D:/WEB/airlines-dev/public/js/pool.js</file>
+            <file>file:/D:/WEB/airlines-dev/doc-generate/pool.php</file>
+            <file>file:/D:/WEB/airlines-dev/public/js/app.js</file>
+            <file>file:/D:/WEB/airlines-dev/controller/insert/pool.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-pool-template-list.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-pool-template-edit.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-pool-edit-user.php</file>
+            <file>file:/D:/WEB/airlines-dev/query/query.select.php</file>
+            <file>file:/D:/WEB/airlines-dev/route/flight.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/pool-list.php</file>
         </group>
     </open-files>
 </project-private>

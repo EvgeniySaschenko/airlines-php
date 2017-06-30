@@ -49,7 +49,7 @@
                         <tr class="a-crew-generate-user" data-date-end-doc="<?= $user['id_user']; ?>">
                           <!--Должность-->
                           <td class="a-crew-generate-user__rank"> 
-                            <?= dropDownList('id_rank[]', $allRank, $user['id_rank']); ?>
+                            <?= dropDownListRquired('id_rank[]', $allRank, $user['id_rank']); ?>
                           </td>
                           <!--Имя-->
                           <td class="a-crew-generate-user__name">

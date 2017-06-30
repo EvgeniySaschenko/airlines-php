@@ -175,8 +175,15 @@
 	//Текущий опрос - шаблон
 	if($_GET['id_pool_template'] != 0)
 	{
-		$currentPool = selectCurrentPoolTemplate($getIdPoolTemplate);
+		$currentPoolTemplate = selectCurrentPoolTemplate($getIdPoolTemplate);
 	}
+        
+	//Текущий опрос
+	if($_GET['id_pool'] != 0)
+	{
+		$currentPool = selectCurrentPool($getIdPool);
+	}
+        
     
 	# НОМЕР ЗАДАНИЯ НА ПОЛЁТ
 

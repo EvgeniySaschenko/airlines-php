@@ -44,4 +44,4 @@
       <?php include('templates/a-pool-template-add.php'); ?>
     </div>
   </div>
-</div>		
+</div>

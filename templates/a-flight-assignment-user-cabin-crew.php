@@ -53,7 +53,7 @@
         <tr>
           <!--Должность-->
           <td>
-            <?= dropDownList('id_rank[]', $allRankCabinCrew, $userFlight['id_rank_user']); ?>
+            <?= dropDownListRquired('id_rank[]', $allRankCabinCrew, $userFlight['id_rank_user']); ?>
           </td>
           <!--Имя-->
           <td>

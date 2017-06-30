@@ -1135,4 +1135,78 @@
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
+        
+        // Обновить вопросы
+        function updatePoolQuestion($idAuthor, $idUser, $nameRu, $nameDepartament, $priority, $status, $seriousnessUser1, $probabilityUser1, $seriousnessUser2, $probabilityUser2, $seriousnessAdmin1, $probabilityAdmin1, $seriousnessAdmin2, $probabilityAdmin2, $remarkAdmin, $remarkUser, $ip, $userAgent, $idPoolQuestion) {
+		global $db;
+		$query =
+		"UPDATE ae_pool_question
+		SET
+                    id_author = ?,
+                    id_user = ?,
+                    name_ru = ?,
+                    name_departament = ?,
+                    priority = ?,
+                    status = ?,
+                    seriousness_user_1 = ?,
+                    probability_user_1 = ?,
+                    seriousness_user_2 = ?,
+                    probability_user_2 = ?,
+                    seriousness_admin_1 = ?,
+                    probability_admin_1 = ?,
+                    seriousness_admin_2 = ?,
+                    probability_admin_2 = ?,
+                    remark_admin = ?,
+                    remark_user = ?,
+                    ip = ?,
+                    user_agent = ?
+		WHERE id = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iissiissssssssssssi", $idAuthor, $idUser, $nameRu, $nameDepartament, $priority, $status, $seriousnessUser1, $probabilityUser1, $seriousnessUser2, $probabilityUser2, $seriousnessAdmin1, $probabilityAdmin1, $seriousnessAdmin2, $probabilityAdmin2, $remarkAdmin, $remarkUser, $ip, $userAgent, $idPoolQuestion);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+        }
+        
+        // Ответы на вопросы
+        function updatePoolQuestionUser($seriousnessUser1, $probabilityUser1, $seriousnessUser2, $probabilityUser2, $remarkUser, $dateUpdate, $idPoolQuestion) {
+		global $db;
+		$query =
+		"UPDATE ae_pool_question
+		SET
+                    seriousness_user_1 = ?,
+                    probability_user_1 = ?,
+                    seriousness_user_2 = ?,
+                    probability_user_2 = ?,
+                    remark_user = ?,
+                    date_update = ?
+		WHERE id = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "ssssssi", $seriousnessUser1, $probabilityUser1, $seriousnessUser2, $probabilityUser2, $remarkUser, $dateUpdate, $idPoolQuestion);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+        }
+        
+        // Удалить / закрыть опрос
+        function updatePoolCloseDelete($poolHide, $poolStatus, $idPool) {
+		global $db;
+		$query =
+		"UPDATE ae_pool
+		SET
+                    hide = ?,
+                    status = ?
+		WHERE id = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+			return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iii", $poolHide, $poolStatus, $idPool);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+        }
 ?>

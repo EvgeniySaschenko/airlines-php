@@ -957,6 +957,27 @@ function dropdownListTime($time, $id, $start){
   </div>";
   }
   
+  //Выпадающий список с обязательным полем + нет
+ function dropDownListSimpleArrayNo($nameList, $arrRecords, $valSelected){
+	global $lang;
+	echo "<div class=\"form-group form-inline\">";
+
+    echo   "<select class=\"form-control\" name=\"{$nameList}\">
+      <option value=\"0\">НЕТ</option>";
+    
+	foreach($arrRecords as $key => $record)
+	{
+            if($record == $valSelected)
+                $selected = 'selected="selected"';
+            echo "<option {$selected} value=\"{$record}\">{$record}</option>";
+            unset($selected);
+	}
+	echo
+	"</select>
+  </div>";
+  }
+  
+  
 
 	//Выпадающий список пользователей
  function dropDownListUsers($nameList, $arrRecords, $idSelected){
@@ -981,6 +1002,29 @@ function dropdownListTime($time, $id, $start){
 	"</select>";
   }
 
+  
+	//Выпадающий список пользователей
+ function dropDownListUsersDisabled($nameList, $arrRecords, $idSelected){
+	global $lang;
+	echo
+	"<select name=\"{$nameList}\" disabled=\"disabled\">";
+	foreach($arrRecords as $record)
+	{
+		if($record['hide'] == 0)
+		{
+			if($record['id'] == $idSelected)
+				$selected = 'selected="selected"';
+			$name = mb_substr($record['name_'.$lang], 0, 1, 'utf-8');
+			$firstName = mb_substr($record['first_name_'.$lang], 0, 1, 'utf-8');
+			$fullName = $record['last_name_'.$lang].' '.$name.'.'.$firstName.'.';
+			echo
+			"<option {$selected} value=\"{$record['id']}\"> {$fullName}</option>";
+			unset($selected);
+		}
+	}
+	echo
+	"</select>";
+  }
 	//Выпадающий список пользователей РАЗДЕЛА
  function dropDownListUsersSection($nameList, $arrRecords, $idSelected, $idSection){
 	global $lang;

@@ -1,5 +1,5 @@
-<div class="a-pool-list" data-anchor-pagination="#poolList">
-  
+<div class="pool-list" data-anchor-pagination="#poolList">
+    <h1 class="title-page text-center text-uppercase"> <?= $currentSubsection[0]['name_'.$lang]; ?> </h1>
 
     
   <nav class="text-right">
@@ -17,6 +17,7 @@
     </ul>
   </nav>
     
+    
   <table class="table table-striped">
     <thead>
       <tr>
@@ -28,7 +29,6 @@
         </th>
       </tr>
     </thead>
-    <caption class="text-bold text-center"><?= $word[409]['name_'.$lang]; ?></caption>
     <tbody>
       <?php foreach($allPoolGroupMonth as $poolMonth): ?>
        <?php foreach($allPool as $key => $pool): ?>
@@ -48,7 +48,7 @@
             <tr>
               <td class="pool-list__name">
                 <div class="cut-text">
-                <a href="index.php?lang=<?= $lang; ?>&amp;id_section=<?= $pool['id_section']; ?>&amp;id_subsection=<?= $pool['id_subsection']; ?>&amp;id_pool=<?= $pool['id']; ?>&amp;action=pool_edit#navBottom">
+                <a href="index.php?lang=<?= $lang; ?>&amp;id_section=<?= $pool['id_section']; ?>&amp;id_subsection=<?= $pool['id_subsection']; ?>&amp;id_pool=<?= $pool['id']; ?>&amp;action=pool_edit_user#navBottom">
                   <?= $pool['name_'.$lang]; ?>
                 </a>
                 </div>
@@ -62,4 +62,5 @@
       <?php endforeach; ?>
     </tbody>
   </table>
+    
 </div>

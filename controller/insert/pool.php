@@ -37,20 +37,22 @@
             if(empty($priority))
                 $priority = 0;
             
-            if(!empty($_POST['name_ru']))
+            $nameRu = clearStr($_POST['name_ru']);
+            $nameEn = clearStr($_POST['name_en']);
+            
+            if(empty($_POST['name_en']))
             {
-                $nameRu = clearStr($_POST['name_ru']);
                 $nameEn = $nameRu;
-                $result = insertPoolTemplateQuestion($idAuthor, $idPoolTemplate, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent);
+            }
+            
+
+            $result = insertPoolTemplateQuestion($idAuthor, $idPoolTemplate, $idUser, $priority, $nameRu, $nameEn, $nameDepartament, $ip, $userAgent);
+
             if($result)
-            {
-            $ancor = '#noticeAddedPoolTemplateQuestion';
-            }
+                $ancor = '#noticeAddedPoolTemplateQuestion';
             else
-            {
-            $ancor = '#noticeErrorAddedPoolTemplateQuestion';
-            }
-                    }
+                $ancor = '#noticeErrorAddedPoolTemplateQuestion';
+
             redirect($ancor);
         }
         

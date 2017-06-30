@@ -31,5 +31,6 @@
     include('manage-site');
     include('maskedinput'); 
     include('captcha'); 
+    include('pool'); 
   });
 }).call(this);

@@ -27,7 +27,16 @@
             $userAgent = $currentUserAgent;
             $idFlightAssignment = $getIdFlightAssignment;
             $user = selectUser($idUser);
-            insertFlightUser($idAuthor, $idUser, $user[0]['id_rank'], $idFlightAssignment, $ip, $userAgent);
+            $idRank = $user[0]['id_rank'];
+            
+            
+            if($user[0]['id_section'] != $getIdSection) {
+              $rank = selectAllRank($getIdSection);
+              $idRank = $rank[0]['id'];
+                
+            }
+                
+            insertFlightUser($idAuthor, $idUser, $idRank, $idFlightAssignment, $ip, $userAgent);
             
             if($_GET['action'] == 'user_assignment_flight')
               $ancor = '#noticeFlightAssignmentUserCrewAdd';
