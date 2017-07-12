@@ -29,16 +29,9 @@
             <td class="text-center text-bold" rowspan="3"><?= $key + 1; ?></td>
 
             <!--Название-->
-            <td>
+            <td class="text-bold">
               <input name="id_pool_question[]" type="hidden" class="form-control" value="<?= $poolQuestion['id'] ?>">
-              <div class="form-group">
-                <div class="input-group">
-                  <div class="input-group-addon">
-                      <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="<?= $word[410]['name_'.$lang]; ?>"></span>
-                  </div>
-                  <input name="name_ru[]" type="text" class="form-control" value="<?= $poolQuestion['name_ru'] ?>" disabled="disabled" placeholder="<?= $word[150]['name_'.$lang]; ?>">
-                </div>
-              </div> 
+              <?= $poolQuestion['name_ru'] ?> <br>/ <?= $poolQuestion['name_en'] ?> 
             </td>
             <!--Ответственный департамент-->
             <td>
@@ -70,20 +63,22 @@
             <td>
                 <!--Примечание пользователя-->
                 <div class="form-group">
-                  <div class="text-bold"><?= $word[411]['name_'.$lang]; ?></div>
-                  <textarea name="remark_user[]" class="form-control"><?= $poolQuestion['remark_user']; ?></textarea>
+                    <div class="input-group">
+                      <div data-toggle="tooltip" title="<?= $word[411]['name_'.$lang]; ?>" class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                      <input name="remark_user[]" value="<?= $poolQuestion['remark_user']; ?>" class="form-control" type="text" placeholder="<?= $word[411]['name_'.$lang]; ?>">
+                    </div>
                 </div>
             </td>
             <td colspan="2" data-index-risk-before="<?=$poolQuestion['probability_user_1'].''.$poolQuestion['seriousness_user_1']; ?>">
                 <div class="form-group down-list__valuation">
-                  <div class="text-bold"><?= $word[414]['name_'.$lang]; ?></div>
+                    <span class="glyphicon glyphicon-remove" data-toggle="tooltip" title="<?= $word[414]['name_'.$lang]; ?>"></span>
                     <?= dropDownListSimpleArrayNo('seriousness_user_1[]', array('A', 'B', 'C', 'D', 'E'), $poolQuestion['seriousness_user_1']); ?>
                     <?= dropDownListSimpleArrayNo('probability_user_1[]', array('1', '2', '3', '4', '5'), $poolQuestion['probability_user_1']); ?>
                 </div>
             </td>
             <td colspan="2" data-index-risk-after="<?=$poolQuestion['probability_user_2'].''.$poolQuestion['seriousness_user_2']; ?>">
                 <div class="form-group down-list__valuation">
-                  <div class="text-bold"><?= $word[415]['name_'.$lang]; ?></div>
+                    <span class="glyphicon glyphicon-ok" data-toggle="tooltip" title="<?= $word[415]['name_'.$lang]; ?>"></span>
                     <?= dropDownListSimpleArrayNo('seriousness_user_2[]', array('A', 'B', 'C', 'D', 'E'), $poolQuestion['seriousness_user_2']); ?>
                     <?= dropDownListSimpleArrayNo('probability_user_2[]', array('1', '2', '3', '4', '5'), $poolQuestion['probability_user_2']); ?>
                 </div>
@@ -94,33 +89,40 @@
             <td>
                 <!--Примечание администратора-->
                 <div class="form-group">
-                  <div class="text-bold"><?= $word[412]['name_'.$lang]; ?></div>
-                  <textarea name="remark_admin[]" class="form-control"><?= $poolQuestion['remark_admin']; ?></textarea>
+                    <div class="input-group">
+                      <div data-toggle="tooltip" title="<?= $word[412]['name_'.$lang]; ?>" class="input-group-addon"><span class="glyphicon glyphicon-tower"></span></div>
+                      <input name="remark_admin[]" value="<?= $poolQuestion['remark_admin']; ?>" class="form-control" type="text" placeholder="<?= $word[412]['name_'.$lang]; ?>">
+                    </div>
                 </div>
             </td>
             <td colspan="2" data-index-risk-before="<?=$poolQuestion['probability_admin_1'].''.$poolQuestion['seriousness_admin_1']; ?>">
                 <div class="form-group down-list__valuation">
+                    <span class="glyphicon glyphicon-remove" data-toggle="tooltip" title="<?= $word[414]['name_'.$lang]; ?>"></span>
                     <?= dropDownListSimpleArrayNo('seriousness_admin_1[]', array('A', 'B', 'C', 'D', 'E'), $poolQuestion['seriousness_admin_1']); ?>
                     <?= dropDownListSimpleArrayNo('probability_admin_1[]', array('1', '2', '3', '4', '5'), $poolQuestion['probability_admin_1']); ?>
                 </div>
             </td>
             <td colspan="2" data-index-risk-after="<?=$poolQuestion['probability_admin_2'].''.$poolQuestion['seriousness_admin_2']; ?>">
                 <div class="form-group down-list__valuation">
+                    <span class="glyphicon glyphicon-ok" data-toggle="tooltip" title="<?= $word[415]['name_'.$lang]; ?>"></span>
                     <?= dropDownListSimpleArrayNo('seriousness_admin_2[]', array('A', 'B', 'C', 'D', 'E'), $poolQuestion['seriousness_admin_2']); ?>
                     <?= dropDownListSimpleArrayNo('probability_admin_2[]', array('1', '2', '3', '4', '5'), $poolQuestion['probability_admin_2']); ?>
                 </div>
             </td>
           </tr>
 
-
           <?php endforeach; ?>
           <tr>
-            <td colspan="4">
+            <!--Отправить-->
+            <td colspan="2">
+               <button type="submit" class="btn btn-success"><?= $word[83]['name_'.$lang]; ?></button>
             </td>
-            <td>
+
+            <td colspan="2">
                 <div class="text-bold"><?= $word[416]['name_'.$lang]; ?> </div>
                 <div class="text-bold"><?= $word[26]['name_'.$lang]; ?> </div>
                 <div class="text-bold"><?= $word[418]['name_'.$lang]; ?> </div>
+                <div class="text-bold"><?= $word[451]['name_'.$lang]; ?> </div>
             </td>
             <td>
                 <!--sent_mail-->
@@ -147,17 +149,22 @@
                         <input type="hidden" name="pool_status" value="<?= $currentPool[0]['status']; ?>">
                     </div>
                 </div> 
-            </td>
-            <!--Отправить-->
-            <td class="text-right" colspan="4">
-               <button type="submit" class="btn btn-success"><?= $word[83]['name_'.$lang]; ?></button>
+                <div class="text-bold text-right">
+                     <?= linkUser($allPoolQuestion[0]['id_section_admin'], $allPoolQuestion[0]['id_author'], $allPoolQuestion[0]['admin_user_last_name_'.$lang], $allPoolQuestion[0]['admin_user_name_'.$lang], $allPoolQuestion[0]['admin_user_first_name_'.$lang]); ?>
+                </div> 
             </td>
           </tr>
         </tbody>
       </table>
     </form>
 <?php endif; ?>
+   
+
    <div style="text-align: center">
-    <img src="images/risk-assessment.jpg" alt="">
+    <?php if($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_1'): ?>
+     <img src="images/risk-assessment.jpg" alt="">
+    <?php elseif($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_2'): ?>
+     <img src="images/risk-assessment-2.jpg" alt="">
+    <?php endif; ?>
    </div>
 </div>

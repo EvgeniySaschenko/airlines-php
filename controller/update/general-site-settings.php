@@ -1,5 +1,5 @@
 <?php
-    # Общие настройки сайта
+    # пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     if($_GET['action'] == 'general_site_settings' and $permissionManageSite)
     {
 
@@ -16,8 +16,10 @@
         $mailsVoluntaryPosts = clearStr($_POST['mails_voluntary_posts']);
         $mailsDoc = clearStr($_POST['mails_doc']);
         $numberingFlightAssignment = clearStr($_POST['numbering_flight_assignment']);
+        $riskAssessment = clearStr($_POST['risk_assessment']);
         
-		updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $ip, $userAgent);
+        
+		updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $ip, $userAgent);
         
         $ancor = '#noticeGeneralSiteSettings';
         

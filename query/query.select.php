@@ -5005,9 +5005,17 @@
                     u.last_name_ru as user_last_name_ru,
                     u.last_name_en as user_last_name_en,
                     u.first_name_ru as user_first_name_ru ,
-                    u.first_name_en as user_first_name_en
+                    u.first_name_en as user_first_name_en,
+                    ua.id_section as id_section_admin,
+                    ua.name_ru as admin_user_name_ru,
+                    ua.name_en as admin_user_name_en,
+                    ua.last_name_ru as admin_user_last_name_ru,
+                    ua.last_name_en as admin_user_last_name_en,
+                    ua.first_name_ru as admin_user_first_name_ru ,
+                    ua.first_name_en as admin_user_first_name_en
                 FROM ae_pool_question pq
                 INNER JOIN ae_user u ON u.id = pq.id_user
+                LEFT OUTER JOIN ae_user ua ON ua.id = pq.id_author
                 INNER JOIN ae_pool p ON p.id = pq.id_pool
                 WHERE
                     pq.id_pool = ?

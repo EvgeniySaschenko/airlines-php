@@ -75,8 +75,12 @@
   </table>
 </form>
     
-<div style="text-align: center">
-    <img src="images/risk-assessment.jpg" alt="">
-</div>
+   <div style="text-align: center">
+    <?php if($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_1'): ?>
+     <img src="images/risk-assessment.jpg" alt="">
+    <?php elseif($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_2'): ?>
+     <img src="images/risk-assessment-2.jpg" alt="">
+    <?php endif; ?>
+   </div>
     
 </div>

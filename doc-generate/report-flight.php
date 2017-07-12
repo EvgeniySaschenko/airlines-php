@@ -75,7 +75,6 @@
 	$phpWord->addFontStyle('font-bold', array('size' => 9, 'bold' => true));
 	$phpWord->addParagraphStyle('paragrap-cell', array('align' => 'center', 'spaceBefore' => 0, 'spaceAfter' => 0));
 	$phpWord->addParagraphStyle('paragrap-cell-left', array('align' => 'left', 'spaceBefore' => 0, 'spaceAfter' => 0));
-	$phpWord->addParagraphStyle('paragrap-cell-right', array('align' => 'right', 'spaceBefore' => 0, 'spaceAfter' => 0));
 	
 			$REPORT_OF_FLIGHT = $word[325]['name_'.$lang].' № '.$CURRENT_NUMBER_ASSIGMENT_FLIGHT;
 	

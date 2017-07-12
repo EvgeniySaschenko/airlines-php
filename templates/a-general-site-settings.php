@@ -118,6 +118,23 @@
                 <textarea name="mails_doc" class="form-control"><?=$GENERAL_SITE_SETTINGS[0]['mails_doc'];?></textarea>
             </td>
          </tr>
+         <!--Нумерация заданий на полёт-->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+              <?= $word[419]['name_'.$lang]; ?>
+            </td>
+            <td>
+              <div class="form-group">
+                <div class="input-group">
+                <select name="risk_assessment" data-selected-option="<?= $GENERAL_SITE_SETTINGS[0]['risk_assessment']; ?>">
+                  <option value="risk_assessment_1"><?= $word[419]['name_'.$lang]; ?> 1</option>
+                  <option value="risk_assessment_2"><?= $word[419]['name_'.$lang]; ?> 2</option>
+                </select>
+                </div>
+              </div>
+            </td>
+         </tr>
+         
         <!--Отправить-->
         <tr>
           <td colspan="2">

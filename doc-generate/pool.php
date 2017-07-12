@@ -46,9 +46,18 @@
 	$cellNoBorder = array('valign' => 'center', 'valign' => 'center');
         $cellBorderTopBottom = array('borderTopSize' => 1, 'borderBottomSize' => 1, 'valign' => 'left', 'valign' => 'center');
         $cellBorderTopBottomLeftRight = array('borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
+        
+        
         $cellBorderTopBottomLeftRightGreen = array('bgColor' => '03ae4e', 'borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
         $cellBorderTopBottomLeftRightYellow = array('bgColor' => 'fffe04', 'borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
         $cellBorderTopBottomLeftRightRed = array('bgColor' => 'fe0000', 'borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
+        
+        $cellBorderTopBottomLeftRightGreen2 = array('bgColor' => '00ff00', 'borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
+        $cellBorderTopBottomLeftRightYellow2 = array('bgColor' => 'feff01', 'borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
+        $cellBorderTopBottomLeftRightOrange2 = array('bgColor' => 'ff9800', 'borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
+        $cellBorderTopBottomLeftRightRed2 = array('bgColor' => 'fe0002', 'borderTopSize' => 1, 'borderBottomSize' => 1, 'borderLeftSize' => 1, 'borderRightSize' => 1, 'valign' => 'left', 'valign' => 'center');
+        
+        
 	$cellNoBorderColSpan2 = array('valign' => 'center', 'gridSpan' => 2, 'valign' => 'center');
 	
 	$cellColSpan2 = array('borderSize' => 1, 'gridSpan' => 2, 'valign' => 'center');
@@ -65,7 +74,6 @@
 	$cellRowSpan = array('borderSize' => 1, 'vMerge' => 'restart', 'valign' => 'center');
 	
 	$cellRowContinue = array('borderSize' => 1, 'vMerge' => 'continue');
-	$styleImgRisk = array('align' => 'center', 'height'=> 230);
 	
 	// Стили текста
 	$phpWord->addFontStyle('font-cell7', array('size' => 7, 'bold' => false));
@@ -85,7 +93,7 @@
          // Оценка рисков   
 	$table = $section->addTable('table1');
             $table->addRow(m2t(13));
-                $table->addCell(m2t(190), $cellNoBorder)->addText($word[419]['name_'.$lang], 'font-bold', 'paragrap-cell');
+                $table->addCell(m2t(190), $cellNoBorder)->addText($word[419]['name_'.$lang].' № '.$currentPool[0]['name_'.$lang].' '.$word[417]['name_'.$lang].' '.convertDate($currentPool[0]['date_doc']), 'font-bold', 'paragrap-cell');
 	$table = $section->addTable('table1'); 
             $table->addRow(m2t(8));
                 $table->addCell(m2t(50), $cellBorderTopBottomLeftRight)->addText($word[420]['name_en'].' <w:br/>'.$word[420]['name_ru'], 'font-cell', 'paragrap-cell');
@@ -107,6 +115,9 @@
                 
 	$table = $section->addTable('table1'); 
             foreach($allPoolQuestion  as $key => $poolQuestion):
+                
+                $poolNameRu = $poolQuestion['name_ru'];
+                $poolNameEn = $poolQuestion['name_en'];
                 
                 $poollProbability1 = $poolQuestion['probability_admin_1'];
                 if(empty($poolQuestion['probability_admin_1']))
@@ -130,94 +141,19 @@
                 
                 $nameDepartament = $poolQuestion['name_departament'];
                 
+                if($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_1')
+                    $arrStyleCellIndexRisk = array(0 => $cellBorderTopBottomLeftRightRed, 1 => $cellBorderTopBottomLeftRightYellow, 2 => $cellBorderTopBottomLeftRightGreen, 3 => $cellBorderTopBottomLeftRight);
+                if($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_2')
+                    $arrStyleCellIndexRisk = array(0 => $cellBorderTopBottomLeftRightRed2, 1 => $cellBorderTopBottomLeftRightOrange2, 2 => $cellBorderTopBottomLeftRightYellow2, 3 => $cellBorderTopBottomLeftRightGreen2, 4 => $cellBorderTopBottomLeftRight);
                 
-                // Оценка после
-                // Красный Цвет ячейки 
-                if(
-                        $poollProbability2 <= 5 and $poollProbability2 >= 3 and $poollSeriousness2 == 'A'
-                      or
-                        $poollProbability2 == 5 and ($poollProbability2 == 4 or $poollSeriousness2 == 'B')
-                      or
-                        $poollProbability2 == 5 and $poollSeriousness2 == 'C'
-                   )
-                {
-                    $cellIndexRisk2 = $cellBorderTopBottomLeftRightRed;
-                }
-                // Желтый цвет
-                elseif(
-                        $poollProbability2 == 5 and ($poollSeriousness2 == 'В' or  $poollSeriousness2 == 'E')
-                      or
-                        $poollProbability2 == 4 and ($poollSeriousness2 == 'C' or $poollSeriousness2 == 'D' or $poollSeriousness2 == 'E')
-                      or
-                        $poollProbability2 == 3 and ($poollSeriousness2 == 'B' or $poollSeriousness2 == 'C' or $poollSeriousness2 == 'D')
-                      or
-                        $poollProbability2 == 2 and ($poollSeriousness2 == 'A' or $poollSeriousness2 == 'B' or $poollSeriousness2 == 'C')
-                   )
-                    {
-                        $cellIndexRisk2 = $cellBorderTopBottomLeftRightYellow;
-                    }
-                // Желтый цвет
-                elseif(
-                        $poollProbability2 == 3 and $poollSeriousness2 == 'E'
-                      or
-                        $poollProbability2 == 2 and ($poollSeriousness2 == 'D' or $poollSeriousness2 == 'E')
-                      or
-                        $poollProbability2 == 1 and ($poollSeriousness2 == 'A' or $poollSeriousness2 == 'B' or $poollSeriousness2 == 'C' or $poollSeriousness2 == 'D' or $poollSeriousness2 == 'E')
-                   )
-                {
-                    $cellIndexRisk2 = $cellBorderTopBottomLeftRightGreen;
-                }
-                else 
-                {
-                    $cellIndexRisk2 = $cellBorderTopBottomLeftRight;
-                }
                 
-                // Оценка до
-                // Красный Цвет ячейки 
-                if(
-                        $poollProbability1 <= 5 and $poollProbability1 >= 3 and $poollSeriousness1 == 'A'
-                      or
-                        $poollProbability1 == 5 and ($poollProbability1 == 4 or $poollSeriousness1 == 'B')
-                      or
-                        $poollProbability1 == 5 and $poollSeriousness1 == 'C'
-                   )
-                {
-                    $cellIndexRisk1 = $cellBorderTopBottomLeftRightRed;
-                }
-                // Желтый цвет
-                elseif(
-                        $poollProbability1 == 5 and ($poollSeriousness1 == 'В' or  $poollSeriousness1 == 'E')
-                      or
-                        $poollProbability1 == 4 and ($poollSeriousness1 == 'C' or $poollSeriousness1 == 'D' or $poollSeriousness1 == 'E')
-                      or
-                        $poollProbability1 == 3 and ($poollSeriousness1 == 'B' or $poollSeriousness1 == 'C' or $poollSeriousness1 == 'D')
-                      or
-                        $poollProbability1 == 2 and ($poollSeriousness1 == 'A' or $poollSeriousness1 == 'B' or $poollSeriousness1 == 'C')
-                   )
-                    {
-                        $cellIndexRisk1 = $cellBorderTopBottomLeftRightYellow;
-                    }
-                // Желтый цвет
-                elseif(
-                        $poollProbability1 == 3 and $poollSeriousness1 == 'E'
-                      or
-                        $poollProbability1 == 2 and ($poollSeriousness1 == 'D' or $poollSeriousness1 == 'E')
-                      or
-                        $poollProbability1 == 1 and ($poollSeriousness1 == 'A' or $poollSeriousness1 == 'B' or $poollSeriousness1 == 'C' or $poollSeriousness1 == 'D' or $poollSeriousness1 == 'E')
-                   )
-                {
-                    $cellIndexRisk1 = $cellBorderTopBottomLeftRightGreen;
-                }
-                else 
-                {
-                    $cellIndexRisk1 = $cellBorderTopBottomLeftRight;
-                }
-                
+                $cellIndexRisk1 = colorHighlightingPool($poollProbability1, $poollSeriousness1, $arrStyleCellIndexRisk, $GENERAL_SITE_SETTINGS[0]['risk_assessment']);
+                $cellIndexRisk2 = colorHighlightingPool($poollProbability2, $poollSeriousness2, $arrStyleCellIndexRisk, $GENERAL_SITE_SETTINGS[0]['risk_assessment']);
                 
                 
                 $table->addRow(m2t(8));
                     $table->addCell(m2t(10), $cellBorderTopBottomLeftRight)->addText($key + 1, 'font-cell7', 'paragrap-cell');
-                    $table->addCell(m2t(40), $cellBorderTopBottomLeftRight)->addText('  '.$poolQuestion['name_ru'].' <w:br/>  '.$poolQuestion['name_en'], 'font-cell7', 'paragrap-cell-left');
+                    $table->addCell(m2t(40), $cellBorderTopBottomLeftRight)->addText($poolNameRu.'<w:br/>'.$poolNameEn, 'font-cell7', 'paragrap-cell-left');
                     $table->addCell(m2t(14), $cellBorderTopBottomLeftRight)->addText(replacementEmpty($poollProbability1), 'font-bold', 'paragrap-cell');
                     $table->addCell(m2t(14), $cellBorderTopBottomLeftRight)->addText(replacementEmpty($poollSeriousness1), 'font-bold', 'paragrap-cell');
                     $table->addCell(m2t(14), $cellIndexRisk1)->addText(replacementEmpty($poollProbability1).replacementEmpty($poollSeriousness1), 'font-bold', 'paragrap-cell');
@@ -227,9 +163,24 @@
                     $table->addCell(m2t(14), $cellIndexRisk2)->addText(replacementEmpty($poollProbability2).replacementEmpty($poollSeriousness2), 'font-bold', 'paragrap-cell');
                     $table->addCell(m2t(20), $cellBorderTopBottomLeftRight)->addText($nameDepartament, 'font-cell7', 'paragrap-cell');
             endforeach;
+            
+            
+        if($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_1') {
+            $styleImgRisk = array('align' => 'center', 'height'=> 230);
+            $risk_assessment_doc = '../images/risk-assessment-doc.jpg';
+        }
+
+        if($GENERAL_SITE_SETTINGS[0]['risk_assessment'] == 'risk_assessment_2') {
+            $styleImgRisk = array('align' => 'center', 'height'=> 150);
+            $risk_assessment_doc = '../images/risk-assessment-doc-2.jpg';
+        }
+
+            
+            
+            
 	$table = $section->addTable('table1'); 
             $table->addRow();
-                $table->addCell(m2t(190), $cellNoBorder)->addImage('../images/risk-assessment-doc.jpg', $styleImgRisk);
+                $table->addCell(m2t(190), $cellNoBorder)->addImage($risk_assessment_doc, $styleImgRisk);
                     
  	// Создание документа
 	$path = '../tmp/'.time().'_'.$currentUser[0]['id'].'.docx';

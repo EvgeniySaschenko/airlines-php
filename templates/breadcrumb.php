@@ -114,6 +114,16 @@
           echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$reports_pic_as_list_users_month.'">'.$getYear.'</a> </li>';
         }
         
+        // Оценка рисков
+        if($_GET['action'] == 'pool_edit_user' or $_GET['action'] == 'pool_edit') 
+        {
+          $pool_name = '&id_pool='.$_GET['id_pool'].'&action='.$_GET['action'].'#navBottom';
+          echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$pool_name.'">'.'№ '.$currentPool[0]['name_'.$lang].' '.$word[417]['name_'.$lang].' '.convertDate($currentPool[0]['date_doc']).'</a> </li>';
+        }
+        
+        
+        
+        
 
 ?>
 </ul>

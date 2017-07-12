@@ -21,9 +21,6 @@
         } 
 
         
-        
-        
-        
       // Админ
       if($permissionEditSubsection) {
         if($_GET['action'] == 'edit') {

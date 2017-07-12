@@ -2,7 +2,7 @@
   $(document).ready(function() {
     var include;
     include = function(name) {
-      $('body').append('<script type="text/javascript" src="/public/js/' + name + '.js?16"></script>');
+      $('body').append('<script type="text/javascript" src="/public/js/' + name + '.js?17"></script>');
     };
     include('ajax-form');
     include('ajax-pagination');

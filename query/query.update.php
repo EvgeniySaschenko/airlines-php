@@ -164,7 +164,7 @@
 	}
   
 	//ОБНОВИТЬ - Воздушные суда
-	function updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $ip, $userAgent) {
+	function updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $ip, $userAgent) {
 		global $db;
 		$query =
 		"UPDATE ae_general_settings
@@ -179,14 +179,15 @@
             mails_voluntary_posts = ?,
             mails_doc = ?,
             numbering_flight_assignment = ?,
-			ip = ?,
-			user_agent = ?
+            risk_assessment = ?,
+            ip = ?,
+            user_agent = ?
 		WHERE id = ?";
 		if(!$stmt = mysqli_prepare($db, $query))
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "iiissiisssssi", $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $ip, $userAgent, $idGeneralSettings);
+		mysqli_stmt_bind_param($stmt, "iiissiissssssi", $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $ip, $userAgent, $idGeneralSettings);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}

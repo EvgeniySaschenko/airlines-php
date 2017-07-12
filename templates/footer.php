@@ -138,6 +138,6 @@
     <script type="text/javascript" src="/public/modules/lightbox/js/lightbox.min.js"></script>
     <script type="text/javascript" src="/public/modules/spruto-player/player.js?3"></script>
     <script type="text/javascript" src="/public/modules/jquery.maskedinput.js"></script>
-    <script type="text/javascript" src="/public/js/app.js?version=<?= $_SESSION['check']; ?>15"></script>
+    <script type="text/javascript" src="/public/js/app.js?version=<?= $_SESSION['check']; ?>16"></script>
   </body>
 </html>

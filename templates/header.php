@@ -39,6 +39,7 @@
   data-current-id-book="<?= $currentBook[0]['id']; ?>"
   data-doc-days-red="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_red']; ?>"
   data-doc-days-orange="<?= $GENERAL_SITE_SETTINGS[0]['doc_days_orange']; ?>"
+  data-risk-assessment="<?= $GENERAL_SITE_SETTINGS[0]['risk_assessment']; ?>"
   data-result-query="">
 <div class="box-header">    
   <header class="header">

@@ -1328,4 +1328,50 @@ function sendMessageAddOrUpdateDoc($mails, $nameDoc, $idDoc, $idUser, $idAuthor,
     }
   }
 }
+
+    // Подcddtnrf цветом ячейки при формировании документа
+    function colorHighlightingPool($poollProbability, $poollSeriousness, $arrStyle, $riskAssessmentSetings) {
+        $evaluation = $poollProbability.$poollSeriousness;
+        
+        if($riskAssessmentSetings == 'risk_assessment_1') {
+            // Красный
+            if($evaluation == '5A' || $evaluation == '4A' || $evaluation == '3A' || $evaluation == '5B' || $evaluation == '4B' || $evaluation == '5C') {
+                 return $arrStyle[0];
+            }
+            // Желтый
+            elseif($evaluation == '5D' || $evaluation == '5E' || $evaluation == '4C' || $evaluation == '4D' || $evaluation == '4E' || $evaluation == '3B' || $evaluation == '3C' || $evaluation == '3D' || $evaluation == '2A' || $evaluation == '2B' || $evaluation == '2C') {
+                 return $arrStyle[1];
+            }
+            // Зеленый 
+            elseif($evaluation == '1A' || $evaluation == '1B' || $evaluation == '1C' || $evaluation == '1D' || $evaluation == '1E' || $evaluation == '2D' || $evaluation == '2E' || $evaluation == '3E') {
+                 return $arrStyle[2];
+            }
+            else {
+                 return $arrStyle[3];
+            } 
+        }
+        
+        if($riskAssessmentSetings == 'risk_assessment_2') {
+            // Красный 
+            if($evaluation == '5D' || $evaluation == '5E' || $evaluation == '4E') {
+                return $arrStyle[0];
+            }
+            // Оранжевый 
+            elseif($evaluation == '4C' || $evaluation == '5C' || $evaluation == '3D' || $evaluation == '4D' || $evaluation == '3E') {
+                return $arrStyle[1];
+            }
+            // Желтый 
+            elseif($evaluation == '3B' || $evaluation == '4B' || $evaluation == '5B' || $evaluation == '2C' || $evaluation == '3C' || $evaluation == '2D' || $evaluation == '2E') {
+                return $arrStyle[2];
+            }
+            // Зеленый 
+            elseif($evaluation == '1A' || $evaluation == '2A' || $evaluation == '3A' || $evaluation == '4A' || $evaluation == '5A' || $evaluation == '1B'  || $evaluation == '2B' || $evaluation == '1C' || $evaluation == '1D' || $evaluation == '1E') {
+                return $arrStyle[3];
+            }
+            else {
+                return $arrStyle[4];
+            } 
+        }
+
+    }
 ?>
