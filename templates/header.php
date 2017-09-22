@@ -48,11 +48,15 @@
       <!--Пользователь заблокирован-->
       <div data-notice="#noticeUserLocked" data-ancor="noticeUserLocked" class="alert alert-danger hidden" role="alert">
         <?= $word[164]['name_'.$lang]; ?>
+          <br>
+        <?= $word[516]['name_'.$lang].' '.$GENERAL_SITE_SETTINGS[0]['mail_admin']; ?> 
       </div>
       <!--Осталось попыток входа-->
       <?php for($i = 10; $i != 0; $i--): ?>
       <div data-notice="#noticeUserLeftLoginAttempts<?= $i; ?>" data-ancor="noticeUserLeftLoginAttempts<?= $i; ?>" class="alert alert-danger hidden" role="alert">
         <?= $word[282]['name_'.$lang]; ?> <?= $i; ?>
+          <br>
+        <?= $word[516]['name_'.$lang].' '.$GENERAL_SITE_SETTINGS[0]['mail_admin']; ?> 
       </div>
       <?php endfor; ?>
     </div>

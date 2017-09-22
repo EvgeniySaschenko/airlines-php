@@ -90,3 +90,18 @@
     });
     
 }).call(this);
+
+// Список отправленных опросов - подсветкам если дата документа меньше текущей на на 180 дней
+(function() {
+  var date, dateDoc;
+  date = moment().format('YYYY-MM-DD');
+
+  $('.pool-list [data-date-doc]').each(function(i, elem) {
+        dateDoc = $(this).data('date-doc');
+        daysLeft = moment(date).diff(dateDoc, 'days');
+        
+        if(daysLeft >= 180) {
+          $(this).addClass('text-red');
+        } 
+  });
+}).call(this);

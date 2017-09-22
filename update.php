@@ -114,6 +114,10 @@ and
   
   # Обновить опрос
   include('controller/update/pool.php'); 
+  
+    
+    # АБ - отчет КВС
+    include('controller/update/as-pic-report.php'); 
 
 }
 ?>

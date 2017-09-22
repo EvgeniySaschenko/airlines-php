@@ -164,12 +164,12 @@
 	}
   
 	//ОБНОВИТЬ - Воздушные суда
-	function updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $ip, $userAgent) {
+	function updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $reportPicAs, $mailAdmin, $basingAirportsReportPicAs, $mailReportPicAs, $remarkReportPicAs, $sourcesInfoAs, $ip, $userAgent) {
 		global $db;
 		$query =
 		"UPDATE ae_general_settings
 		SET
-			id_author = ?,
+            id_author = ?,
             id_flight_manager = ?,
             id_engineer_manager = ?,
             name_company_ru = ?,
@@ -180,6 +180,12 @@
             mails_doc = ?,
             numbering_flight_assignment = ?,
             risk_assessment = ?,
+            report_pic_as = ?,
+            mail_admin = ?,
+            basing_airports_report_pic_as = ?,
+            mail_report_pic_as = ?,
+            remark_report_pic_as = ?,
+            sources_info_as = ?,
             ip = ?,
             user_agent = ?
 		WHERE id = ?";
@@ -187,7 +193,7 @@
 		{
 			return false;
 		}
-		mysqli_stmt_bind_param($stmt, "iiissiissssssi", $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $ip, $userAgent, $idGeneralSettings);
+		mysqli_stmt_bind_param($stmt, "iiissiissssssssssssi", $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $reportPicAs, $mailAdmin, $basingAirportsReportPicAs, $mailReportPicAs, $remarkReportPicAs, $sourcesInfoAs, $ip, $userAgent, $idGeneralSettings);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
@@ -1207,6 +1213,123 @@
 			return false;
 		}
 		mysqli_stmt_bind_param($stmt, "iii", $poolHide, $poolStatus, $idPool);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+        }
+        
+        
+        // АБ - обновить ОТЧЕТ КВС - ВС
+        function updateASPicReportAircraftUserYearMonth($paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph13, $paragraph14, $dateSignature, $dateClosed,  $ip, $userAgent, $idUser, $idAircraft, $dateDoc){
+		global $db;
+		$query =
+		"UPDATE ae_as_report
+		SET
+                    paragraph_1 = ?,
+                    paragraph_3 = ?,
+                    paragraph_4_1 = ?,
+                    paragraph_4_2 = ?,
+                    paragraph_5 = ?,
+                    paragraph_5_1 = ?,
+                    paragraph_6 = ?,
+                    paragraph_7 = ?,
+                    paragraph_8 = ?,
+                    paragraph_9 = ?,
+                    paragraph_10 = ?,
+                    paragraph_11 = ?,
+                    paragraph_12 = ?,
+                    paragraph_13 = ?,
+                    paragraph_14 = ?,
+                    date_update = CURRENT_TIMESTAMP,
+                    date_signature = ?,
+                    date_closed = ?,
+                    ip = ?,
+                    user_agent = ?
+		WHERE id_user = ? AND id_aircraft = ? AND date_doc = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+                    return false;
+		}
+		mysqli_stmt_bind_param($stmt, "sssssssssssssssssssiis", $paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph13, $paragraph14, $dateSignature, $dateClosed,  $ip, $userAgent, $idUser, $idAircraft, $dateDoc);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+        }
+        
+        // АБ - обновить ОТЧЕТ КВС - КВС 
+        function updateASPicReportPICUserYearMonth($paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph12_1, $paragraph12_2, $paragraph13, $dateSignature, $dateClosed,  $ip, $userAgent, $idUser, $dateDoc){
+		global $db;
+		$query =
+		"UPDATE ae_as_report_alternative
+		SET
+                    paragraph_1 = ?,
+                    paragraph_3 = ?,
+                    paragraph_4_1 = ?,
+                    paragraph_4_2 = ?,
+                    paragraph_5 = ?,
+                    paragraph_5_1 = ?,
+                    paragraph_6 = ?,
+                    paragraph_7 = ?,
+                    paragraph_8 = ?,
+                    paragraph_9 = ?,
+                    paragraph_10 = ?,
+                    paragraph_11 = ?,
+                    paragraph_12 = ?,
+                    paragraph_12_1 = ?,
+                    paragraph_12_2 = ?,
+                    paragraph_13 = ?,
+                    date_update = CURRENT_TIMESTAMP,
+                    date_signature = ?,
+                    date_closed = ?,
+                    ip = ?,
+                    user_agent = ?
+		WHERE id_user = ? AND date_doc = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+                    return false;
+		}
+		mysqli_stmt_bind_param($stmt, "ssssssssssssssssssssis", $paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph12_1, $paragraph12_2, $paragraph13, $dateSignature, $dateClosed,  $ip, $userAgent, $idUser, $dateDoc);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+        }
+        
+
+        // АБ - обновить ОТЧЕТ КВС - КВС 
+        function updateASReportPicRiskPICUserYearMonth($region, $remark, $val_1, $val_2, $val_3, $val_4, $val_5, $val_6_1, $val_6_2, $val_6_3, $val_7, $val_8, $val_9, $val_10_1, $val_10_2, $val_10_3, $val_11_1, $val_11_2, $val_11_3, $val_11_4, $val_11_5, $dateSignature, $dateClosed,  $ip, $userAgent, $idUser, $dateDoc){
+		global $db;
+		$query =
+		"UPDATE ae_as_report_risk_alternative
+		SET
+                    region = ?,
+                    remark = ?,
+                    val_1 = ?,
+                    val_2 = ?,
+                    val_3 = ?,
+                    val_4 = ?,
+                    val_5 = ?,
+                    val_6_1 = ?,
+                    val_6_2 = ?,
+                    val_6_3 = ?,
+                    val_7 = ?,
+                    val_8 = ?,
+                    val_9 = ?,
+                    val_10_1 = ?,
+                    val_10_2 = ?,
+                    val_10_3 = ?,
+                    val_11_1 = ?,
+                    val_11_2 = ?,
+                    val_11_3 = ?,
+                    val_11_4 = ?,
+                    val_11_5 = ?,
+                    date_update = CURRENT_TIMESTAMP,
+                    date_signature = ?,
+                    date_closed = ?,
+                    ip = ?,
+                    user_agent = ?
+		WHERE id_user = ? AND date_doc = ?";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+                    return false;
+		}
+		mysqli_stmt_bind_param($stmt, "ssiiiiiiiiiiiiiiiiiiissssis", $region, $remark, $val_1, $val_2, $val_3, $val_4, $val_5, $val_6_1, $val_6_2, $val_6_3, $val_7, $val_8, $val_9, $val_10_1, $val_10_2, $val_10_3, $val_11_1, $val_11_2, $val_11_3, $val_11_4, $val_11_5, $dateSignature, $dateClosed,  $ip, $userAgent, $idUser, $dateDoc);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
         }

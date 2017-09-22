@@ -74,6 +74,13 @@
           <span class="glyphicon glyphicon-user"></span>
       </a>
     <?php endif; ?>
+      <!--Редактировать опрос-->
+    <?php if($permissionEditSubsection and $_GET['action'] == 'pool_edit_user'): ?>
+          <a class="menu-manage__link" title="<?= $word[24]['name_'.$lang]; ?>" href="index.php?lang=<?= $lang; ?>&id_section=<?= $_GET['id_section']; ?>&id_subsection=<?= $_GET['id_subsection']; ?>&id_pool=<?= $_GET['id_pool']; ?>&action=pool_edit#navBottom">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+    <?php endif; ?>
+      
       <a class="menu-manage__print" title="<?= $word[393]['name_'.$lang]; ?>" onclick="javascript: print();">
           <span class="glyphicon glyphicon-print"></span>
       </a>

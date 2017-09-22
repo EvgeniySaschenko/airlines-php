@@ -16,6 +16,11 @@
           $allUserAllSectionControl = selectAllUserAllSectionControl();
           
           $allDocControl = selectAllDocControl($getPage);
+          
+          $allPpoolUserControl = selectAllPpoolUserControl($getIdSection, $getPage);
+          
+          $countPpoolUserControl = selectCountPpoolUserControl($getIdSection);
+          
           include('templates/control-all.php');
         }
  ?>

@@ -39,6 +39,12 @@
         <span><?= $word[399]['name_'.$lang]; ?></span>
       </a>
     </li>
+    <li>
+      <a href="#riskAssessment" aria-controls="riskAssessment" role="tab" data-toggle="tab">
+        <span class="fa fa-pie-chart"></span> 
+        <span><?= $word[452]['name_'.$lang]; ?></span>
+      </a>
+    </li>
   </ul>
   <!-- Содержимое вкладок -->
   <div class="tab-content">
@@ -59,6 +65,9 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="docAll">
       <?php include('templates/control-doc-all.php'); ?>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="riskAssessment">
+      <?php include('templates/control-risk-assessment.php'); ?>
     </div>
   </div>
 </div>

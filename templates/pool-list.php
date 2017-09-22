@@ -25,7 +25,7 @@
           <?= $word[51]['name_'.$lang]; ?>
         </th>
         <th class="title text-right">
-          <?= $word[71]['name_'.$lang]; ?>
+          <?= $word[11]['name_'.$lang]; ?>
         </th>
       </tr>
     </thead>
@@ -45,7 +45,7 @@
               <td colspan="7"><?= showNameMonth($poolMonth['date_doc']); ?></td>
             </tr>
             <?php endif; ?>
-            <tr>
+            <tr data-date-doc="<?= $pool['date_doc']; ?>">
               <td class="pool-list__name">
                 <div class="cut-text">
                 <a href="index.php?lang=<?= $lang; ?>&amp;id_section=<?= $pool['id_section']; ?>&amp;id_subsection=<?= $pool['id_subsection']; ?>&amp;id_pool=<?= $pool['id']; ?>&amp;action=pool_edit_user#navBottom">

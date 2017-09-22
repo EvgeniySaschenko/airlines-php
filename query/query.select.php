@@ -4516,18 +4516,27 @@
 		global $db;
 		$query =
 		"SELECT
-      a.id_pic_a,
-      a.id_aircraft,
-			r.date_shipping,
-			u.name_ru,
-			u.name_en,
-			u.last_name_ru,
-			u.last_name_en,
-			u.first_name_ru,
-			u.first_name_en
+                a.id_pic_a,
+                a.id_aircraft,
+                r.date_shipping,
+                u.name_ru,
+                u.name_en,
+                u.last_name_ru,
+                u.last_name_en,
+                u.first_name_ru,
+                u.first_name_en,
+                as_rep.	date_create,
+                as_rep.date_closed
      FROM ae_flight_assignment a
      INNER JOIN ae_user u ON u.id = a.id_pic_a
      INNER JOIN ae_flight_report r ON a.id = r.id_flight_assignment
+     LEFT OUTER JOIN ae_as_report as_rep 
+        ON 
+            as_rep.id_user = a.id_pic_a 
+        AND 
+            as_rep.id_aircraft = a.id_aircraft 
+        AND 
+            DATE_FORMAT(as_rep.date_doc, '%Y-%m') = DATE_FORMAT(r.date_shipping, '%Y-%m')
      WHERE 
       a.hide = 0
      AND
@@ -4547,6 +4556,222 @@
 		mysqli_stmt_close($stmt);
 		return $arr;
 	}
+        
+        
+  # Задание на полёт групировка месяцам PIC
+	function selectAllFlightReportPicGroupMonthAS($year){
+		global $db;
+		$query =
+		"SELECT
+		r.date_shipping
+     FROM ae_flight_report r 
+     INNER JOIN ae_flight_assignment a ON a.id = r.id_flight_assignment
+     WHERE 
+      r.hide = 0
+     AND
+      YEAR(r.date_shipping) = ?
+     GROUP BY MONTH(r.date_shipping) 
+     ORDER BY MONTH(r.date_shipping) DESC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $year);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+        
+        
+  # Задание на полёт групировка пользователей по месяцам PIC
+	function selectAllFlightReportPicGroupMonthGropPicAS($year){
+		global $db;
+		$query =
+		"SELECT
+                a.id_pic_a,
+                a.id_aircraft,
+                r.date_shipping,
+                u.name_ru,
+                u.name_en,
+                u.last_name_ru,
+                u.last_name_en,
+                u.first_name_ru,
+                u.first_name_en,
+                as_rep.	date_create,
+                as_rep.date_closed,
+                as_rep_risk.date_create as date_create_risk,
+                as_rep_risk.date_closed as date_closed_risk
+     FROM ae_flight_assignment a
+     INNER JOIN ae_user u ON u.id = a.id_pic_a
+     INNER JOIN ae_flight_report r ON a.id = r.id_flight_assignment
+     LEFT OUTER JOIN ae_as_report_alternative as_rep 
+        ON 
+            as_rep.id_user = a.id_pic_a 
+        AND 
+            DATE_FORMAT(as_rep.date_doc, '%Y-%m') = DATE_FORMAT(r.date_shipping, '%Y-%m')
+     LEFT OUTER JOIN ae_as_report_risk_alternative as_rep_risk
+        ON 
+            as_rep_risk.id_user = a.id_pic_a 
+        AND 
+            DATE_FORMAT(as_rep_risk.date_doc, '%Y-%m') = DATE_FORMAT(r.date_shipping, '%Y-%m')
+
+     WHERE 
+      a.hide = 0
+     AND
+      YEAR(r.date_shipping) = ?
+     GROUP BY a.id_pic_a, MONTH(r.date_shipping)
+     ORDER BY MONTH(r.date_shipping) DESC, a.id_pic_a DESC";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "i", $year);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
+        
+  # Воздушные суда в месяце -  PIC
+	function selectAllFlightReportAircraftGroupPicAS($idPic, $yearMonth){
+		global $db;
+		$query =
+		"SELECT
+                     air.id,
+                     air.name_ru,
+                     air.name_en,
+                     air.model
+                FROM ae_flight_assignment a
+                INNER JOIN ae_flight_report r ON a.id = r.id_flight_assignment
+                INNER JOIN ae_aircraft air ON air.id = a.id_aircraft
+                WHERE 
+                   a.hide = 0
+                AND
+                   a.id_pic_a = ?
+                AND
+                   DATE_FORMAT(r.date_shipping, '%Y-%m') = DATE_FORMAT(?, '%Y-%m')
+                GROUP BY a.id_aircraft
+                ORDER BY MONTH(a.id_aircraft) DESC";
+               $stmt = mysqli_stmt_init($db);
+               if(!mysqli_stmt_prepare($stmt, $query))
+                       return false;
+               mysqli_stmt_bind_param($stmt, "is", $idPic, $yearMonth);
+               mysqli_stmt_execute($stmt);
+               $result = mysqli_stmt_get_result($stmt);
+               while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                       $arr[] = $row;
+               mysqli_stmt_close($stmt);
+               return $arr;
+	}
+        
+        
+        
+        
+        
+  # Аеропорты с привязкой к капитану и ВС
+	function selectAllASFlightReportAircraftMonthPicAirports($year, $month, $idAircraft, $idUser){
+		global $db;
+		$query =
+                "(SELECT 
+                     r.point_departure as airport
+                FROM ae_flight_assignment a
+                INNER JOIN ae_user u ON u.id = a.id_pic_a
+                INNER JOIN ae_flight_report r ON a.id = r.id_flight_assignment
+                WHERE 
+                   a.hide = 0
+                AND
+                   r.hide = 0
+                AND
+                   DATE_FORMAT(r.date_shipping, '%Y') = ?
+                AND
+                   DATE_FORMAT(r.date_shipping, '%m') = ?
+                AND 
+                    a.id_aircraft = ? 
+                AND 
+                    a.id_pic_a = ?)
+            UNION
+                (SELECT 
+                     r.point_arrival as airport
+                FROM ae_flight_assignment a
+                INNER JOIN ae_user u ON u.id = a.id_pic_a
+                INNER JOIN ae_flight_report r ON a.id = r.id_flight_assignment
+                WHERE 
+                   a.hide = 0
+                AND
+                   r.hide = 0
+                AND
+                   DATE_FORMAT(r.date_shipping, '%Y') = ?
+                AND
+                   DATE_FORMAT(r.date_shipping, '%m') = ?
+                AND 
+                    a.id_aircraft = ? 
+                AND 
+                    a.id_pic_a = ?)";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "isiiisii", $year, $month, $idAircraft, $idUser, $year, $month, $idAircraft, $idUser);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+
+        
+  # Аеропорты с привязкой к капитану и ВС
+	function selectAllASFlightReportMonthPicAirports($year, $month, $idUser){
+		global $db;
+		$query =
+                "(SELECT 
+                     r.point_departure as airport
+                FROM ae_flight_assignment a
+                INNER JOIN ae_user u ON u.id = a.id_pic_a
+                INNER JOIN ae_flight_report r ON a.id = r.id_flight_assignment
+                WHERE 
+                   a.hide = 0
+                AND
+                   r.hide = 0
+                AND
+                   DATE_FORMAT(r.date_shipping, '%Y') = ?
+                AND
+                   DATE_FORMAT(r.date_shipping, '%m') = ?
+                AND 
+                    a.id_pic_a = ?)
+            UNION
+                (SELECT 
+                     r.point_arrival as airport
+                FROM ae_flight_assignment a
+                INNER JOIN ae_user u ON u.id = a.id_pic_a
+                INNER JOIN ae_flight_report r ON a.id = r.id_flight_assignment
+                WHERE 
+                   a.hide = 0
+                AND
+                   r.hide = 0
+                AND
+                   DATE_FORMAT(r.date_shipping, '%Y') = ?
+                AND
+                   DATE_FORMAT(r.date_shipping, '%m') = ?
+                AND 
+                    a.id_pic_a = ?)";
+		$stmt = mysqli_stmt_init($db);
+		if(!mysqli_stmt_prepare($stmt, $query))
+			return false;
+		mysqli_stmt_bind_param($stmt, "isiisi", $year, $month, $idUser, $year, $month, $idUser);
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			$arr[] = $row;
+		mysqli_stmt_close($stmt);
+		return $arr;
+	}
+        
 
   # Отчеты по воздушному судну за год
 	function selectAllReportPicAircraftYearAS($year, $idAircraft){
@@ -5167,6 +5392,166 @@
             if(!mysqli_stmt_prepare($stmt, $query))
                 return false;
             mysqli_stmt_bind_param($stmt, "i", $idPool);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                    $arr[] = $row;
+            mysqli_stmt_close($stmt);
+            return $arr;
+        }
+        
+        // Опрос контроль
+        function selectAllPpoolUserControl($idSection, $page) {
+            $record = $page * 30;
+            global $db;
+            $query =
+            "SELECT
+                pq.*,
+                p.date_doc,
+                pt.id_section,
+                u.id_section as id_section_user,
+                u.name_ru as user_name_ru,
+                u.name_en as user_name_en,
+                u.last_name_ru as user_last_name_ru,
+                u.last_name_en as user_last_name_en,
+                u.first_name_ru as user_first_name_ru,
+                u.first_name_en as user_first_name_en,
+                r.name_ru as user_rank_ru,
+                r.name_en as user_rank_en,
+                (SELECT 
+                    COUNT(DISTINCT p_c.id) 
+                FROM ae_pool_question pq_c
+                INNER JOIN ae_pool p_c ON p_c.id = id_pool
+                INNER JOIN ae_pool_template pt_c ON pt_c.id = p_c.id_pool_template
+                WHERE 
+                    pt_c.id_section = pt.id_section
+                AND 
+                    pq_c.id_user = pq.id_user
+                AND
+                    (pq_c.remark_user = '' OR pq_c.remark_user = '0')
+                AND 
+                    DATE_FORMAT(p.date_doc, '%Y-%m') = DATE_FORMAT(p_c.date_doc, '%Y-%m')
+                AND
+                    p_c.hide = 0) as count_no_answer
+                    
+            FROM ae_pool_question pq
+            INNER JOIN ae_pool p ON p.id = pq.id_pool
+            INNER JOIN ae_pool_template pt ON pt.id = p.id_pool_template
+            INNER JOIN ae_user u ON u.id = pq.id_user
+            INNER JOIN ae_rank r ON r.id = u.id_rank
+            WHERE
+                 pt.id_section = ?
+            AND
+                 (pq.remark_user = '' OR pq.remark_user = '0')
+            AND
+                 p.hide = 0
+            GROUP BY pq.id_user, DATE_FORMAT(p.date_doc, '%Y-%m')
+            ORDER BY p.date_doc DESC, pq.id_user DESC
+            LIMIT $record, 30";
+            $stmt = mysqli_stmt_init($db);
+            if(!mysqli_stmt_prepare($stmt, $query))
+                return false;
+            mysqli_stmt_bind_param($stmt, "i", $idSection);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                    $arr[] = $row;
+            mysqli_stmt_close($stmt);
+            return $arr;
+        }
+        
+        
+        // Опрос количество записей
+        function selectCountPpoolUserControl($idSection) {
+            global $db;
+            $query =
+            "SELECT
+                COUNT(DISTINCT pq.id_user, DATE_FORMAT(p.date_doc, '%Y-%m')) as count_records
+            FROM ae_pool_question pq
+            INNER JOIN ae_pool p ON p.id = pq.id_pool
+            INNER JOIN ae_pool_template pt ON pt.id = p.id_pool_template
+            WHERE
+                 pt.id_section = ?
+            AND
+                 (pq.remark_user = '' OR pq.remark_user = '0')
+            AND
+                 p.hide = 0
+            ORDER BY p.date_doc DESC, pq.id_user DESC";
+            $stmt = mysqli_stmt_init($db);
+            if(!mysqli_stmt_prepare($stmt, $query))
+                return false;
+            mysqli_stmt_bind_param($stmt, "i", $idSection);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                    $arr[] = $row;
+            mysqli_stmt_close($stmt);
+            return $arr;
+        }
+        
+        // Отчет КВС - БП
+        function selectASPicReportAircraftUserYearMonth($idAircraft, $idUser, $dateDoc) {
+            global $db;
+            $query =
+            "SELECT
+                *
+            FROM ae_as_report
+            WHERE
+                id_aircraft = ?
+            AND
+                id_user = ?
+            AND
+               date_doc = ?";
+            $stmt = mysqli_stmt_init($db);
+            if(!mysqli_stmt_prepare($stmt, $query))
+                return false;
+            mysqli_stmt_bind_param($stmt, "iis", $idAircraft, $idUser, $dateDoc);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                    $arr[] = $row;
+            mysqli_stmt_close($stmt);
+            return $arr;
+        }
+        
+        // Отчет КВС - БП - PIC
+        function selectASPicReportPICUserYearMonth($idUser, $dateDoc) {
+            global $db;
+            $query =
+            "SELECT
+                *
+            FROM ae_as_report_alternative
+            WHERE
+                id_user = ?
+            AND
+               date_doc = ?";
+            $stmt = mysqli_stmt_init($db);
+            if(!mysqli_stmt_prepare($stmt, $query))
+                return false;
+            mysqli_stmt_bind_param($stmt, "is", $idUser, $dateDoc);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                    $arr[] = $row;
+            mysqli_stmt_close($stmt);
+            return $arr;
+        }
+        
+        // Отчет КВС - оценка рисков - PIC
+        function selectASReportPICRiskPICUserYearMonth($idUser, $dateDoc) {
+            global $db;
+            $query =
+            "SELECT
+                *
+            FROM ae_as_report_risk_alternative
+            WHERE
+                id_user = ?
+            AND
+               date_doc = ?";
+            $stmt = mysqli_stmt_init($db);
+            if(!mysqli_stmt_prepare($stmt, $query))
+                return false;
+            mysqli_stmt_bind_param($stmt, "is", $idUser, $dateDoc);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))

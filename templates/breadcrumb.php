@@ -107,23 +107,53 @@
                 $flight_consolidated_report_cabin_crew_year = '&id_aircraft='.$_GET['id_aircraft'].'&year='.$_GET['year'].'&action=flight_consolidated_report_cabin_crew_year#navBottom';
                 echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$flight_consolidated_report_crew_year.'">'.$word[279]['name_'.$lang].' - '.$getYear.'</a> </li>';
         }
-  // Отчет КВС - АБ  
-        if($_GET['action'] == 'reports_pic_as_list_users_month') 
+        
+        
+        // Отчет КВС - АБ  - По ВС
+        if(($_GET['action'] == 'reports_pic_as_list_users_month' or $_GET['action'] == 'as_reports_pic_users_month_edit') and !empty($_GET['id_aircraft'])) 
         {
           $reports_pic_as_list_users_month = '&id_aircraft='.$_GET['id_aircraft'].'&year='.$_GET['year'].'&action=reports_pic_as_list_users_month#navBottom';
+          echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$reports_pic_as_list_users_month.'">'.$word[127]['name_'.$lang].' '.$currentAircraft[0]['name_'.$lang].' '.$currentAircraft[0]['model'].' - '.$getYear.'</a> </li>';
+        }
+        
+        // Отчет КВС - АБ   - По ВС 
+        if($_GET['action'] == 'as_reports_pic_users_month_edit' and !empty($_GET['id_aircraft'])) 
+        {
+          $as_reports_pic_users_month_edit = '&id_user='.$_GET['id_user'].'&id_aircraft='.$_GET['id_aircraft'].'&month='.$_GET['month'].'&year='.$_GET['year'].'&action=as_reports_pic_users_month_edit#navBottom';
+          echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$as_reports_pic_users_month_edit.'">'.showNameMonth($getYear.'-'.$getMonth.'-'.'01').'</a> </li>';
+        }
+        
+        // Отчет КВС - АБ  - По КВС
+        if(($_GET['action'] == 'reports_pic_as_list_users_month' or $_GET['action'] == 'as_reports_pic_users_month_edit' or $_GET['action'] == 'as_reports_pic_users_month_risk_edit') and empty($_GET['id_aircraft'])) 
+        {
+          $reports_pic_as_list_users_month = '&year='.$_GET['year'].'&action=reports_pic_as_list_users_month#navBottom';
           echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$reports_pic_as_list_users_month.'">'.$getYear.'</a> </li>';
         }
+        
+        
+        // Отчет КВС - АБ   - По КВС 
+        if($_GET['action'] == 'as_reports_pic_users_month_edit' and empty($_GET['id_aircraft'])) 
+        {
+          $as_reports_pic_users_month_edit = '&id_user='.$_GET['id_user'].'&month='.$_GET['month'].'&year='.$_GET['year'].'&action=as_reports_pic_users_month_edit#navBottom';
+          echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$as_reports_pic_users_month_edit.'">'.$word[517]['name_'.$lang].' - '.showNameMonth($getYear.'-'.$getMonth.'-'.'01').'</a> </li>';
+        }
+        
+        // Отчет КВС - АБ  - оценка угроз  - По КВС 
+        if($_GET['action'] == 'as_reports_pic_users_month_risk_edit' and empty($_GET['id_aircraft'])) 
+        {
+          $as_reports_pic_users_month_edit = '&id_user='.$_GET['id_user'].'&month='.$_GET['month'].'&year='.$_GET['year'].'&action=as_reports_pic_users_month_risk_edit#navBottom';
+          echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$as_reports_pic_users_month_edit.'">'.$word[518]['name_'.$lang].' - '.showNameMonth($getYear.'-'.$getMonth.'-'.'01').'</a> </li>';
+        }
+        
+        
         
         // Оценка рисков
         if($_GET['action'] == 'pool_edit_user' or $_GET['action'] == 'pool_edit') 
         {
-          $pool_name = '&id_pool='.$_GET['id_pool'].'&action='.$_GET['action'].'#navBottom';
+          $pool_name = '&id_pool='.$_GET['id_pool'].'&action=pool_edit_user#navBottom';
           echo '<li><a href="index.php?lang='.$lang.$breadSection.$breadSubsection.$pool_name.'">'.'№ '.$currentPool[0]['name_'.$lang].' '.$word[417]['name_'.$lang].' '.convertDate($currentPool[0]['date_doc']).'</a> </li>';
         }
-        
-        
-        
-        
+  
 
 ?>
 </ul>

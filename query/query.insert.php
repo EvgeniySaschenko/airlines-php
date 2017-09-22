@@ -714,4 +714,134 @@
 		mysqli_stmt_close($stmt);
 		return 	mysqli_insert_id($db);
 	}
+        
+        
+	//ДОБАВИТЬ вопросы ВС
+	function insertASPicReportAircraftUserYearMonth($idAuthor, $idUser, $idAircraft, $paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph13, $paragraph14, $dateSignature, $dateDoc, $dateClosed,  $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_as_report
+                    (id_author,
+                    id_user,
+                    id_aircraft,
+                    paragraph_1,
+                    paragraph_3,
+                    paragraph_4_1,
+                    paragraph_4_2,
+                    paragraph_5,
+                    paragraph_5_1,
+                    paragraph_6,
+                    paragraph_7,
+                    paragraph_8,
+                    paragraph_9,
+                    paragraph_10,
+                    paragraph_11,
+                    paragraph_12,
+                    paragraph_13,
+                    paragraph_14,
+                    date_create,
+                    date_update,
+                    date_signature,
+                    date_doc,
+                    date_closed,
+                    ip,
+                    user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+                    return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iiissssssssssssssssssss", $idAuthor, $idUser, $idAircraft, $paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph13, $paragraph14, $dateSignature, $dateDoc, $dateClosed,  $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
+        
+	//Отчет по АБ - КВС
+	function insertASPicReportPICUserYearMonth($idAuthor, $idUser, $paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph12_1, $paragraph12_2, $paragraph13, $dateSignature, $dateDoc, $dateClosed,  $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_as_report_alternative
+                    (id_author,
+                    id_user,
+                    paragraph_1,
+                    paragraph_3,
+                    paragraph_4_1,
+                    paragraph_4_2,
+                    paragraph_5,
+                    paragraph_5_1,
+                    paragraph_6,
+                    paragraph_7,
+                    paragraph_8,
+                    paragraph_9,
+                    paragraph_10,
+                    paragraph_11,
+                    paragraph_12,
+                    paragraph_12_1,
+                    paragraph_12_2,
+                    paragraph_13,
+                    date_create,
+                    date_update,
+                    date_signature,
+                    date_doc,
+                    date_closed,
+                    ip,
+                    user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+                    return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iisssssssssssssssssssss", $idAuthor, $idUser, $paragraph1, $paragraph3, $paragraph4_1, $paragraph4_2, $paragraph5, $paragraph5_1, $paragraph6, $paragraph7, $paragraph8, $paragraph9, $paragraph10, $paragraph11, $paragraph12, $paragraph12_1, $paragraph12_2, $paragraph13, $dateSignature, $dateDoc, $dateClosed,  $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
+        
+	//Отчет по АБ - КВС - Оценка угроз
+	function insertASReportPicRiskPICUserYearMonth($idAuthor, $idUser, $region, $remark, $val_1, $val_2, $val_3, $val_4, $val_5, $val_6_1, $val_6_2, $val_6_3, $val_7, $val_8, $val_9, $val_10_1, $val_10_2, $val_10_3, $val_11_1, $val_11_2, $val_11_3, $val_11_4, $val_11_5, $dateSignature, $dateDoc, $dateClosed,  $ip, $userAgent){
+		global $db;
+		$query = 
+		"INSERT INTO ae_as_report_risk_alternative
+                    (id_author,
+                    id_user,
+                    region,
+                    remark,
+                    val_1,
+                    val_2,
+                    val_3,
+                    val_4,
+                    val_5,
+                    val_6_1,
+                    val_6_2,
+                    val_6_3,
+                    val_7,
+                    val_8,
+                    val_9,
+                    val_10_1,
+                    val_10_2,
+                    val_10_3,
+                    val_11_1,
+                    val_11_2,
+                    val_11_3,
+                    val_11_4,
+                    val_11_5,
+                    date_create,
+                    date_update,
+                    date_signature,
+                    date_doc,
+                    date_closed,
+                    ip,
+                    user_agent)
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?)";
+		if(!$stmt = mysqli_prepare($db, $query))
+		{
+                    return false;
+		}
+		mysqli_stmt_bind_param($stmt, "iissssssssssssssssssssssssss", $idAuthor, $idUser, $region, $remark, $val_1, $val_2, $val_3, $val_4, $val_5, $val_6_1, $val_6_2, $val_6_3, $val_7, $val_8, $val_9, $val_10_1, $val_10_2, $val_10_3, $val_11_1, $val_11_2, $val_11_3, $val_11_4, $val_11_5, $dateSignature, $dateDoc, $dateClosed,  $ip, $userAgent);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		return 	mysqli_insert_id($db);
+	}
+        
 ?>

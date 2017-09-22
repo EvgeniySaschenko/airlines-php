@@ -135,6 +135,73 @@
             </td>
          </tr>
          
+         <!--Отчет КВС АБ -->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+              <?= $word[517]['name_'.$lang]; ?>
+            </td>
+            <td>
+              <div class="form-group">
+                <div class="input-group">
+                <select name="report_pic_as" data-selected-option="<?= $GENERAL_SITE_SETTINGS[0]['report_pic_as']; ?>">
+                  <option value="report_pic_as_aircraft">Сортировать по ВС</option>
+                  <option value="report_pic_as_PIC">Сортировать по КВС</option>
+                </select>
+                </div>
+              </div>
+            </td>
+         </tr>
+         
+         <!--Адрес администратора-->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+                <?= $word[503]['name_'.$lang]; ?>
+            </td>
+            <td>
+                <textarea name="mail_admin" class="form-control"><?=$GENERAL_SITE_SETTINGS[0]['mail_admin'];?></textarea>
+            </td>
+         </tr>
+         
+         <!--Аэродромы базирования АБ-->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+                <?= $word[504]['name_'.$lang]; ?>
+            </td>
+            <td>
+                <textarea name="basing_airports_report_pic_as" class="form-control"><?=$GENERAL_SITE_SETTINGS[0]['basing_airports_report_pic_as'];?></textarea>
+            </td>
+         </tr>
+         
+         <!--Е-мейл АБ-->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+                <?= $word[506]['name_'.$lang]; ?>
+            </td>
+            <td>
+                <textarea name="mail_report_pic_as" class="form-control"><?=$GENERAL_SITE_SETTINGS[0]['mail_report_pic_as'];?></textarea>
+            </td>
+         </tr>
+         
+         <!--Примечание отчеты КВС АБ-->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+                <?= $word[505]['name_'.$lang]; ?>
+            </td>
+            <td>
+                <textarea name="remark_report_pic_as" class="form-control"><?=$GENERAL_SITE_SETTINGS[0]['remark_report_pic_as'];?></textarea>
+            </td>
+         </tr>
+         
+         <!--Источники информации по состояние АБ-->
+         <tr>
+            <td class="text-bold a-general-site-settings__name">
+                <?= $word[508]['name_'.$lang]; ?>
+            </td>
+            <td>
+                <textarea name="sources_info_as" class="form-control"><?=$GENERAL_SITE_SETTINGS[0]['sources_info_as'];?></textarea>
+            </td>
+         </tr>
+         
         <!--Отправить-->
         <tr>
           <td colspan="2">

@@ -1,5 +1,5 @@
 <?php
-    # ����� ��������� �����
+    # Управление сайтом
     if($_GET['action'] == 'general_site_settings' and $permissionManageSite)
     {
 
@@ -17,9 +17,14 @@
         $mailsDoc = clearStr($_POST['mails_doc']);
         $numberingFlightAssignment = clearStr($_POST['numbering_flight_assignment']);
         $riskAssessment = clearStr($_POST['risk_assessment']);
-        
-        
-		updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $ip, $userAgent);
+        $reportPicAs = clearStr($_POST['report_pic_as']);
+        $mailAdmin = clearStr($_POST['mail_admin']);
+        $basingAirportsReportPicAs = clearStr($_POST['basing_airports_report_pic_as']);
+        $mailReportPicAs = clearStr($_POST['mail_report_pic_as']);
+        $remarkReportPicAs = clearStr($_POST['remark_report_pic_as']);
+        $sourcesInfoAs = clearStr($_POST['sources_info_as']);
+                
+		updateGeneralSettings($idGeneralSettings, $idAuthor, $idFlightManager, $idEngineerManager, $nameCompanyRu, $nameCompanyEn, $docDaysRed, $docDaysOrange, $mailsVoluntaryPosts, $mailsDoc, $numberingFlightAssignment, $riskAssessment, $reportPicAs, $mailAdmin, $basingAirportsReportPicAs, $mailReportPicAs, $remarkReportPicAs, $sourcesInfoAs, $ip, $userAgent);
         
         $ancor = '#noticeGeneralSiteSettings';
         

@@ -459,19 +459,25 @@
 	}
 
 	//Показывает название месяца на RUS и ENG
-	function showNameMonth($date){
+	function showNameMonth($date, $ukr){
 		global $lang;
 		$ref = date('n', strtotime($date));
 		if($lang == 'en')
 			$month = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 		else
 			$month = array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь');
+                
+                if(!empty($ukr)) {
+                    $month = array('січень', 'лютий', 'березень', 'квітень', 'травень', 'червень', 'липень', 'серпень', 'вересень', 'жовтень', 'листопад', 'грудень');
+                }
+                
 		for($i = 0; $i <= $ref - 1; $i++)
 		{
 			if($i == $ref - 1)
 				return $month[$i];
 		}
 	}
+        
 
 	//Показывает название месяца на RUS и ENG для таблицы
 	function showNameMonthTableTD(){
@@ -1373,5 +1379,22 @@ function sendMessageAddOrUpdateDoc($mails, $nameDoc, $idDoc, $idUser, $idAuthor,
             } 
         }
 
+    }
+    
+    
+    // Массив через запятую
+    function arraySeparatedCommasAirport($arr) {
+        foreach($arr  as $key => $value) {
+            $str = $str.$value['airport'].', ';
+        }
+        return substr($str, 0, -2);
+    }
+    
+    // Массив через запятую ВС 
+    function arraySeparatedCommasAircrafts($arr) {
+        foreach($arr  as $key => $value) {
+            $str = $str.$value['name_ru'].$value['model'].', ';
+        }
+        return substr($str, 0, -2);
     }
 ?>

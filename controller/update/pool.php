@@ -169,7 +169,7 @@
                                
                               $protocol.$_SERVER['HTTP_HOST']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection;
                               "The answers must be submitted no later than ".convertDate($currentPool[0]['date_end']);
-                              $headers = 'From: pool <pool'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+                              $headers = 'From: pool <pool@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
                               $headers .= 'Content-type: text/html; charset="utf-8"';
 
                        if($poolQuestionUser['user_mail']) {

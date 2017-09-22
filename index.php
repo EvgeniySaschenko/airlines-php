@@ -3,7 +3,6 @@
   # Шапка сайта
 	include('templates/header.php');
 ?>
-
 <div class="box-content box-content_<?= $currentSection[0]['type']; ?>">
 
   <?php 
