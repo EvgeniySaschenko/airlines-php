@@ -65,7 +65,7 @@
           </a>
         </td>
         <td class="a-user-list__permission text-center">
-           <?= dropDownListRquiredNo('id_user_permission[]', $allUserPermission, $user['id_user_permission']); ?>
+           <?= dropDownListPermission('id_user_permission[]', $allUserPermission, $user['id_user_permission']); ?>   
         </td>
         <td class="text-center">
           <!--Пользователь заблокирован-->  

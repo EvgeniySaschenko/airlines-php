@@ -110,3 +110,42 @@ addPermissionUser('.a-user-permission-add__permission [data-premission-manage-us
     /*  Управление пользователями */
     editPermissionUser('.a-user-permission-edit [data-premission-manage-users]', 'premission-manage-users', 'premission-manage-users-you');
 }).call(this);
+
+
+/* Редактировать пользователя */
+(function() {
+    function permissionUserDropList(selector) {
+        var permissionDropList, permissionCurrentUser, readSect, editSect, delSect, readSubSect, editSubSect, delSubSect, manageUser, readPersonalData, manageSite, editFlightAsigment;
+        permissionCurrentUser= $('body').data('permission-all');
+        $(selector).each(function(i, thisElem) {
+            permissionDropList= $(this).data('permission');
+            readSect= permissionDropList.match(/:[a-z]{1,}:/ig);
+            editSect= permissionDropList.match(/!:[a-z]{1,}:/ig);
+            delSect= permissionDropList.match(/_!:[a-z]{1,}:/ig);
+            readSubSect= permissionDropList.match(/[a-z]{1,1}[0-9]{1,}~/ig);
+            editSubSect= permissionDropList.match(/![a-z]{1,1}[0-9]{1,}~/ig);
+            delSubSect= permissionDropList.match(/_![a-z]{1,1}[0-9]{1,}~/ig);
+            manageUser= permissionDropList.match(/@[a-z]{1,1}/ig);
+            readPersonalData= permissionDropList.match(/#/ig);
+            manageSite= permissionDropList.match(/\*/ig);
+            editFlightAsigment= permissionDropList.match(/%/ig);
+
+            var arr= [readSect, editSect, delSect, readSubSect, editSubSect, delSubSect, manageUser, readPersonalData, editFlightAsigment];
+
+            $(arr).each(function(i, e){
+                $(e).each(function(i, e){
+                    if( !permissionCurrentUser.match(e) ){
+                        $(thisElem).css({"visibility": "hidden"});
+                    }
+                });
+            });
+
+        });
+    }
+    
+    permissionUserDropList('.a-user-edit select[name="id_user_permission"] [data-permission]');
+    permissionUserDropList('.a-user-add select[name="id_user_permission"] [data-permission]');
+    permissionUserDropList('.a-user-list select[name="id_user_permission[]"] [data-permission]');
+    
+    
+}).call(this);

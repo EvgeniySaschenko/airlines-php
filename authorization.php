@@ -4,7 +4,7 @@
 	if(!empty($_GET['enter']) and strstr($_SERVER['HTTP_REFERER'], $_SERVER["HTTP_HOST"]))
 	{
 		$login = clearStr($_POST['login']);
-		$pass = codePass($_POST['pass']);
+		echo $pass = codePass($_POST['pass']);
 		$currentUser = selectUserСurrent($login, $pass);
 		$numberRetries = selectUserLogin($login);
         # Если вход в систему успешный
@@ -55,7 +55,7 @@
 		unset($_SESSION['pass']);
 		unset($_SESSION['check']);
 	}
-  
+
 	if(strstr($_SERVER['HTTP_REFERER'], $_SERVER["HTTP_HOST"]))
 		header('location: '.$_SERVER['HTTP_REFERER'].$ancor);
 	else

@@ -50,7 +50,7 @@
             <?= $word[22]['name_'.$lang]; ?>
           </td>
           <td>
-            <?= dropDownListRquiredNo('id_user_permission', $allUserPermission, $user[0]['id_user_permission']); ?>
+            <?= dropDownListPermission('id_user_permission', $allUserPermission, $user[0]['id_user_permission']); ?>              
           </td>
         </tr>
         <!--Загрузить фото-->

@@ -178,31 +178,65 @@
 						$permission = $permission.'%';
 				}
         
-        // Обновить права доступа администратора 
-        if($login == 'admin') 
-        {
-          //РАЗДЕЛЫ
-          for($i = 0; !empty($allSections[$i]['id']); $i++)
-          {
-            $permission = '_!:'.$allSections[$i]['mark'].':'.$permission;
-            $permission = $permission.'@'.$allSections[$i]['mark'];
-          }
+                                // Обновить права доступа администратора 
+                                if($login == 'admin') 
+                                {
+                                  //РАЗДЕЛЫ
+                                  for($i = 0; !empty($allSections[$i]['id']); $i++)
+                                  {
+                                    $permission = '_!:'.$allSections[$i]['mark'].':'.$permission;
+                                    $permission = $permission.'@'.$allSections[$i]['mark'];
+                                  }
 
-          //ПОДРАЗДЕЛЫ
-          for($i = 0; !empty($allSubsections[$i]['id']); $i++)
-          {
-            $permission = $allSubsections[$i]['mark'].$allSubsections[$i]['id'].'~'.$permission;
-            $permission = '_!'.$permission;
-          }
+                                  //ПОДРАЗДЕЛЫ
+                                  for($i = 0; !empty($allSubsections[$i]['id']); $i++)
+                                  {
+                                    $permission = $allSubsections[$i]['mark'].$allSubsections[$i]['id'].'~'.$permission;
+                                    $permission = '_!'.$permission;
+                                  }
 
-          $login = 'admin';
-          $permission = $permission.'#*%';
-        }
-        
-        
-        if(empty($permission)) {
-          $permission = 0;
-        }
+                                  $login = 'admin';
+                                  $permission = $permission.'#*%';
+                                }
+
+
+                                if(empty($permission)) {
+                                  $permission = 0;
+                                }
+                                
+                                
+                                // Проверка прав, на возможность изменения прав доступа
+                                $userPermissionCheck= selectUserPermission($idUserPermission);
+                                preg_match_all('/:[a-z]{1,}:/', $userPermissionCheck[0]['permission'], $readSect, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/!:[a-z]{1,}:/', $userPermissionCheck[0]['permission'], $editSect, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/_!:[a-z]{1,}:/', $userPermissionCheck[0]['permission'], $delSect, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/[a-z]{1,1}[0-9]{1,}~/', $userPermissionCheck[0]['permission'], $readSubSect, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/![a-z]{1,1}[0-9]{1,}~/', $userPermissionCheck[0]['permission'], $reditSubSect, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/_![a-z]{1,1}[0-9]{1,}~/', $userPermissionCheck[0]['permission'], $delSubSect, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/@[a-z]{1,1}/', $userPermissionCheck[0]['permission'], $manageUser, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/#/', $userPermissionCheck[0]['permission'], $readPersonalData, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/\*/', $userPermissionCheck[0]['permission'], $manageSite, PREG_OFFSET_CAPTURE);
+                                preg_match_all('/%/', $userPermissionCheck[0]['permission'], $editFlightAsigment, PREG_OFFSET_CAPTURE);
+
+                                $arrPermission= [ $readSect, $editSect, $delSect, $readSubSect, $reditSubSect, $delSubSect, $manageUser, $readPersonalData, $manageSite, $editFlightAsigment ];
+                                $userPermission= '';
+                                foreach($arrPermission as $permissionItem){
+
+                                    foreach($permissionItem[0] as  $permissionItemSub){
+                                      if(strstr($currentUser[0]['permission'], $permissionItemSub[0])){
+                                          $userPermissionResult= true;
+                                      }else{
+                                          $userPermissionResult= false;
+                                          break;
+                                      }
+                                    }
+
+                                    if(!$userPermissionResult){
+                                        break;
+                                    }
+
+                                }
+                                
         
         
 				$checkLogin = selectUserCheckLogin($login);
@@ -247,7 +281,7 @@
           }
           
           
-          
+        if(($userPermissionResult or $idUserPermission == 0))
           updateUser($idUser, $idAuthor, $idSection, $idRank, $idCrew, $idUserPermission, $login, $pass, $nameRu, $nameEn, $lastNameRu, $lastNameEn, $firstNameRu, $firstNameEn, $addressRu, $addressEn, $mail, $mail2, $skype, $additionalInfo, $phone, $phoneCorp, $dateBirth, $permission, $hide, $removeMailingList, $numberRetries, $extension, $ip, $userAgent);
           $ancor = '#noticeUpdateUserEdit';
 				}

@@ -3,9 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/WEB/airlines-dev/route/aviation-security.php</file>
-            <file>file:/D:/WEB/airlines-dev/templates/a-general-site-settings.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-user-add.php</file>
+            <file>file:/D:/WEB/airlines-dev/controller/insert/user.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-user-list.php</file>
+            <file>file:/D:/WEB/airlines-dev/controller/update/user.php</file>
+            <file>file:/D:/WEB/airlines-dev/public/js/app.js</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-user-permission-edit.php</file>
             <file>file:/D:/WEB/airlines-dev/query/query.select.php</file>
+            <file>file:/D:/WEB/airlines-dev/lib.fun.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/header.php</file>
+            <file>file:/D:/WEB/airlines-dev/controller/update/users-all.php</file>
+            <file>file:/D:/WEB/airlines-dev/templates/a-user-edit.php</file>
+            <file>file:/D:/WEB/airlines-dev/public/js/a-user.js</file>
+            <file>file:/D:/WEB/airlines-dev/templates/footer.php</file>
         </group>
     </open-files>
 </project-private>

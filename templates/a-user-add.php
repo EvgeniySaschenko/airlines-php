@@ -36,7 +36,7 @@
             <?= $word[22]['name_'.$lang]; ?> *
           </td>
           <td>
-            <?= dropDownListRquired('id_user_permission', $allUserPermission); ?>
+            <?= dropDownListPermission('id_user_permission', $allUserPermission); ?>    
           </td>
         </tr>
         <!--Ф.И.О.-->
