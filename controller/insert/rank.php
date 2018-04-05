@@ -20,14 +20,20 @@
 						$nameRu = clearStr($_POST['name_ru']);
 						$nameEn = clearStr($_POST['name_en']);
 					}
-					insertRank($idAuthor, $idSection, $nameRu, $nameEn, $ip, $userAgent);
-          $ancor = '#noticeAddedUserRank';
+					$id= insertRank($idAuthor, $idSection, $nameRu, $nameEn, $ip, $userAgent);
+                                        
+                                        if($id){
+                                            $ancor = '#noticeAddedUserRank';
+                                        } else {
+                                           echo $ancor = '#noticeErrorUserRank';
+                                        }
+          
 				}
 				else
 				{
 					$ancor = '#noticeErrorUserRank';
 				}
-         redirect($ancor);
+         //redirect($ancor);
 			}
     }
 ?>

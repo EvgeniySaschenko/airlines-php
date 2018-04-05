@@ -75,6 +75,9 @@
       
       # Оценка рисков
       include('route/pool.php');
+      
+      # Поиск
+      include('route/search.php');
     }
     
     # Добровольные сообщения

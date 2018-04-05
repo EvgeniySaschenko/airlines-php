@@ -162,14 +162,14 @@
                     $allPoolQuestionGroupUser = selectAllPoolQuestionGroupUser($getIdPool);
 
                     foreach($allPoolQuestionGroupUser as $key => $poolQuestionUser) {
-                       $subject = $_SERVER['HTTP_HOST'].' '.$currentPool[0]['subsection_name_en'].' - '.$currentPool[0]['name_ru'].' - '.convertDate($currentPool[0]['date_doc']); 
+                       $subject = $_SERVER['SERVER_NAME'].' '.$currentPool[0]['subsection_name_en'].' - '.$currentPool[0]['name_ru'].' - '.convertDate($currentPool[0]['date_doc']); 
                        $message = "Hello,\n". 
                               "Please answer the questions in this document: ". $currentPool[0]['name_ru'].' - '.convertDate($currentPool[0]['date_doc']) ."\n".
                               $_SERVER['HTTP_REFERER']."\n".
                                
-                              $protocol.$_SERVER['HTTP_HOST']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection;
+                              $protocol.$_SERVER['SERVER_NAME']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection;
                               "The answers must be submitted no later than ".convertDate($currentPool[0]['date_end']);
-                              $headers = 'From: pool <pool@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+                              $headers = 'From: pool <pool@'.$_SERVER['SERVER_NAME'].'>' . "\r\n";
                               $headers .= 'Content-type: text/html; charset="utf-8"';
 
                        if($poolQuestionUser['user_mail']) {

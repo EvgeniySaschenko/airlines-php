@@ -63,11 +63,11 @@
                     }
 
 
-                    $subject = $_SERVER['HTTP_HOST'].' Aviation security report PIC '; 
+                    $subject = $_SERVER['SERVER_NAME'].' Aviation security report PIC '; 
                     $message = "Hello,\n". 
                     "To view the report click here \n".
-                    $protocol.$_SERVER['HTTP_HOST']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection."&id_user=".$idUser."&id_aircraft=".$idAircraft."&month=".convertDateMonth($dateDoc)."&year=".convertDateYear($dateDoc)."&action=as_reports_pic_users_month_edit";
-                    $headers = 'From: AS Report PIC <as@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+                    $protocol.$_SERVER['SERVER_NAME']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection."&id_user=".$idUser."&id_aircraft=".$idAircraft."&month=".convertDateMonth($dateDoc)."&year=".convertDateYear($dateDoc)."&action=as_reports_pic_users_month_edit";
+                    $headers = 'From: AS Report PIC <as@'.$_SERVER['SERVER_NAME'].'>' . "\r\n";
                     $headers .= 'Content-type: text/html; charset="utf-8"';
 
                     if($GENERAL_SITE_SETTINGS[0]['mail_report_pic_as'] and empty($_POST['date_closed']) or $_POST['date_closed'] == '0000-00-00') {
@@ -101,11 +101,11 @@
                     }
 
 
-                    $subject = $_SERVER['HTTP_HOST'].' Aviation security report PIC '; 
+                    $subject = $_SERVER['SERVER_NAME'].' Aviation security report PIC '; 
                     $message = "Hello,\n". 
                     "To view the report click here \n".
-                    $protocol.$_SERVER['HTTP_HOST']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection."&id_user=".$idUser."&month=".convertDateMonth($dateDoc)."&year=".convertDateYear($dateDoc)."&action=as_reports_pic_users_month_edit";
-                    $headers = 'From: AS Report PIC <as@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+                    $protocol.$_SERVER['SERVER_NAME']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection."&id_user=".$idUser."&month=".convertDateMonth($dateDoc)."&year=".convertDateYear($dateDoc)."&action=as_reports_pic_users_month_edit";
+                    $headers = 'From: AS Report PIC <as@'.$_SERVER['SERVER_NAME'].'>' . "\r\n";
                     $headers .= 'Content-type: text/html; charset="utf-8"';
 
                     if($GENERAL_SITE_SETTINGS[0]['mail_report_pic_as'] and empty($_POST['date_closed']) or $_POST['date_closed'] == '0000-00-00') {
@@ -195,11 +195,11 @@
                     }
 
 
-                    $subject = $_SERVER['HTTP_HOST'].' Aviation security report PIC '; 
+                    $subject = $_SERVER['SERVER_NAME'].' Aviation security report PIC '; 
                     $message = "Hello,\n". 
                     "To view the report click here \n".
-                    $protocol.$_SERVER['HTTP_HOST']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection."&id_user=".$idUser."&month=".convertDateMonth($dateDoc)."&year=".convertDateYear($dateDoc)."&action=as_reports_pic_users_month_risk_edit";
-                    $headers = 'From: AS Report PIC <as@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+                    $protocol.$_SERVER['SERVER_NAME']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_subsection=".$getIdSubsection."&id_user=".$idUser."&month=".convertDateMonth($dateDoc)."&year=".convertDateYear($dateDoc)."&action=as_reports_pic_users_month_risk_edit";
+                    $headers = 'From: AS Report PIC <as@'.$_SERVER['SERVER_NAME'].'>' . "\r\n";
                     $headers .= 'Content-type: text/html; charset="utf-8"';
 
                     if($GENERAL_SITE_SETTINGS[0]['mail_report_pic_as'] and empty($_POST['date_closed']) or $_POST['date_closed'] == '0000-00-00') {

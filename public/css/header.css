@@ -451,7 +451,7 @@
 }
 
 .header__nav-bottom .header__nav-bottom-list-item {
-        width: 14.28571%;
+        width: 12.5%; /**/
 }
 
 @media (max-width: 768px) { 

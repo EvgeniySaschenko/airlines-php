@@ -24,16 +24,16 @@
           }
 
           // Отправка на маил
-/*
+
           if($idSentDoc) {
             $user = selectUser($idUser);
 
-               $subject = $_SERVER['HTTP_HOST'].' - '.$nameDoc.' - '.convertDate($dateEnd); 
+               $subject = $_SERVER['SERVER_NAME'].' - '.$nameDoc.' - '.convertDate($dateEnd); 
                $message = "Hello,\n". 
                       "You have received the document \"".$nameDoc."\" to get acquainted with it, proceed the following link:\n".
-                      $protocol.$_SERVER['HTTP_HOST']."/index.php?lang=".$_GET['lang']."&id_section=".$idSectionUser."&id_user=".$idUser."&action=user_profile#docUserReceived\n".
+                      $protocol.$_SERVER['SERVER_NAME']."/index.php?lang=".$_GET['lang']."&id_section=".$idSectionUser."&id_user=".$idUser."&action=user_profile#docUserReceived\n".
                       "The document must be read prior to the date ".convertDate($dateEnd);
-                      $headers = 'From: doc <doc@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+                      $headers = 'From: doc <doc@'.$_SERVER['SERVER_NAME'].'>' . "\r\n";
                       $headers .= 'Content-type: text/html; charset="utf-8"';
 
                if($user[0]['mail']) {
@@ -46,7 +46,7 @@
                 mail($to, $subject, $message, $headers); 
                }
           }
-*/
+
 
 				}
 

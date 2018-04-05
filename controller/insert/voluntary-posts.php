@@ -39,13 +39,13 @@
               // Создание массива E-mail 
               $arrMail = explode(",", $mailsVoluntaryPosts);
 
-               $subject = 'Voluntary posts '.$_SERVER['HTTP_HOST'].' - '.$nameRu; 
+               $subject = 'Voluntary posts '.$_SERVER['SERVER_NAME'].' - '.$nameRu; 
                $message = "Hello,\n". 
                        "It's a new message with the content:\n".
                        $contentRu." ".$mail."\n To get acquainted with him, go to the link\n".
-                       $protocol.$_SERVER['HTTP_HOST']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_news=".$idVoluntaryPosts;
+                       $protocol.$_SERVER['SERVER_NAME']."/index.php?lang=".$_GET['lang']."&id_section=".$getIdSection."&id_news=".$idVoluntaryPosts;
                   
-               $headers = "From: doc <doc@".$_SERVER['HOST'].">";
+               $headers = "From: doc <doc@".$_SERVER['SERVER_NAME'].">";
   
                foreach($arrMail as $itemMail){
                  $to = $itemMail;
